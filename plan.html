@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ラズパイ車中泊PJT — メモ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #f8fafc; color: #0f172a; padding: 2rem 1rem; font-size: 14px; line-height: 1.7; }
+    .page { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; }
+
+    h1 { font-size: 1.5rem; font-weight: 900; }
+    h2 { font-size: 1rem; font-weight: 900; margin-bottom: .75rem; padding-bottom: .4rem; border-bottom: 2px solid #e2e8f0; }
+    .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem 1.5rem; }
+    .meta { font-size: .8rem; color: #64748b; margin-top: .3rem; }
+
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    th { background: #f1f5f9; font-weight: 700; padding: .5rem .75rem; text-align: left; }
+    td { padding: .5rem .75rem; border-top: 1px solid #e2e8f0; vertical-align: top; color: #334155; }
+    tr:hover td { background: #f8fafc; }
+    .b { font-weight: 700; color: #0f172a; }
+    .p { font-weight: 700; color: #0369a1; }
+    .warn { color: #b91c1c; font-size: .8rem; }
+    .ok { color: #065f46; }
+
+    .arch { background: #0f172a; border-radius: 8px; padding: 1rem 1.25rem; font-family: monospace; font-size: .82rem; line-height: 2; color: #94a3b8; }
+    .arch .k { color: #60a5fa; font-weight: 700; }
+    .arch .v { color: #a3e635; }
+    .arch .c { color: #f97316; }
+    .arch .w { color: #fbbf24; }
+
+    .phases { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .75rem; }
+    .ph { border-radius: 8px; padding: .9rem 1rem; border: 1px solid; }
+    .ph h3 { font-size: .8rem; font-weight: 900; margin-bottom: .6rem; }
+    .ph ul { list-style: none; font-size: .78rem; color: #334155; display: flex; flex-direction: column; gap: .3rem; }
+    .ph li::before { content: '□ '; color: #cbd5e1; }
+    .ph0 { background: #fef3c7; border-color: #fcd34d; } .ph0 h3 { color: #92400e; }
+    .ph1 { background: #eff6ff; border-color: #bfdbfe; } .ph1 h3 { color: #1e40af; }
+    .ph2 { background: #f0fdf4; border-color: #bbf7d0; } .ph2 h3 { color: #166534; }
+    .ph3 { background: #fdf4ff; border-color: #e9d5ff; } .ph3 h3 { color: #6b21a8; }
+    .ph4 { background: #fff1f2; border-color: #fecdd3; } .ph4 h3 { color: #9f1239; }
+
+    .note { background: #fff7ed; border-left: 3px solid #f97316; padding: .6rem .9rem; border-radius: 4px; font-size: .82rem; color: #7c2d12; margin-top: .75rem; }
+    .note-red { background: #fee2e2; border-left-color: #ef4444; color: #7f1d1d; }
+    .note-blue { background: #eff6ff; border-left-color: #3b82f6; color: #1e3a8a; }
+
+    footer { text-align: center; font-size: .75rem; color: #94a3b8; padding-bottom: 1rem; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- タイトル -->
+  <div class="card">
+    <h1>ラズパイ車中泊PJT</h1>
+    <p class="meta">ハイエース ワイドボディ / LiFePO4 24V 9.2kWh / 2026-06-02 / v3（Gemini + Codex レビュー反映）</p>
+    <p class="meta" style="margin-top:6px;">→ <a href="file:///Users/izubuchihiroki/Documents/Antigravity/solar_circuit_diagram.html" style="color:#2563eb;">車中泊システム 回路図</a>（ソーラー・バッテリー・充放電設定・切断順序）</p>
+  </div>
+
+  <!-- システム構成 -->
+  <div class="card">
+    <h2>システム構成</h2>
+    <div class="arch">
+<div><span class="k">ソーラーパネル（並列）</span></div>
+<div>  <span class="c">└─</span> <span class="v">AIKO-A440-MAH54Tm × 3枚</span> <span class="w">← 440W / Vmp 34.23V / Voc 40.47V / 1762×1134mm</span></div>
+<div>      <span class="c">└→</span> <span class="v">Renogy Rover 60A MPPT（BT-1 RS232経由 BLE監視）</span> <span class="w">← Absorption 28.4V（90%上限）設定</span></div>
+<div>          <span class="c">└→</span> <span class="v">LiFePO4 24V 9.2kWh（JK BMS B2A8S30P 低電圧カット 25.6V＝20%下限）</span></div>
+<div>              <span class="c">└→</span> <span class="v">実使用容量: 約 6.4kWh（20〜90% 運用）</span></div>
+<div></div>
+<div><span class="k">24V バスバー</span></div>
+<div>  <span class="c">└→</span> <span class="v">5A ヒューズ（バスバー直後）</span></div>
+<div>      <span class="c">└→</span> <span class="v">Raspberry Pi 5（4GB）+ Active Cooler</span> <span class="w">← Cooler 必須。ヒートシンクのみ夏に不十分</span></div>
+<div></div>
+<div><span class="k">RPi 5 の接続</span></div>
+<div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
+<div>  <span class="c">├─ I2C    :</span> <span class="v">SHT31 バッテリ庫 / SHT31 室内 / SCD41（CO₂）</span></div>
+<div>  <span class="c">├─ GPIO   :</span> <span class="v">MQ-7+閾値モジュール / CO警報GPIO / 水漏れ / ブザー</span></div>
+<div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（IRLZ44N）← タッチサイクル 切→弱→強→弱→切</span></div>
+<div>  <span class="c">├─ GPIO   :</span> <span class="v">TTP223タッチセンサー入力（メインライト）</span></div>
+<div>  <span class="c">├─ GPIO   :</span> <span class="v">AM312人感センサー入力 → 足元LED（IRLZ44N）</span></div>
+<div>  <span class="c">├─ GPIO   :</span> <span class="v">足元LED（IRLZ44N）← スライドドア人感連動</span></div>
+<div>  <span class="c">└─ USB Hub（Anker PowerExpand+ 7-in-1）</span> <span class="w">← 既存品流用。USB-A×2 / PD 60W給電 / Ethernet内蔵</span></div>
+<div>      <span class="c">├─</span> <span class="v">USB カメラ 前（魚眼）← アクティブ延長ケーブル</span></div>
+<div>      <span class="c">├─</span> <span class="v">USB カメラ 後（魚眼）← アクティブ延長ケーブル</span></div>
+<div>      <span class="c">└─</span> <span class="w">Phase 3 以降：左・右カメラ追加</span></div>
+<div></div>
+<div><span class="k">独立型 CO 警報器（電池駆動）</span> <span class="w">← RPi 停止時も単独で鳴ること必須</span></div>
+<div></div>
+<div><span class="k">換気ファン（バッテリ庫）</span></div>
+<div>  <span class="c">└→</span> <span class="v">バイメタルサーモスタット直結</span> <span class="w">← RPi 非依存。フェイルセーフ</span></div>
+<div></div>
+<div><span class="k">ネットワーク</span></div>
+<div>  <span class="c">→</span> <span class="v">古いスマホ + 楽天SIM（USB テザリング → RPi）</span> <span class="w">← 安価。バッテリー常時充電問題に注意</span></div>
+<div></div>
+<div><span class="k">ACC 連動走行前チェック</span></div>
+<div>  <span class="c">├─ ACC 12V →</span> <span class="v">フォトカプラ（PC817）→ GPIO 入力</span> <span class="w">← ACC ON 検知。絶縁必須。抵抗分圧禁止（車載サージ）</span></div>
+<div>  <span class="c">└─ 磁気リードスイッチ（NC接点）× N →</span> <span class="v">GPIO 入力（10kΩプルアップ + 100nF RCフィルタ）</span></div>
+<div>      <span class="c">├─</span> <span class="v">ソーラーパネル展開中 / RVジャッキ展開中 / RV窓開放</span></div>
+<div>      <span class="c">└─</span> <span class="v">サイドオーニング / 外部電源ケーブル / 給排水ホース / スライドドア等</span></div>
+<div></div>
+<div><span class="k">スマホ UI</span></div>
+<div>  <span class="c">├─</span> <span class="v">go2rtc ブラウザ → カメラ切替（任意の1台を選んで表示）</span></div>
+<div>  <span class="c">├─</span> <span class="v">Grafana → エネルギー・センサー一元ダッシュボード</span></div>
+<div>  <span class="c">└─</span> <span class="v">ntfy.sh → CO / CO₂超過 / 高温 / 浸水 / 走行前チェック異常 アラート</span></div>
+    </div>
+    <div class="note note-red">CO 警報は ntfy.sh だけに依存禁止。圏外・RPi 停止時も独立ハードウェア警報器が単独で鳴ること。</div>
+  </div>
+
+  <!-- 部品リスト -->
+  <div class="card">
+    <h2>部品リスト</h2>
+    <table>
+      <thead><tr><th>部品</th><th>価格</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td class="b">Raspberry Pi 5（4GB）</td><td class="p">¥18,000〜22,000</td><td></td></tr>
+        <tr><td class="b">RPi 5 Active Cooler</td><td class="p">¥1,500</td><td>必須</td></tr>
+        <tr><td class="b">SHT31 × 2</td><td class="p">¥2,000</td><td>バッテリ庫 + 室内</td></tr>
+        <tr><td class="b">Sensirion SCD41</td><td class="p">¥6,000</td><td>CO₂（CO とは別物）</td></tr>
+        <tr><td class="b">MQ-7 + 閾値モジュール</td><td class="p">¥1,200</td><td class="warn">MQ-7 単体は ADC 必要。閾値モジュール付き品で GPIO 入力</td></tr>
+        <tr><td class="b">圧電ブザー</td><td class="p">¥300</td><td>ローカル警報。圏外でも鳴る</td></tr>
+        <tr><td class="b">水漏れセンサー</td><td class="p">¥300</td><td>短時間パルス読み取り（常時通電は腐食）</td></tr>
+        <tr><td class="b">バイメタルサーモスタット</td><td class="p">¥500</td><td>換気ファン直結</td></tr>
+        <tr><td class="b">Anker PowerExpand+ 7-in-1 USB Hub</td><td class="p">¥0（既存品）</td><td>USB-A×2・PD 60W・Ethernet内蔵。60W PDチャージャー接続で12Wをハブ自己給電・48WをRPiへパススルー</td></tr>
+        <tr><td class="b">USB 魚眼カメラ × 2（まず）</td><td class="p">¥5,000</td><td>ELP 170° 等。検証後に +2 台</td></tr>
+        <tr><td class="b">アクティブ USB 延長 × 2</td><td class="p">¥3,000</td><td class="warn">3m 超えはアクティブ必須。パッシブは信号減衰</td></tr>
+        <tr><td class="b">コルゲートチューブ・圧着端子</td><td class="p">¥2,000</td><td>全配線保護。振動・擦れ対策</td></tr>
+        <tr><td class="b">Renogy BT-1 Bluetooth モジュール</td><td class="p">¥3,000〜</td><td>Rover 60A の RS232 ポートに接続。BT非内蔵のため必須。Phase 4</td></tr>
+        <tr><td class="b">433MHz 送受信モジュール（FS1000A + XY-MK-5V）</td><td class="p">¥500</td><td>インバーター無線リモコン ON/OFF 制御。Phase 4</td></tr>
+        <tr><td class="b">IR 受信モジュール（VS1838B）</td><td class="p">¥100</td><td>エアコン IR リモコン学習用。Phase 4</td></tr>
+        <tr><td class="b">IR LED（940nm）+ 2N2222 + 抵抗</td><td class="p">¥100</td><td>エアコン IR 送信回路。Phase 4</td></tr>
+        <tr><td class="b">5V リレーモジュール（1ch）</td><td class="p">¥300</td><td>換気ファン遠隔 ON/OFF。バイメタルと並列接続。Phase 4</td></tr>
+        <tr><td class="b">Bluetooth リモコン（プロジェクター兼用）</td><td class="p">¥0（既存）</td><td>RPi 5 BT 内蔵のため追加モジュール不要。evdev でボタン割り当て。Phase 4</td></tr>
+        <tr><td class="b">磁気リードスイッチ（NC接点）× 13以上</td><td class="p">¥4,000〜5,000</td><td>走行前チェック用。ソーラー×2・ジャッキ×4・窓×3・他4。防水品（IP67）推奨。Phase 4</td></tr>
+        <tr><td class="b">フォトカプラ（PC817）+ TVS ダイオード + 抵抗</td><td class="p">¥300</td><td>ACC 12V 検知回路。GPIO への絶縁入力。車載ノイズ・サージから RPi 保護。Phase 4</td></tr>
+        <tr><td class="b">TTP223 タッチセンサーモジュール</td><td class="p">¥100〜</td><td>メインLED調光サイクル用。MODEピン=オープン（モーメンタリ）。Phase 4</td></tr>
+        <tr><td class="b">AM312 人感センサー（PIR）</td><td class="p">¥200〜</td><td>スライドドア足元LED自動点灯。3.3V直接駆動可。Phase 4</td></tr>
+        <tr><td class="b">IRLZ44N MOSFETモジュール × 2</td><td class="p">¥400〜</td><td>メインLED（PWM調光）+ 足元LED（ON/OFF）各1個。GND共通化必須。Phase 4</td></tr>
+        <tr style="background:#f0fdf4;"><td class="b ok">合計（最小構成）</td><td class="p">約 ¥47,700〜54,000</td><td>MEAN WELL・ネットワーク除く。カメラ Phase 3・リモコン・走行前チェック・LED制御 Phase 4 含む</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note note-blue" style="margin-top:.75rem;">
+      <strong>採用しないもの：</strong>
+      UPS HAT（夏の車内でリポ発火リスク）/ Pico W（バイメタルで代替）/ Coral TPU・Frigate（カメラ切替のみ）/
+      USB SSD（録画なし、Phase 4 以降）/ OLED（スマホで代替）/ BH1750・INA219・リードスイッチ（Phase 4 以降）
+    </div>
+  </div>
+
+  <!-- 実装フェーズ -->
+  <div class="card">
+    <h2>実装フェーズ</h2>
+    <div class="phases">
+      <div class="ph ph0">
+        <h3>Phase 0 — 電源・安全基盤</h3>
+        <ul>
+          <li>RSD-30G-5 配線・ヒューズ</li>
+          <li>RPi 5 設置・温度実測</li>
+          <li>Active Cooler 取付</li>
+          <li>独立 CO 警報器 設置</li>
+          <li>ネットワーク（スマホ or GL.iNet）</li>
+          <li>Tailscale 接続確認</li>
+        </ul>
+      </div>
+      <div class="ph ph1">
+        <h3>Phase 1 — センシング</h3>
+        <ul>
+          <li>SHT31（バッテリ庫 + 室内）</li>
+          <li>SCD41（CO₂）</li>
+          <li>MQ-7 + 閾値モジュール</li>
+          <li>水漏れセンサー</li>
+          <li>圧電ブザー</li>
+          <li>換気ファン バイメタル直結</li>
+          <li>JK BMS BLE</li>
+          <li>電圧監視シャットダウン設定</li>
+        </ul>
+      </div>
+      <div class="ph ph2">
+        <h3>Phase 2 — ログ・通知</h3>
+        <ul>
+          <li>InfluxDB + Grafana</li>
+          <li>tmpfs 設定（SD 寿命保護）</li>
+          <li>ntfy.sh アラート</li>
+          <li>閾値チューニング</li>
+        </ul>
+      </div>
+      <div class="ph ph3">
+        <h3>Phase 3 — カメラ</h3>
+        <ul>
+          <li>USB カメラ 2 台 + Hub</li>
+          <li>go2rtc セットアップ</li>
+          <li>24h ストレステスト</li>
+          <li>OK なら左右 2 台追加</li>
+        </ul>
+      </div>
+      <div class="ph ph4">
+        <h3>Phase 4 — 拡張（任意）</h3>
+        <ul>
+          <li>Renogy Rover ソーラー監視（RS232→USB or BT-1モジュール経由BLE）</li>
+          <li>エアコン IR 制御（VS1838B 学習 → IR LED 送信）</li>
+          <li>インバーター RF 制御（433MHz ON/OFF）</li>
+          <li>換気ファン遠隔制御（リレー + Tailscale）</li>
+          <li>BT リモコン統合（evdev ボタン割り当て）</li>
+          <li>USB SSD 録画</li>
+          <li>ACC 連動走行前チェック（リードスイッチ × N + フォトカプラ ACC 検知）</li>
+          <li>LED 照明制御（メインライト PWM 調光 + 足元ライト人感）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 注意事項 -->
+  <div class="card">
+    <h2>注意事項まとめ</h2>
+    <table>
+      <thead><tr><th>項目</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td class="b">電源ノイズ</td><td>LiFePO4でもインバーター・MPPT・エアコン起動でノイズが出る。安物USB-PDは故障リスク</td></tr>
+        <tr><td class="b">CO 警報</td><td>独立型ハードウェア（電池駆動）必須。ntfy.sh は補助のみ。CO₂（SCD41）とは別物</td></tr>
+        <tr><td class="b">MQ-7</td><td>RPi に ADC がない。閾値モジュール付きで GPIO デジタル入力として使う</td></tr>
+        <tr><td class="b">USB カメラ配線</td><td>3m 超えはアクティブ延長必須 / セルフパワー Hub 必須 / コネクタはホットメルト固定</td></tr>
+        <tr><td class="b">InfluxDB</td><td>tmpfs（RAMディスク）に書いて定期フラッシュ。SD への直書きは短命</td></tr>
+        <tr><td class="b">スマホルーター</td><td>USB テザリング推奨（Wi-Fi ホットスポットより安定）。常時充電はバッテリー劣化・膨張に注意</td></tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ケーブル割り当て -->
+  <div class="card">
+    <h2>KRT-SW AWG28 ケーブル割り当て（協和ハーモネット シールド付きスリムロボットケーブル）</h2>
+    <table>
+      <thead><tr><th>モジュール</th><th>芯数</th><th>配線</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td class="b">SHT31（バッテリ庫）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>ADDR → VCC でアドレス 0x45</td></tr>
+        <tr><td class="b">SHT31（室内）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>ADDR → GND でアドレス 0x44（デフォルト）</td></tr>
+        <tr><td class="b">SCD41（CO₂）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>I2C アドレス 0x62 固定。SHT31 と同バスに接続可</td></tr>
+        <tr><td class="b">MQ-7 + 閾値モジュール</td><td class="p">3芯</td><td>VCC / GND / DO</td><td>DO = デジタル出力。GPIO 入力として接続</td></tr>
+        <tr><td class="b">水漏れセンサー</td><td class="p">3芯</td><td>VCC / GND / Signal</td><td>常時通電は腐食するため GPIO でパルス制御</td></tr>
+        <tr><td class="b">圧電ブザー</td><td class="p">2芯</td><td>GPIO / GND</td><td>GPIO 直駆動（20mA 以内）または トランジスタ経由</td></tr>
+        <tr><td class="b">CO 警報器 → RPi GPIO 入力</td><td class="p">2芯</td><td>警報出力 / GND</td><td>警報器のリレー出力を RPi GPIO で読み取る場合のみ</td></tr>
+        <tr><td class="b">磁気リードスイッチ（各外装部位）</td><td class="p">2芯</td><td>Signal / GND</td><td>NC接点。10kΩプルアップ + 100nF RCフィルタ。デバウンス 300ms。防水コネクタ必須</td></tr>
+      </tbody>
+    </table>
+    <div class="note note-blue" style="margin-top:.75rem;">
+      <strong>シールド線の接地：</strong>RPi 側の GND に片端のみ接続。両端接地するとグランドループになりノイズを拾う。<br>
+      <strong>I2C バス共通化：</strong>SHT31 × 2 と SCD41 は同一 SDA/SCL ラインに並列接続可。T 分岐点はラズパイ近傍で行う。<br>
+      <strong>バイメタルサーモスタット：</strong>RPi 非依存の電源直結。AWG28 は電流容量不足のため対象外。ファン電源線（AWG18〜20）を使うこと。
+    </div>
+  </div>
+
+  <!-- ACC連動走行前チェックシステム -->
+  <div class="card">
+    <h2>ACC 連動走行前チェックシステム（Phase 4）</h2>
+    <p style="font-size:.85rem;color:#334155;margin-bottom:.75rem;">
+      ACC 電源 ON を検知し、走行前に収納忘れ・開けっぱなしを自動チェック。異常があれば圧電ブザー + LED + ntfy.sh で警告。<br>
+      センサー数: ソーラー×2（チルト+スライド）/ ジャッキ×4（前後左右）/ 窓×3（リア+サイドF+サイドR）/ 他4 = <strong>合計13個以上</strong><br>
+      <em>Codex (gpt-5.5) レビュー反映: ACC 検知はフォトカプラ絶縁必須。デバウンス・抑制込みの設計。</em>
+    </p>
+    <table>
+      <thead><tr><th>検知対象</th><th>優先度</th><th>設置場所イメージ</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td class="b">ソーラーパネル展開中（チルト）</td><td class="p">★★★</td><td>チルト機構のヒンジ端 × 1</td><td>パネルを傾けた状態で走行 → 損傷・飛来物の危険</td></tr>
+        <tr><td class="b">ソーラーパネル展開中（スライド）</td><td class="p">★★★</td><td>スライドレール終端 × 1</td><td>スライドアウトしたまま走行 → 車体幅超過・衝突</td></tr>
+        <tr><td class="b">RV ジャッキ展開中（前左）</td><td class="p">★★★</td><td>前左ジャッキアーム基部</td><td rowspan="4">地面と接触したまま走行で破損。4箇所すべて格納確認が必要</td></tr>
+        <tr><td class="b">RV ジャッキ展開中（前右）</td><td class="p">★★★</td><td>前右ジャッキアーム基部</td></tr>
+        <tr><td class="b">RV ジャッキ展開中（後左）</td><td class="p">★★★</td><td>後左ジャッキアーム基部</td></tr>
+        <tr><td class="b">RV ジャッキ展開中（後右）</td><td class="p">★★★</td><td>後右ジャッキアーム基部</td></tr>
+        <tr><td class="b">RV 窓開放中（リア）</td><td class="p">★★★</td><td>リア窓枠 + 窓パネル間 × 1</td><td rowspan="3">走行風で破損・通行障害。3箇所すべて閉確認が必要</td></tr>
+        <tr><td class="b">RV 窓開放中（サイドフロント）</td><td class="p">★★★</td><td>サイドフロント窓枠間 × 1</td></tr>
+        <tr><td class="b">RV 窓開放中（サイドリア）</td><td class="p">★★★</td><td>サイドリア窓枠間 × 1</td></tr>
+        <tr><td class="b">サイドオーニング展開中</td><td class="p">★★★</td><td>オーニングアーム付根</td><td>展開したまま走行で車体ごと破壊</td></tr>
+        <tr><td class="b">外部電源ケーブル接続中</td><td class="p">★★★</td><td>外部電源ポート横</td><td>ケーブル引きずり・電源ソケット損傷</td></tr>
+        <tr><td class="b">給排水ホース接続中</td><td class="p">★★</td><td>給水口・排水口カバー内</td><td>ホース断裂・車体底面引きずり</td></tr>
+        <tr><td class="b">スライドドア半ドア</td><td class="p">★★</td><td>スライドドア後端</td><td>走行中に開放、乗員・荷物転落の危険</td></tr>
+        <tr><td class="b">ルーフベンチレーター開放中</td><td class="p">★</td><td>ベンチレーターカバー端</td><td>高速走行時の雨水浸入・カバー破損</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note note-blue" style="margin-top:.75rem;">
+      <strong>ACC 検知回路（Codex 推奨）:</strong><br>
+      ACC 12V → 1kΩ抵抗 + TVSダイオード → フォトカプラ（PC817）LED → GND<br>
+      フォトカプラ出力: 3.3V → 4.7kΩプルアップ → GPIO<br>
+      <span style="color:#b91c1c;">抵抗分圧のみは禁止。車載サージ（最大80V超）でGPIO破壊の危険あり。</span>
+    </div>
+
+    <div class="note" style="margin-top:.5rem;">
+      <strong>動作仕様:</strong><br>
+      ① ACC ON 検知 → 1〜3秒待機（起動ノイズ除去）<br>
+      ② 全センサースキャン（GPIO HIGH = 開放 = 異常）<br>
+      ③ 異常あり → ブザー周期鳴動 + LED 点滅 + ntfy.sh 送信<br>
+      ④ 走行中は 5秒間隔で再チェック。同一異常の ntfy 再送は 10分間隔で抑制<br>
+      ⑤ センサー線断線もHighになるためフェイルセーフ設計（誤判定注意。デバウンス 300ms 確定）
+    </div>
+
+    <div class="note note-red" style="margin-top:.5rem;">
+      <strong>配線注意:</strong>
+      センサー線をインバーター・DC-DC・モーター配線に近接させない。ルーフ等長距離配線はコルゲートチューブ保護 + 防水コネクタ（IP67以上）必須。シールド片端接地。
+    </div>
+  </div>
+
+  <!-- LED照明制御 -->
+  <div class="card">
+    <h2>LED 照明制御（Phase 4）</h2>
+    <h3>① 車内メインライト — PWM 調光サイクル</h3>
+    <div class="note note-blue" style="margin-bottom:.5rem;">
+      タッチごとに状態が1段階進む: <strong>切 → 弱（30%）→ 強（100%）→ 弱（30%）→ 切</strong><br>
+      スマホ（Flask / MQTT）からも同じ state 変数を操作して連携。
+    </div>
+    <table>
+      <thead><tr><th>モジュール</th><th>型番</th><th>設定・接続</th></tr></thead>
+      <tbody>
+        <tr><td class="b">タッチセンサー</td><td>TTP223</td><td>MODEピン = オープン（モーメンタリ）→ GPIO 入力（立ち上がりエッジ割り込み）</td></tr>
+        <tr><td class="b">MOSFET</td><td>IRLZ44N</td><td>GPIO12（ハードウェア PWM）→ ゲート。GND 共通化必須</td></tr>
+        <tr><td class="b">PWM 設定</td><td>—</td><td>周波数 1kHz 以上（ちらつき防止）。duty: 切=0% / 弱=30% / 強=100%</td></tr>
+        <tr><td class="b">LED</td><td>24V 対応テープ / パネル</td><td>ヒューズボックスから直給電。RPi は MOSFET でスイッチのみ</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:1rem;">② スライドドア足元ライト — 人感自動点灯</h3>
+    <table>
+      <thead><tr><th>モジュール</th><th>型番</th><th>設定・接続</th></tr></thead>
+      <tbody>
+        <tr><td class="b">人感センサー（PIR）</td><td>AM312</td><td>3.3V 直接駆動可。検知距離 3m / 検知角 100°。出力 → GPIO 入力</td></tr>
+        <tr><td class="b">MOSFET</td><td>IRLZ44N</td><td>GPIO → ゲート。GPIO High で LED ON</td></tr>
+        <tr><td class="b">LED</td><td>24V 対応テープ（足元用）</td><td>ドア開放時 + 人感検知で点灯。消灯ディレイ（例: 30秒）はソフトウェアで設定</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note note-red" style="margin-top:.5rem;">
+      <strong>共通注意:</strong> MOSFET の GND と RPi の GND を必ず共通化。浮いていると誤動作する。
+    </div>
+  </div>
+
+  <footer>ラズパイ車中泊PJT メモ — 2026-06-02</footer>
+</div>
+</body>
+</html>

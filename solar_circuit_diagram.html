@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>車中泊システム 回路図 (安全標準・縦型上下分離式バスバー版)</title>
+    <!-- Google Fonts for modern design -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            
+            /* Line Colors */
+            --wire-pos: #ef4444; /* 赤線 (＋) */
+            --wire-neg: #1e293b; /* 黒線 (ー) */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Responsive SVG container */
+        .svg-container {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background-color: #ffffff;
+            padding: 0.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .diagram-toolbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .copy-button {
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #0f172a;
+            border-radius: 8px;
+            padding: 0.45rem 0.8rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+        }
+
+        .copy-button:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+            transform: translateY(-1px);
+        }
+
+        .copy-status {
+            min-width: 9rem;
+            color: #64748b;
+            font-size: 0.82rem;
+            text-align: right;
+        }
+
+        svg {
+            display: block;
+            width: 100%;
+            min-width: 1300px;
+            height: auto;
+        }
+
+        /* SVG Text styling */
+        text {
+            user-select: text;
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        .font-regular {
+            font-weight: 400;
+        }
+
+        .wire-label {
+            font-size: 11px;
+            font-weight: 700;
+            fill: #0f172a;
+        }
+
+        .wire-label-muted {
+            font-size: 9px;
+            font-weight: 500;
+            fill: #475569;
+        }
+
+        #circuitDiagram path[stroke^="var(--wire"],
+        #circuitDiagram .wire-underlay {
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        #circuitDiagram .wire-underlay {
+            pointer-events: none;
+        }
+
+        /* Hover effect for components */
+        .component-group {
+            transition: transform 0.2s ease, filter 0.2s ease;
+            cursor: pointer;
+        }
+
+        .component-group:hover {
+            filter: brightness(1.03) drop-shadow(0 4px 12px rgba(0,0,0,0.08));
+        }
+
+        /* Notes Box */
+        .notes-card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .notes-title {
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .notes-body {
+            font-size: 0.9rem;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .notes-body ul {
+            padding-left: 1.25rem;
+        }
+
+        .notes-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-table-wrap {
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
+        .spec-table {
+            width: 100%;
+            min-width: 1100px;
+            border-collapse: collapse;
+            font-size: 0.86rem;
+        }
+
+        .spec-table th,
+        .spec-table td {
+            padding: 0.65rem 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .spec-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .spec-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .spec-table td:first-child {
+            font-weight: 700;
+            color: #0f172a;
+            white-space: nowrap;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>車中泊システム 回路図 (安全標準・縦型上下分離式バスバー版)</h1>
+        <p class="subtitle">主要回路の電圧・最大電流を表示し、ヒューズボックス以降の細分化は省略した実配線確認用レイアウト</p>
+        <p class="subtitle" style="margin-top:4px;">→ <a href="file:///Users/izubuchihiroki/Documents/Antigravity/raspi-sharchu-pjt/plan.html" style="color:#2563eb;">ラズパイ車中泊PJT メモ</a>（RPi設計・センサー・Phase計画）</p>
+    </header>
+
+    <div class="diagram-toolbar">
+        <button class="copy-button" type="button" id="copyPngButton">PNGコピー</button>
+        <button class="copy-button" type="button" id="copySvgButton">SVGコピー</button>
+        <span class="copy-status" id="copyStatus" aria-live="polite"></span>
+    </div>
+
+    <div class="svg-container">
+        <svg id="circuitDiagram" viewBox="0 0 1350 820" width="1350" height="820" xmlns="http://www.w3.org/2000/svg">
+            <!-- Grid Background -->
+            <defs>
+                <pattern id="grid-pattern" width="30" height="30" patternUnits="userSpaceOnUse">
+                    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#f1f5f9" stroke-width="1.2"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+
+            <!-- ========================================== -->
+            <!-- 1. LINES / WIRES (BACK LAYER)             -->
+            <!-- ========================================== -->
+            
+            <!-- --- LEFT SECTION: BATTERY, BMS, BUSBARS --- -->
+            <!-- Battery Cells to Main Breaker ① (Red Wire, Positive) -->
+            <path d="M 120 220 L 190 220" stroke="var(--wire-pos)" stroke-width="4.5" fill="none" />
+            <!-- Main Breaker ① to Red Bus Bar ① (straight run to first busbar terminal) -->
+            <path d="M 252 220 L 370 250" stroke="var(--wire-pos)" stroke-width="4.5" fill="none" />
+            
+            <!-- Battery Cells to BMS B- (Black Wire, Negative) -->
+            <path d="M 120 280 L 120 460 L 190 460" stroke="var(--wire-neg)" stroke-width="4.5" fill="none" />
+            <!-- BMS P- to SmartShunt, then Black Bus Bar ② -->
+            <path d="M 290 460 L 305 460" stroke="var(--wire-neg)" stroke-width="4.5" fill="none" />
+            <path d="M 355 460 L 370 460" stroke="var(--wire-neg)" stroke-width="4.5" fill="none" />
+
+            <!-- --- CENTER SECTION: RED BUS BAR ① DISTRIBUTIONS (POSITIVE - TOP BUSBAR) --- -->
+            <!-- x折り返し点: R1=450, R2=500, R3=456, R4=516, R5=542, R6=440 → 上段行きほど左、下段行きほど右に逃がして交差を防止 -->
+
+            <!-- 1. Red Bus Bar ① (y=250) → x=450 → 上向きy=65 → MPPT Breaker ② -->
+            <path d="M 420 250 L 450 250 L 450 65 L 570 65" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <!-- MPPT Breaker ② → MPPT 本体 -->
+            <path d="M 632 65 L 700 65" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+
+            <!-- 2. Red Bus Bar ① (y=280) → x=500 → 上向きy=175 → Orion XS Breaker ③ -->
+            <path d="M 420 280 L 500 280 L 500 175 L 570 175" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <!-- Orion XS Breaker ③ → Orion XS 本体 -->
+            <path d="M 632 175 L 700 175" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+
+            <!-- 3. Red Bus Bar ① (y=310) → AC充電器保護30A → AC充電器＋（上側端子） -->
+            <path d="M 420 310 L 620 310" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <path d="M 664 310 L 740 300" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+
+            <!-- 4. Red Bus Bar ① (y=340) → Inverter Breaker ④ -->
+            <path d="M 420 340 L 570 391" stroke="var(--wire-pos)" stroke-width="4" fill="none" />
+            <!-- Inverter Breaker ④ → Inverter 本体 -->
+            <path d="M 632 391 L 760 435" stroke="var(--wire-pos)" stroke-width="4" fill="none" />
+
+            <!-- 5. Red Bus Bar ① (y=350) → 車載エアコン保護60A → 車載エアコン＋ (Breaker⑤下方を通過する対角線) -->
+            <path d="M 420 350 L 700 530" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <path d="M 744 530 L 830 530" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+
+            <!-- 6. Red Bus Bar ① (y=400) → ヒューズボックス保護50A → ヒューズボックス＋ -->
+            <path d="M 420 400 L 460 400 L 460 660 L 620 660" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <path d="M 664 660 L 710 660" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+
+            <!-- --- CENTER SECTION: BLACK BUS BAR ② DISTRIBUTIONS (NEGATIVE - BOTTOM BUSBAR) --- -->
+            <!-- x折り返し点: B1=540, B2=705, B3=478, B4=600, B5=492, B6=476 -->
+            <!-- ※ RedとBlackのx折り返し点は意図的に離して配置し、同色線の平行・重複を防止 -->
+
+            <!-- 1. Black Bus Bar ② (y=460) → x=540 → 上向きy=115 → MPPT ー端子 -->
+            <path d="M 420 460 L 540 460 L 540 115 L 700 115" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+
+            <!-- 2. Black Bus Bar ② (y=485) → x=705 → 上向きy=225 → Orion XS ー端子 -->
+            <!-- x=705でAC充電器の外側を通し、AC充電器への接続に見えないよう分離 -->
+            <path d="M 420 485 L 705 485 L 705 225 L 700 225" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+
+            <!-- 3. Black Bus Bar ② (y=510) → x=478 → 上向きy=360 → AC充電器ー端子（下側端子） -->
+            <!-- x=478でR6(x=440)と38px離す。R3(x=456)とも22px離れる -->
+            <path d="M 420 510 L 478 510 L 478 335 L 740 335" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+
+            <!-- 4. Black Bus Bar ② (y=535) → x=600 → 上向きy=465 → Inverter ー端子 -->
+            <!-- x=600でB2(x=705)から十分離す -->
+            <path d="M 420 535 L 600 535 L 600 500 L 760 500" stroke="var(--wire-neg)" stroke-width="4" fill="none" />
+
+            <!-- 5. Black Bus Bar ② (y=560) → 車載エアコンー端子（直線） -->
+            <path d="M 420 560 L 830 560" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+
+            <!-- 6. Black Bus Bar ② (y=585) → バスバー右辺x=420からすぐ下へ → y=760 → ヒューズボックスー端子 -->
+            <path d="M 420 585 L 420 760 L 710 760" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+
+            <!-- --- RIGHT SECTION: CHARGING SOURCES & LOADS --- -->
+            
+            <!-- MPPT to Solar Bus Bars -->
+            <!-- MPPT Positive to Red Solar Bus Bar ③ (With PV Breaker ⑤ on positive line) -->
+            <path d="M 800 80 L 860 80" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <path d="M 922 80 L 1020 80" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <!-- MPPT Negative to Black Solar Bus Bar ④ (Direct) -->
+            <path d="M 800 110 L 960 110 L 960 195 L 1020 195" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+
+            <!-- Solar Panel to Solar Bus Bars (3 TOTALLY INDEPENDENT RUNS FOR BOTH POSITIVE AND NEGATIVE) -->
+            <!-- 3 Red Positive Wires (Solar Panel to Red Solar Bus Bar ③ - Completely Parallel & Separate) -->
+            <path d="M 1225 100 L 1165 100 L 1090 82" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <path d="M 1225 122 L 1155 122 L 1090 95" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <path d="M 1225 144 L 1145 144 L 1090 108" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            
+            <!-- 3 Black Negative Wires (Solar Panel top edge to Black Solar Bus Bar ④ - Separate runs, unified only at busbar terminals) -->
+            <path d="M 1225 185 L 1165 185 L 1090 180" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+            <path d="M 1225 207 L 1155 207 L 1090 195" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+            <path d="M 1225 229 L 1145 229 L 1090 210" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+
+            <!-- Orion XS to Starter Battery -->
+            <!-- Orion XS Positive to Starter Battery Positive (With Breaker ⑥ on positive line!) -->
+            <path d="M 800 200 L 930 200 L 930 331 L 990 331" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <path d="M 1052 331 L 1105 331 L 1105 410" stroke="var(--wire-pos)" stroke-width="3" fill="none" />
+            <!-- Orion XS Negative to Starter Battery Negative (Direct) -->
+            <path d="M 800 230 L 885 230 L 885 445 L 1165 445 L 1165 410" stroke="var(--wire-neg)" stroke-width="3" fill="none" />
+
+            <!-- Fuse Box to 24V Loads Box -->
+            <path d="M 820 680 L 900 680" stroke="var(--wire-pos)" stroke-width="3.5" fill="none" />
+            <path d="M 820 740 L 900 740" stroke="var(--wire-neg)" stroke-width="3.5" fill="none" />
+
+            <!-- ========================================== -->
+            <!-- WIRE RATING LABELS                         -->
+            <!-- ========================================== -->
+            <g>
+                <text x="305" y="220" text-anchor="middle" class="wire-label">(1) 38sq 150A</text>
+                <text x="505" y="88" text-anchor="middle" class="wire-label">(2) 14sq 70A</text>
+                <text x="509" y="165" text-anchor="middle" class="wire-label">(3) 8sq 50A</text>
+                <text x="515" y="302" text-anchor="middle" class="wire-label">(4) 5.5sq 30A</text>
+                <text x="710" y="407" text-anchor="middle" class="wire-label">(5) 38sq 150A</text>
+                <text x="601" y="438" text-anchor="middle" class="wire-label">(6) 14sq 60A</text>
+                <text x="560" y="648" text-anchor="middle" class="wire-label">(7) 8sq 50A 仮</text>
+                <text x="971" y="74" text-anchor="middle" class="wire-label">(8) 14sq 50A</text>
+                <text x="940" y="260" text-anchor="middle" class="wire-label">(9) 22sq 80A</text>
+            </g>
+
+            <!-- ========================================== -->
+            <!-- 2. COMPONENTS (FOREGROUND LAYER)          -->
+            <!-- ========================================== -->
+            
+            <!-- LiFePO4 Battery Cells (Left) -->
+            <g class="component-group" transform="translate(30, 160)">
+                <rect width="90" height="150" rx="8" fill="#1e3a8a" stroke="#3b82f6" stroke-width="2" />
+                <!-- Drawing battery cells -->
+                <rect x="5" y="10" width="80" height="130" fill="#1e40af" rx="4" />
+                <!-- Terminal Marks -->
+                <circle cx="25" cy="30" r="10" fill="#ef4444" />
+                <circle cx="65" cy="30" r="10" fill="#1e293b" />
+                <text x="25" y="34" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">＋</text>
+                <text x="65" y="34" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">ー</text>
+                <text x="45" y="85" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">LiFePO4</text>
+                <text x="45" y="105" fill="#93c5fd" font-size="11" text-anchor="middle">24V Battery</text>
+                <text x="45" y="120" fill="#93c5fd" font-size="11" text-anchor="middle">8 Cells</text>
+            </g>
+
+            <!-- BMS (Bottom Left) -->
+            <g class="component-group" transform="translate(190, 400)">
+                <rect width="100" height="130" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+                <rect width="100" height="30" fill="#1e293b" rx="6" />
+                <text x="50" y="20" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">BMS (保護ボード)</text>
+                <!-- Daly / JBD Style ports -->
+                <rect x="15" y="45" width="20" height="20" fill="#1e293b" rx="2" />
+                <text x="25" y="58" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">B-</text>
+                <text x="25" y="80" fill="#64748b" font-size="11" text-anchor="middle">Cellー</text>
+
+                <rect x="65" y="45" width="20" height="20" fill="#1e293b" rx="2" />
+                <text x="75" y="58" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">P-</text>
+                <text x="75" y="80" fill="#64748b" font-size="11" text-anchor="middle">Outー</text>
+
+                <line x1="15" y1="95" x2="85" y2="95" stroke="#cbd5e1" stroke-width="2" />
+                <text x="50" y="115" fill="#10b981" font-size="11" text-anchor="middle" class="font-bold">正常動作監視中</text>
+            </g>
+
+            <!-- Battery Monitor Shunt -->
+            <g class="component-group" transform="translate(305, 442)">
+                <rect width="50" height="36" rx="5" fill="#e2e8f0" stroke="#475569" stroke-width="1.5" />
+                <rect x="6" y="13" width="38" height="10" rx="3" fill="#94a3b8" />
+                <text x="25" y="11" fill="#1e293b" font-size="7.5" text-anchor="middle" class="font-bold">SmartShunt</text>
+                <text x="25" y="32" fill="#334155" font-size="8" text-anchor="middle" class="font-bold">500A</text>
+            </g>
+
+            <!-- Main Battery Breaker (Positive side - Breaker ①) -->
+            <g class="component-group" transform="translate(190, 192)">
+                <rect width="62" height="62" rx="7" fill="#b91c1c" stroke="#ef4444" stroke-width="2" />
+                <rect x="19" y="24" width="24" height="11" fill="#ffffff" rx="2" />
+                <!-- ID badge -->
+                <circle cx="11" cy="11" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <text x="11" y="14" fill="#856404" font-size="8" text-anchor="middle" class="font-bold">1</text>
+                <text x="36" y="13" fill="#ffffff" font-size="7" text-anchor="middle" class="font-bold">BREAKER</text>
+                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">150A</text>
+                <text x="31" y="58" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">キル兼用</text>
+            </g>
+
+            <!-- ================= VERTICAL LARGE UPPER/LOWER SEPARATED BUSBARS (SWAPPED) ================= -->
+            <!-- UPPER HALF: Red Bus Bar ① (＋ 主幹 - NOW AT TOP: translate(370, 220)) -->
+            <g class="component-group" transform="translate(370, 220)">
+                <!-- Tall Copper Busbar Shape -->
+                <rect width="50" height="195" rx="8" fill="#b91c1c" stroke="#7f1d1d" stroke-width="3" />
+                <rect x="5" y="5" width="40" height="15" fill="#dc2626" rx="3" />
+                <text x="25" y="15" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">＋【1】</text>
+                
+                <text x="25" y="105" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold" transform="rotate(-90 25 105)">バスバー【1】＋</text>
+                <text x="25" y="-8" fill="#7f1d1d" font-size="9" text-anchor="middle" class="font-bold">600A級</text>
+            </g>
+
+            <!-- LOWER HALF: Black Bus Bar ② (ー 主幹 - NOW AT BOTTOM: translate(370, 430)) -->
+            <g class="component-group" transform="translate(370, 430)">
+                <!-- Tall Copper Busbar Shape -->
+                <rect width="50" height="190" rx="8" fill="#1e293b" stroke="#0f172a" stroke-width="3" />
+                <rect x="5" y="5" width="40" height="15" fill="#334155" rx="3" />
+                <text x="25" y="15" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">ー【1】</text>
+                
+                <text x="25" y="100" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold" transform="rotate(-90 25 100)">バスバー【1】ー</text>
+                <text x="25" y="202" fill="#0f172a" font-size="9" text-anchor="middle" class="font-bold">600A級</text>
+            </g>
+
+            <!-- --- BREAKERS ON RED POSITIVE LINES --- -->
+            <!-- MPPT Breaker (Breaker ②) -->
+            <g class="component-group" transform="translate(570, 32)">
+                <rect width="62" height="62" rx="7" fill="#b91c1c" stroke="#ef4444" stroke-width="1.5" />
+                <rect x="19" y="24" width="24" height="11" fill="#ffffff" rx="2" />
+                <!-- ID badge -->
+                <circle cx="11" cy="11" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <text x="11" y="14" fill="#856404" font-size="8" text-anchor="middle" class="font-bold">2</text>
+                <text x="36" y="13" fill="#ffffff" font-size="7" text-anchor="middle">BREAKER</text>
+                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">70A</text>
+                <text x="31" y="58" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">MPPT</text>
+            </g>
+
+            <!-- Orion XS Breaker (Breaker ③) -->
+            <g class="component-group" transform="translate(570, 142)">
+                <rect width="62" height="62" rx="7" fill="#b91c1c" stroke="#ef4444" stroke-width="1.5" />
+                <rect x="19" y="24" width="24" height="11" fill="#ffffff" rx="2" />
+                <!-- ID badge -->
+                <circle cx="11" cy="11" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <text x="11" y="14" fill="#856404" font-size="8" text-anchor="middle" class="font-bold">3</text>
+                <text x="36" y="13" fill="#ffffff" font-size="7" text-anchor="middle">BREAKER</text>
+                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">50A</text>
+                <text x="31" y="58" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">走行</text>
+            </g>
+
+            <!-- Inverter Breaker (Breaker 5) -->
+            <g class="component-group" transform="translate(570, 360)">
+                <rect width="62" height="62" rx="7" fill="#b91c1c" stroke="#ef4444" stroke-width="1.5" />
+                <rect x="19" y="24" width="24" height="11" fill="#ffffff" rx="2" />
+                <!-- ID badge -->
+                <circle cx="11" cy="11" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <text x="11" y="14" fill="#856404" font-size="8" text-anchor="middle" class="font-bold">5</text>
+                <text x="36" y="13" fill="#ffffff" font-size="7" text-anchor="middle">BREAKER</text>
+                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">150A</text>
+                <text x="31" y="58" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">INV</text>
+            </g>
+
+            <!-- AC Charger Protection -->
+            <g class="component-group" transform="translate(620, 290)">
+                <rect width="44" height="40" rx="6" fill="#b91c1c" stroke="#ef4444" stroke-width="1.5" />
+                <rect x="13" y="15" width="18" height="8" fill="#ffffff" rx="2" />
+                <circle cx="7" cy="7" r="7" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <text x="7" y="10" fill="#856404" font-size="7" text-anchor="middle" class="font-bold">4</text>
+                <text x="22" y="34" fill="#ffffff" font-size="9" text-anchor="middle" class="font-bold">30A</text>
+                <text x="28" y="10" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">AC</text>
+            </g>
+
+            <!-- Air Conditioner Protection -->
+            <g class="component-group" transform="translate(700, 510)">
+                <rect width="44" height="40" rx="6" fill="#b91c1c" stroke="#ef4444" stroke-width="1.5" />
+                <rect x="13" y="15" width="18" height="8" fill="#ffffff" rx="2" />
+                <circle cx="7" cy="7" r="7" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <text x="7" y="10" fill="#856404" font-size="7" text-anchor="middle" class="font-bold">6</text>
+                <text x="22" y="34" fill="#ffffff" font-size="9" text-anchor="middle" class="font-bold">60A</text>
+                <text x="28" y="10" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">A/C</text>
+            </g>
+
+            <!-- Fuse Box Feed Protection -->
+            <g class="component-group" transform="translate(620, 640)">
+                <rect width="44" height="40" rx="6" fill="#b91c1c" stroke="#ef4444" stroke-width="1.5" />
+                <rect x="13" y="15" width="18" height="8" fill="#ffffff" rx="2" />
+                <circle cx="7" cy="7" r="7" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <text x="7" y="10" fill="#856404" font-size="7" text-anchor="middle" class="font-bold">7</text>
+                <text x="22" y="34" fill="#ffffff" font-size="9" text-anchor="middle" class="font-bold">50A</text>
+                <text x="29" y="10" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">LOAD</text>
+            </g>
+
+            <!-- --- CENTRAL CHARGING DEVICES & SYSTEM COMPACTS --- -->
+
+            <!-- Renogy Rover MPPT (Top Center) -->
+            <g class="component-group" transform="translate(700, 50)">
+                <rect width="100" height="90" rx="8" fill="#111827" stroke="#374151" stroke-width="2" />
+                <rect x="5" y="5" width="90" height="20" fill="#1f2937" rx="3" />
+                <text x="50" y="18" fill="#e5e7eb" font-size="9" text-anchor="middle" class="font-bold">RENOGY ROVER</text>
+                <text x="50" y="48" fill="#0ea5e9" font-size="14" text-anchor="middle" class="font-bold">MPPT</text>
+                <text x="50" y="66" fill="#e5e7eb" font-size="9" text-anchor="middle" class="font-bold">60A / 1600W</text>
+                <text x="50" y="80" fill="#9ca3af" font-size="8.5" text-anchor="middle">24V Solar Controller</text>
+                
+            </g>
+
+            <!-- Victron Orion XS (Below MPPT) -->
+            <g class="component-group" transform="translate(700, 160)">
+                <rect width="100" height="90" rx="8" fill="#005a9c" stroke="#2563eb" stroke-width="2" />
+                <text x="50" y="30" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">Victron energy</text>
+                <text x="50" y="50" fill="#93c5fd" font-size="13" text-anchor="middle" class="font-bold">Orion XS</text>
+                <text x="50" y="66" fill="#ffffff" font-size="9" text-anchor="middle" class="font-bold">12V入力 → 24V出力</text>
+                <text x="50" y="81" fill="#ef4444" font-size="10" text-anchor="middle" class="font-bold">上限40A設定</text>
+                
+            </g>
+
+            <!-- AC Charger (Below Orion XS) -->
+            <g class="component-group" transform="translate(740, 285)">
+                <rect width="130" height="70" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+                <text x="65" y="24" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">AC充電器</text>
+                <text x="65" y="43" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">20A / 600W</text>
+                <text x="65" y="58" fill="#94a3b8" font-size="9.5" text-anchor="middle">24V 外部100V充電用</text>
+            </g>
+
+            <!-- Inverter (Below AC Charger) -->
+            <g class="component-group" transform="translate(760, 410)">
+                <rect width="120" height="90" rx="8" fill="#856404" stroke="#9a3412" stroke-width="2" />
+                <text x="60" y="25" fill="#ffffff" font-size="12" text-anchor="middle" class="font-bold">インバーター</text>
+                <text x="60" y="45" fill="#ffffff" font-size="9.5" text-anchor="middle" class="font-bold">2000W / 最大4000W</text>
+                <text x="60" y="63" fill="#fef08a" font-size="10" text-anchor="middle">DC24V → AC100V</text>
+                <text x="60" y="79" fill="#fef08a" font-size="9" text-anchor="middle">純正弦波</text>
+            </g>
+
+            <!-- Air Conditioner (Right of Inverter) -->
+            <g class="component-group" transform="translate(830, 510)">
+                <rect width="90" height="60" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+                <!-- Vent line -->
+                <line x1="5" y1="49" x2="85" y2="49" stroke="#94a3b8" stroke-width="1.5" />
+                <text x="45" y="17" fill="#1e293b" font-size="10" text-anchor="middle" class="font-bold">車載エアコン</text>
+                <text x="45" y="31" fill="#334155" font-size="9" text-anchor="middle" class="font-bold">24V / 最大55A</text>
+                <text x="45" y="43" fill="#64748b" font-size="9" text-anchor="middle">通常15〜45A</text>
+            </g>
+
+            <!-- Fuse Box (Bottom Center) -->
+            <g class="component-group" transform="translate(710, 620)">
+                <rect width="110" height="150" rx="8" fill="#1e2538" stroke="#334155" stroke-width="2" />
+                <!-- Cover glow -->
+                <rect x="5" y="5" width="100" height="140" fill="none" stroke="#60a5fa" stroke-width="1" stroke-dasharray="4,2" />
+                <text x="55" y="30" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">ヒューズボックス</text>
+                
+                <!-- Fuse icons -->
+                <circle cx="35" cy="60" r="6" fill="#eab308" />
+                <circle cx="55" cy="60" r="6" fill="#ef4444" />
+                <circle cx="75" cy="60" r="6" fill="#3b82f6" />
+                <circle cx="35" cy="85" r="6" fill="#10b981" />
+                <circle cx="55" cy="85" r="6" fill="#eab308" />
+                <circle cx="75" cy="85" r="6" fill="#ef4444" />
+                
+                <text x="55" y="118" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">24V負荷分配</text>
+                <text x="55" y="132" fill="#94a3b8" font-size="9" text-anchor="middle">以降詳細省略</text>
+            </g>
+
+            <!-- --- RIGHT SECTION: BUS BARS, STARTER BATT, SOLAR, LOADS --- -->
+
+            <!-- Solar System Red Bus Bar (ソーラー＋ - Busbar 2) -->
+            <g class="component-group" transform="translate(1020, 60)">
+                <rect width="70" height="50" rx="6" fill="#b91c1c" stroke="#7f1d1d" stroke-width="2" />
+                <text x="35" y="23" fill="#ffffff" font-size="9" text-anchor="middle" class="font-bold">バスバー【2】</text>
+                <text x="35" y="40" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">ソーラー＋</text>
+                <text x="35" y="58" fill="#7f1d1d" font-size="8" text-anchor="middle" class="font-bold">100A</text>
+            </g>
+
+            <!-- Solar System Black Bus Bar (ソーラー− - Busbar 2) -->
+            <g class="component-group" transform="translate(1020, 165)">
+                <rect width="70" height="50" rx="6" fill="#1e293b" stroke="#0f172a" stroke-width="2" />
+                <text x="35" y="23" fill="#ffffff" font-size="9" text-anchor="middle" class="font-bold">バスバー【2】</text>
+                <text x="35" y="40" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">ソーラー−</text>
+                <text x="35" y="58" fill="#0f172a" font-size="8" text-anchor="middle" class="font-bold">100A</text>
+            </g>
+
+            <!-- Solar Breaker (Breaker 8) -->
+            <g class="component-group" transform="translate(860, 40)">
+                <rect width="62" height="62" rx="7" fill="#b91c1c" stroke="#ef4444" stroke-width="1.5" />
+                <rect x="19" y="24" width="24" height="11" fill="#ffffff" rx="2" />
+                <!-- ID badge -->
+                <circle cx="11" cy="11" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <text x="11" y="14" fill="#856404" font-size="8" text-anchor="middle" class="font-bold">8</text>
+                <text x="36" y="13" fill="#ffffff" font-size="7" text-anchor="middle">BREAKER</text>
+                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">50A</text>
+                <text x="31" y="58" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">PV＋</text>
+            </g>
+
+            <!-- Per-panel PV Fuses -->
+            <g class="component-group" transform="translate(1160, 91)">
+                <rect width="34" height="18" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1.2" />
+                <text x="17" y="13" fill="#991b1b" font-size="8" text-anchor="middle" class="font-bold">15A</text>
+            </g>
+            <g class="component-group" transform="translate(1148, 113)">
+                <rect width="34" height="18" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1.2" />
+                <text x="17" y="13" fill="#991b1b" font-size="8" text-anchor="middle" class="font-bold">15A</text>
+            </g>
+            <g class="component-group" transform="translate(1136, 135)">
+                <rect width="34" height="18" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1.2" />
+                <text x="17" y="13" fill="#991b1b" font-size="8" text-anchor="middle" class="font-bold">15A</text>
+            </g>
+
+            <!-- Solar Panel 450W x3 parallel (Far Right) -->
+            <g class="component-group" transform="translate(1225, 80)">
+                <rect width="110" height="200" rx="8" fill="#0f172a" stroke="#475569" stroke-width="3" />
+                <!-- Grid gridlines on solar panel -->
+                <line x1="22" y1="0" x2="22" y2="200" stroke="#334155" stroke-width="1" />
+                <line x1="44" y1="0" x2="44" y2="200" stroke="#334155" stroke-width="1" />
+                <line x1="66" y1="0" x2="66" y2="200" stroke="#334155" stroke-width="1" />
+                <line x1="88" y1="0" x2="88" y2="200" stroke="#334155" stroke-width="1" />
+                <line x1="0" y1="40" x2="110" y2="40" stroke="#334155" stroke-width="1" />
+                <line x1="0" y1="80" x2="110" y2="80" stroke="#334155" stroke-width="1" />
+                <line x1="0" y1="120" x2="110" y2="120" stroke="#334155" stroke-width="1" />
+                <line x1="0" y1="160" x2="110" y2="160" stroke="#334155" stroke-width="1" />
+
+                <!-- Badge -->
+                <circle cx="55" cy="100" r="35" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+                <text x="55" y="93" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">単結晶</text>
+                <text x="55" y="113" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">450W</text>
+                <rect x="8" y="168" width="94" height="24" rx="4" fill="#111827" stroke="#64748b" stroke-width="1" />
+                <text x="55" y="178" fill="#ffffff" font-size="8.5" text-anchor="middle" class="font-bold">450W x3 並列</text>
+                <text x="55" y="189" fill="#cbd5e1" font-size="7.5" text-anchor="middle">PV 約35V / 39A</text>
+            </g>
+
+            <!-- Starter Battery Breaker (Breaker 9) -->
+            <g class="component-group" transform="translate(990, 300)">
+                <rect width="62" height="62" rx="7" fill="#b91c1c" stroke="#ef4444" stroke-width="1.5" />
+                <rect x="19" y="24" width="24" height="11" fill="#ffffff" rx="2" />
+                <!-- ID badge -->
+                <circle cx="11" cy="11" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <text x="11" y="14" fill="#856404" font-size="8" text-anchor="middle" class="font-bold">9</text>
+                <text x="36" y="13" fill="#ffffff" font-size="7" text-anchor="middle">BREAKER</text>
+                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">80A</text>
+                <text x="31" y="58" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">オルタ</text>
+            </g>
+
+            <!-- Starter Battery (Panasonic) -->
+            <g class="component-group" transform="translate(1080, 290)">
+                <rect width="110" height="140" rx="6" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2" />
+                <rect x="10" y="10" width="90" height="20" fill="#1e3a8a" rx="2" />
+                <text x="55" y="24" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">Panasonic</text>
+                <text x="55" y="65" fill="#334155" font-size="11" text-anchor="middle" class="font-bold">スターターバッテリー</text>
+                <text x="55" y="85" fill="#64748b" font-size="11" text-anchor="middle">12V 車両メイン</text>
+                <!-- Terminals -->
+                <circle cx="25" cy="120" r="8" fill="#ef4444" />
+                <circle cx="85" cy="120" r="8" fill="#1e293b" />
+                <text x="25" y="123" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">＋</text>
+                <text x="85" y="123" fill="#ffffff" font-size="11" text-anchor="middle" class="font-bold">ー</text>
+            </g>
+
+            <!-- 24V DC Loads Box -->
+            <g class="component-group" transform="translate(900, 600)">
+                <rect width="200" height="175" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+                <text x="100" y="36" fill="#1e293b" font-size="11" text-anchor="middle" class="font-bold">24V 負荷機器</text>
+                <rect x="22" y="56" width="156" height="74" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+                <text x="100" y="84" fill="#334155" font-size="11" text-anchor="middle" class="font-bold">冷蔵庫 / 照明 / FF</text>
+                <text x="100" y="104" fill="#334155" font-size="11" text-anchor="middle" class="font-bold">換気ファン など</text>
+                <text x="100" y="148" fill="#64748b" font-size="11" text-anchor="middle">個別電流・配線は省略</text>
+            </g>
+
+        </svg>
+    </div>
+
+    <!-- Notes Section based on exact diagram logic -->
+    <div class="notes-card">
+        <h3 class="notes-title">📋 系統図および更新ポイントの詳細</h3>
+        <div class="notes-body">
+            <ul>
+                <li><strong>バスバー【1】の「縦型上下完全分離」配置:</strong>
+                    プラスとマイナスのショート（短絡）リスクを物理的・視覚的にゼロにするため、同一の横座標 `x=370` 上で、**「バスバー【1】＋（上段: y=220〜415）」** と **「バスバー【1】ー（下段: y=430〜620）」** に**縦に真っ二つに上下分離**して配置しました。
+                    これにより、プラス（赤線）とマイナス（黒線）の配線ラインが一切交差・干渉しない「完璧な絶縁分離レイアウト」が実現しました。
+                </li>
+                <li><strong>ソーラーアレイの「完全独立3並列結線」:</strong> ソーラーパネル側からの3本のマイナス（黒）線、および3本のプラス（赤）線が、途中で合流・干渉することなく、それぞれ完全に独立して **「バスバー【2】ー」** および **「バスバー【2】＋」** の個別ターミナルボルトへと直接引き込まれ結合する、実際の安全な並列配線回路をビジュアル化しました。各パネルのプラス側には逆流対策として 15A ヒューズを追加しています。</li>
+                <li><strong>主要配線の電圧・最大電流表示:</strong>
+                    MPPT、走行充電器、外部AC充電器、インバーター、車載エアコン、PV入力の主要回路に電圧・最大電流の目安を表示しました。インバーター回路は 24V 約100A、車載エアコン回路は 24V 最大55A を目安にしています。
+                </li>
+                <li><strong>ヒューズボックス以降は省略:</strong>
+                    冷蔵庫、照明、FFヒーター、換気ファンなどの個別負荷は細かくなるため、現段階では「24V負荷機器」としてまとめ、個別電流・個別配線は省略しています。
+                </li>
+                <li><strong>推奨ケーブル太さ・保護容量（距離反映）:</strong>
+                    推定片道距離と実運用負荷を反映し、(1) 30cm: 38sq / 150A、(2) 40cm: 14sq / 70A、(3) 40cm: 8sq / 50A、(4) 40cm: 5.5sq / 30A、(5) 40cm: 38sq / 150A、(6) 300cm: 14sq / 60A、(7) 60cm: 8sq / 50A、(8) 800cm: 14sq / 50A、(9) 500cm: 22sq / 80A を目安として表示しました。長距離の(8)(9)は電圧降下を抑えるため太めにしています。
+                </li>
+                <li><strong>追加した保護・監視部品:</strong>
+                    AC充電器、車載エアコン、ヒューズボックス送りの各プラス分岐に保護器を追加しました。マイナス側には SmartShunt 500A を追加し、バッテリー残量・充放電電流を確認できる構成にしています。ブレーカー(1)は150Aの手動遮断できるDC対応品を想定し、キルスイッチ兼用として扱います。
+                </li>
+                <li><strong>バスバー容量:</strong>
+                    バスバー【1】は 600A級、バスバー【2】は 100A級の目安を表示しました。実物は連続電流・端子サイズ・絶縁カバーの有無を確認してください。
+                </li>
+                <li><strong>配線番号:</strong>
+                    (1) LiFePO4バッテリー→バスバー【1】、(2) バスバー【1】→MPPT、(3) バスバー【1】→走行充電器、(4) バスバー【1】→AC充電器、(5) バスバー【1】→インバーター、(6) バスバー【1】→車載エアコン、(7) バスバー【1】→ヒューズボックス、(8) ソーラーパネル→バスバー【2】、(9) スターターバッテリー→走行充電器。
+                </li>
+                <li><strong>プラス（赤）配線すべての「バスバー【1】直結」可視化:</strong>
+                    上段の「バスバー【1】＋」の右側のボルトネジ穴に沿って、各デバイス（MPPT、走行充電、外部充電器、インバーター、エアコン、ヒューズボックス）へ伸びる**すべての赤色プラス配線が独立したラインで美しく整列・直結**している状態を完全にデザインしました。重なり合ったり途中で混同したりしないため、実配線ミスを劇的に防止します。
+                </li>
+                <li><strong>バスバー採番:</strong> 
+                    <ul>
+                        <li><strong style="color: #ef4444;">バスバー【1】:</strong> メイン24V側のプラス・マイナスバスバー</li>
+                        <li><strong style="color: #1e293b;">バスバー【2】:</strong> ソーラーパネル側のプラス・マイナスバスバー</li>
+                    </ul>
+                </li>
+                <li><strong>ブレーカー・保護器一覧:</strong> 
+                    <ul>
+                        <li><strong>ブレーカー(1):</strong> バッテリー主幹プラス遮断器・キルスイッチ兼用 (150A)</li>
+                        <li><strong>ブレーカー(2):</strong> MPPT充電入力保護用 (70A)</li>
+                        <li><strong>ブレーカー(3):</strong> 走行充電（Orion XS）充電入力保護用 (50A)</li>
+                        <li><strong>ブレーカー(4):</strong> AC充電器保護用 (30A)</li>
+                        <li><strong>ブレーカー(5):</strong> 大容量インバーター保護用 (150A)</li>
+                        <li><strong>ブレーカー(6):</strong> 車載エアコン保護用 (60A)</li>
+                        <li><strong>ブレーカー(7):</strong> ヒューズボックス送り保護用 (50A)</li>
+                        <li><strong>ブレーカー(8):</strong> ソーラーパネル（PV）入力保護用 (PV＋遮断)</li>
+                        <li><strong>ブレーカー(9):</strong> オルタネーター（スターターバッテリー）入力保護用 (オルタ＋)</li>
+                        <li><strong>追加保護:</strong> 各ソーラーパネル15Aヒューズ × 3個</li>
+                        <li><strong>保護器の必要数:</strong> 150A×2、80A×1、70A×1、60A×1、50A×3、30A×1、15Aヒューズ×3</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="notes-card">
+        <h3 class="notes-title">📦 商品スペック一覧</h3>
+        <div class="notes-body">
+            <div class="spec-table-wrap">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>商品・部品</th>
+                            <th>主な仕様</th>
+                            <th>図面上の接続・保護</th>
+                            <th>配線長（片道）</th>
+                            <th>電圧降下・注意点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LiFePO4 バッテリー</td>
+                            <td>24V系 / 3.2V 360Ahセル×8直列 / 約9.2kWh / 4セル+4セル配置: 約W288×D414×H195mm / セル重量 約56kg</td>
+                            <td>(1) 38sq / 150A、主ブレーカー(1) キルスイッチ兼用。マイナス側はBMS→SmartShunt→バスバー【1】ー</td>
+                            <td>30cm</td>
+                            <td>ΔV≈0.04V（無視できる）。38sqは剛性が高く曲げが困難なため取り回しルートを事前確認。端子圧着には油圧圧着工具（12t以上）が必須。作業前にキルスイッチ①を必ず遮断。</td>
+                        </tr>
+                        <tr>
+                            <td>BMS（保護ボード）<br><small style="color:#64748b;">JK-B2A8S30P</small></td>
+                            <td>JK BMS / 8S 24V LiFePO4専用 / アクティブバランサー内蔵 2A / 連続電流300A / Bluetooth・Wi-Fi対応</td>
+                            <td>バッテリーマイナス → BMS(B-) → BMS(P-) → SmartShunt → バスバー【1】ー</td>
+                            <td>—</td>
+                            <td>連続電流300A。150Aシステムに対して2倍の余裕あり。B-（セル側マイナス）とP-（出力側マイナス）の接続方向を誤ると保護機能が動作しないため必ず確認。Bluetoothアプリでセル電圧・SOC・温度・過電流履歴をリアルタイム監視可能。</td>
+                        </tr>
+                        <tr>
+                            <td>SmartShunt</td>
+                            <td>500A</td>
+                            <td>バッテリーマイナス系統に直列</td>
+                            <td>—</td>
+                            <td>残量・充放電電流・消費電力量の監視用。Victron GX連携でスマホ監視も可能。シャント端子の締め付けトルクを守る。</td>
+                        </tr>
+                        <tr>
+                            <td>ソーラーパネル<br><small style="color:#64748b;">AIKO-A440-MAH54Tm</small></td>
+                            <td>440W × 3枚 並列 / Vmp 34.23V / Voc 40.47V / 1762×1134mm / 最大約39A想定</td>
+                            <td>(8) 14sq / 50A、各パネル15Aヒューズ、ブレーカー(8) 50A</td>
+                            <td>800cm</td>
+                            <td>ΔV≈0.78V（2.2% @35V）→ 許容内（3%以下）。屋根上配線のため耐候性PVケーブル（XLPE/EPRMゴム被覆）必須。ルーフ貫通部は防水グロメット処理。各パネル並列のVocはMPPT最大入力電圧以内か確認。</td>
+                        </tr>
+                        <tr>
+                            <td>MPPTコントローラー</td>
+                            <td>Renogy Rover / 60A / 24V / 1600W級 / 約W285×D205×H102mm</td>
+                            <td>(2) 14sq / 70A、ブレーカー(2) 70A</td>
+                            <td>40cm</td>
+                            <td>ΔV≈0.06V（無視できる）。PV側はバスバー【2】、バッテリー側はバスバー【1】へ接続。3枚並列でVocは1枚分のままなので入力電圧は問題なし。<br><strong style="color:#b91c1c;">⚠️ LOAD端子は未使用。</strong>LOAD端子は定格20Aのため、インバーター・充電器・エアコン等の大電流機器は接続不可。マニュアルでも明示禁止。全負荷はバスバー【1】から直接配線すること。</td>
+                        </tr>
+                        <tr>
+                            <td>走行充電器</td>
+                            <td>Victron Orion XS 1400 / 12V入力→24V出力 / <strong style="color:#ef4444;">上限40A運用</strong>（機器最大50A）/ 目安 約W140×D80×H190mm</td>
+                            <td>(3) 8sq / 50A、ブレーカー(3) 50A。入力側は(9) 22sq / 80A、ブレーカー(9) 80A</td>
+                            <td>出力側(3): 40cm<br>入力側(9): 500cm</td>
+                            <td>出力側ΔV≈0.07V（無視できる）。入力側ΔV≈0.58V（4.2% @13.8V）→やや大きめだが走行中はOrion XS側で自動補正。<strong style="color:#ef4444;">機器の最大出力は50Aだが、出力側配線(3)8sq/50Aおよびブレーカー③50Aがぎりぎりのスペック、かつ入力側(9)22sq/80Aも余裕が少ないため、Orion XSの出力上限を必ず40Aに設定して運用すること。</strong>入力電流は最大約73A（40A出力時）。エンジン停車後の自動停止設定を確認。</td>
+                        </tr>
+                        <tr>
+                            <td>AC充電器</td>
+                            <td>29.2V / 20A / 約584W / 外部100V充電用 / 約W276×D89.5×H120.6mm</td>
+                            <td>(4) 5.5sq / 30A、ブレーカー(4) 30A</td>
+                            <td>40cm</td>
+                            <td>ΔV≈0.05V（無視できる）。出力は29.2V×20A=584W。停車時・外部AC100V電源使用時のみ稼働。アース（GND）接続必須。整備時に切り離せるようバスバー直後に保護器を配置。</td>
+                        </tr>
+                        <tr>
+                            <td>インバーター</td>
+                            <td>24V / 2000W / 最大4000W / DC24V→AC100V / 純正弦波 / 約W380×D170×H105mm</td>
+                            <td>(5) 38sq / 150A、ブレーカー(5) 150A</td>
+                            <td>40cm</td>
+                            <td>ΔV≈0.03V（無視できる）。38sqのため端子処理に油圧圧着工具必須。突入電流が大きいため接触不良は厳禁。定格2000W運用前提。最大4000Wを長時間使用する設計では配線・ブレーカーの再計算が必要。</td>
+                        </tr>
+                        <tr>
+                            <td>車載エアコン</td>
+                            <td>24V DC / 最大55A / 通常15〜45A / 冷房能力2200〜2400W級</td>
+                            <td>(6) 14sq / 60A、ブレーカー(6) 60A</td>
+                            <td>300cm</td>
+                            <td>ΔV≈0.41V（1.7% @24V）→ 許容内。14sq（許容~65A）で最大55Aに対応。インバーター制御（15〜45A可変）のため起動突入電流は比較的小さいが、念のためD特性（遅動型）ブレーカーを推奨。コルゲートチューブ等で配線を保護。</td>
+                        </tr>
+                        <tr>
+                            <td>ヒューズボックス</td>
+                            <td>24V負荷分配 / 以降詳細省略</td>
+                            <td>(7) 8sq / 50A、ブレーカー(7) 50A</td>
+                            <td>60cm</td>
+                            <td>ΔV≈0.08V（無視できる）。BOX内の個別ヒューズは各機器定格×1.25以下で選定。幹線ブレーカー(7)とBOX内ヒューズの保護協調（BOX内ヒューズが先に飛ぶ）を確認。</td>
+                        </tr>
+                        <tr>
+                            <td>スターターバッテリー</td>
+                            <td>12V 車両メイン / ハイエース ガソリン ワイドボディ想定</td>
+                            <td>(9) 22sq / 80A、ブレーカー(9) 80A</td>
+                            <td>500cm</td>
+                            <td>ΔV≈0.58V（4.2% @13.8V）→ やや大きめ。Orion XS出力上限を40Aに設定して運用。入力電流は最大73A（40A出力時）で22sqの許容80Aに対して余裕少なめ。アイドリング停車中は入力電圧が低下し充電効率が落ちる場合あり。</td>
+                        </tr>
+                        <tr>
+                            <td>バスバー</td>
+                            <td>バスバー【1】: 600A級 × 2本（プラス用1・マイナス用1）<br>バスバー【2】: 100A級 × 2本（ソーラー＋用1・ソーラー－用1）</td>
+                            <td>【1】は24V主系統、【2】はソーラー並列統合</td>
+                            <td>—</td>
+                            <td>合計4本必要。バスバー【1】の＋／－は物理的に完全分離して取り付け。絶縁カバーなしの場合は作業時のショートリスクに注意。端子サイズ・連続電流定格・絶縁カバー有無を実物で確認。</td>
+                        </tr>
+                        <tr>
+                            <td>保護器・ヒューズ</td>
+                            <td>DCブレーカー/遮断器: 150A×2、80A×1、70A×1、60A×1、50A×3、30A×1<br>ソーラーパネル個別ヒューズ: 15A×3</td>
+                            <td>150A: 主幹(1)・インバーター(5)<br>80A: オルタ側(9)<br>70A: MPPT(2)<br>60A: 車載エアコン(6)<br>50A: 走行充電(3)・ヒューズボックス(7)・PV入力(8)<br>30A: AC充電器(4)<br>15A: ソーラー各パネル</td>
+                            <td>—</td>
+                            <td>合計: DCブレーカー9個 + 15Aヒューズ3個。すべてDC対応品を選定。PV側ヒューズは太陽光発電用のDC定格品を使用。予備として15Aヒューズは追加で数個用意すると安心。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="notes-card" style="margin-top: 1.5rem;">
+        <h3 class="notes-title">🔌 ヒューズボックス以降の負荷機器一覧</h3>
+        <div class="notes-body">
+            <p style="margin-bottom: 1rem; color: #475569;">すべて24Vシステム。電流値は <strong>W ÷ 24V</strong> で算出。推奨ヒューズは定格電流の 1.25〜1.5倍を目安に選定。</p>
+            <div class="spec-table-wrap">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>機器</th>
+                            <th>消費電力 (W)</th>
+                            <th>電流 @24V (A)</th>
+                            <th>推奨ヒューズ</th>
+                            <th>備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>FFヒーター</td>
+                            <td>150W</td>
+                            <td>6.3A</td>
+                            <td>10A</td>
+                            <td>燃焼用ファンの突入電流を考慮して10A。エアコンとの同時使用は通常しない。</td>
+                        </tr>
+                        <tr>
+                            <td>冷蔵庫</td>
+                            <td>50W</td>
+                            <td>2.1A</td>
+                            <td>10A</td>
+                            <td>コンプレッサー起動時に定格の2〜3倍の突入電流が流れるため、定格の5倍相当で10Aを推奨。</td>
+                        </tr>
+                        <tr>
+                            <td>換気扇（天井×2）</td>
+                            <td>— W</td>
+                            <td>— A</td>
+                            <td>要確認</td>
+                            <td>製品仕様のW数を確認して選定。天井2台まとめて1回路でも可。一般的に各5〜15W程度。</td>
+                        </tr>
+                        <tr>
+                            <td>換気扇（バッテリ庫）</td>
+                            <td>— W</td>
+                            <td>— A</td>
+                            <td>要確認</td>
+                            <td>小型ファン想定。温度センサー連動で自動ON/OFFする場合は制御回路も同一回路で可。</td>
+                        </tr>
+                        <tr>
+                            <td>温度センサー（室内・バッテリ庫・バッテリセル）</td>
+                            <td>〜1W</td>
+                            <td>〜0.1A</td>
+                            <td>換気扇と共用 or 3A</td>
+                            <td>消費電力が極小のため、換気扇と同一回路にまとめるか、小型5Aヒューズで全センサー類をまとめてよい。</td>
+                        </tr>
+                        <tr>
+                            <td>LEDライト（天井・足元・バックドア）</td>
+                            <td>— W</td>
+                            <td>— A</td>
+                            <td>要確認</td>
+                            <td>製品W数を確認。エリアごとに回路を分けると利便性が高い。調光器を挟む場合は調光器の定格電流でヒューズ選定。</td>
+                        </tr>
+                        <tr>
+                            <td>PC</td>
+                            <td>60W</td>
+                            <td>2.5A</td>
+                            <td>5A</td>
+                            <td>USB Type-C PD対応 DC-DC降圧コンバーター（24V→USB PD）経由。24V入力電流は60W÷(24V×効率90%)≈2.8A。インバーター不要。コンバーターのPD定格（65W以上品を推奨）を確認。</td>
+                        </tr>
+                        <tr>
+                            <td>プロジェクタ</td>
+                            <td>60W</td>
+                            <td>2.5A</td>
+                            <td>5A</td>
+                            <td>USB Type-C PD対応 DC-DC降圧コンバーター（24V→USB PD）経由。同上。インバーター不要。PCと同時使用する場合は2台合計5Aになるため、同一回路にまとめるなら7.5Aヒューズに変更。</td>
+                        </tr>
+                        <tr>
+                            <td>室内LEDライト</td>
+                            <td>36W</td>
+                            <td>1.5A</td>
+                            <td>5A</td>
+                            <td>テープライトやシーリングライト想定。複数箇所に分岐する場合は総W数で再計算。</td>
+                        </tr>
+                        <tr>
+                            <td>スマホ充電 × 3</td>
+                            <td>10W × 3 = 30W</td>
+                            <td>1.25A（合計）</td>
+                            <td>5A（3口まとめて）</td>
+                            <td>USBハブ or 車載USB充電器経由。機器はDC-DC変換済みのため実際の24V側電流はさらに小さい。</td>
+                        </tr>
+                        <tr>
+                            <td>カメラ電源 × 3</td>
+                            <td>15W × 3 = 45W</td>
+                            <td>1.875A（合計）</td>
+                            <td>5A（3台まとめて）</td>
+                            <td>常時録画用途（ドラレコ等）の場合は電源オン連動制御を検討。</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: #f1f5f9;">
+                            <td><strong>合計（W数判明分）</strong></td>
+                            <td><strong>431W</strong></td>
+                            <td><strong>≈18A</strong></td>
+                            <td colspan="2">換気扇・センサー・LEDライト類（推定+100W）を含めると <strong>≈22〜25A</strong> 想定。ヒューズボックス送り50Aブレーカーに対して十分な余裕あり。FFヒーターとエアコンの同時使用はしない前提。</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-card" style="margin-bottom:24px;">
+            <h2 class="section-title">🛠️ 施工上の注意点（実機確認事項）</h2>
+            <div style="display:grid; gap:16px;">
+
+                <div style="background:#fff7ed; border-left:4px solid #f97316; padding:14px 16px; border-radius:6px;">
+                    <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">① Orion XS への 22sq 接続はフェルール端子必須</div>
+                    <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
+                        Orion XS の端子はコンパクトなブロックターミナルで、22sq はギリギリのサイズ。
+                        <strong>高品質なフェルール端子（棒端子）をきっちり圧着</strong>して差し込むこと。
+                        芯線を雑にねじると入らない。<br>
+                        どうしても入らない場合は「ブレーカー直前まで 22sq → 本体手前の数十センチのみ 14sq」という現物合わせも選択肢。
+                    </p>
+                </div>
+
+                <div style="background:#fff7ed; border-left:4px solid #f97316; padding:14px 16px; border-radius:6px;">
+                    <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">② Renogy Rover の端子はフェルール端子（棒端子）一択</div>
+                    <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
+                        Rover の端子台は<strong>スクリュークランプ方式（奥まった四角い穴にネジ締め）</strong>のため、丸型端子の輪っかは物理的に入らない。
+                        14sq の配線に対して <strong>14sq 用の絶縁カバー付きフェルール端子</strong>を用意すること。
+                    </p>
+                </div>
+
+                <div style="background:#fff7ed; border-left:4px solid #f97316; padding:14px 16px; border-radius:6px;">
+                    <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">③ 走行充電線 (9) はコネクタなしの 1 本直結</div>
+                    <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
+                        常時 80A 級が流れる固定配線にアンダーソンコネクタを挟むと、<strong>接点抵抗が発熱・故障リスクになる</strong>。
+                        エンジンルームのブレーカー⑨から Orion XS まで、<strong>22sq ケーブル 1 本を途中コネクタなしで直結</strong>するのが最も安全。
+                    </p>
+                </div>
+
+                <div style="background:#f0fdf4; border-left:4px solid #22c55e; padding:14px 16px; border-radius:6px;">
+                    <div style="font-weight:700; color:#15803d; margin-bottom:6px;">④ BMS の連続放電電流 ✅ 確認済み（JK-B2A8S30P）</div>
+                    <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
+                        公式サイト確認済み：<strong>連続放電 300A / ピーク 600A</strong>（4S〜8S、LiFePO4対応）。
+                        主ブレーカー 150A に対して <strong>2倍の余裕</strong>があり完全に安全圏。
+                        BMS を変更する際は必ず連続 200A クラス以上を選ぶこと。
+                    </p>
+                </div>
+
+                <div style="background:#fef2f2; border-left:4px solid #ef4444; padding:14px 16px; border-radius:6px;">
+                    <div style="font-weight:700; color:#b91c1c; margin-bottom:6px;">⑤ 同時使用 150A はギリギリ — 電子レンジ使用時の運用ルール</div>
+                    <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
+                        レンジ（≈63A）＋エアコン最大（≈55A）＋その他（≈5A）＝<strong>約 123A</strong> で主ブレーカー 150A に対して余裕あり（82%使用）。
+                        ただし将来の機器追加や起動突入電流が重なる瞬間を考慮し、<strong>電子レンジ使用時は他の大電流機器の同時使用を避ける</strong>習慣を持っておくと安心。
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div style="margin-bottom:24px;">
+            <h2 style="font-size:1.15rem; font-weight:800; color:#0f172a; margin-bottom:12px;">📍 ブレーカー設置位置ガイド</h2>
+            <p style="font-size:14px; color:#374151; margin-bottom:16px; line-height:1.7;">
+                ブレーカーは「配線保護」が主目的のため、<strong>電源側のできるだけ近く</strong>に設置するのが鉄則。
+                「バッテリーからブレーカーまでの区間」は保護されない無防備ゾーンになるため、この距離を最短にすることで振動によるショート→火災リスクを極限まで抑えられる。
+            </p>
+
+            <div class="spec-table-wrap" style="margin-bottom:20px;">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th style="width:3em;">No</th>
+                            <th>ブレーカー</th>
+                            <th>推奨設置位置</th>
+                            <th>理由</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color:#b91c1c;">①</td>
+                            <td>主幹 150A</td>
+                            <td><strong>サブバッテリー＋端子から 30cm 以内</strong></td>
+                            <td>38sq 配線がショートした場合の唯一の砦。無保護区間を最短に。</td>
+                        </tr>
+                        <tr>
+                            <td>②</td>
+                            <td>MPPT 70A</td>
+                            <td>主バスバー直後（電装コンパネ内）</td>
+                            <td rowspan="6" style="vertical-align:middle;">バスバーから各機器への分岐直後。コンパネ内に集中配置することで管理・メンテが容易。</td>
+                        </tr>
+                        <tr>
+                            <td>③</td>
+                            <td>Orion XS出力 50A</td>
+                            <td>主バスバー直後（電装コンパネ内）</td>
+                        </tr>
+                        <tr>
+                            <td>④</td>
+                            <td>AC充電器 30A</td>
+                            <td>主バスバー直後（電装コンパネ内）</td>
+                        </tr>
+                        <tr>
+                            <td>⑤</td>
+                            <td>インバーター 150A</td>
+                            <td>主バスバー直後（電装コンパネ内）</td>
+                        </tr>
+                        <tr>
+                            <td>⑥</td>
+                            <td>エアコン 60A</td>
+                            <td>主バスバー直後（電装コンパネ内）</td>
+                        </tr>
+                        <tr>
+                            <td>⑦</td>
+                            <td>ヒューズボックス 50A</td>
+                            <td>主バスバー直後（電装コンパネ内）</td>
+                        </tr>
+                        <tr>
+                            <td>⑧</td>
+                            <td>PV入力 50A</td>
+                            <td>ルーフ引き込み口の直後 または MPPT 直前</td>
+                            <td>屋根上配線がショートした際にパネル側の電流を遮断するため引き込み口近傍が理想。メンテ優先なら MPPT 直前でも可。</td>
+                        </tr>
+                        <tr>
+                            <td style="color:#b91c1c;">⑨</td>
+                            <td>オルタ側 80A</td>
+                            <td><strong>スターターバッテリー＋端子から 30cm 以内（エンジンルーム内）</strong></td>
+                            <td>5m の 22sq 配線が車両床下を通る。リア側に設置すると全区間が無保護になりハイエース車体が燃えるリスク。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="display:grid; gap:12px;">
+                <div style="background:#fef2f2; border-left:4px solid #ef4444; padding:13px 16px; border-radius:6px;">
+                    <div style="font-weight:700; color:#b91c1c; margin-bottom:4px;">🛑 ① と ⑨ は「30cm 以内」が絶対ルール</div>
+                    <p style="margin:0; font-size:13.5px; line-height:1.7; color:#374151;">
+                        バッテリーからブレーカーまでの区間はブレーカーが保護できない無防備ゾーン。この距離を 30cm 以内に抑えることで、配線が車の振動でボディに擦れてショートし火災になるリスクを極限まで低減できる。
+                        特に⑨はエンジンルームに必ず設置すること。リア側に置くと 5m の 22sq が全区間無保護になる。
+                    </p>
+                </div>
+                <div style="background:#eff6ff; border-left:4px solid #3b82f6; padding:13px 16px; border-radius:6px;">
+                    <div style="font-weight:700; color:#1d4ed8; margin-bottom:4px;">📦 ②〜⑦ は電装コンパネ内に集中配置</div>
+                    <p style="margin:0; font-size:13.5px; line-height:1.7; color:#374151;">
+                        機器の近くに点在させる必要はなく、<strong>主バスバー横のコンパネ内に一列に並べるのが最も整備性が高い</strong>。
+                        点在させると配線が長くなり管理しづらくなる。
+                        これらのブレーカーは安全装置でもあり手動スイッチでもあるため、点検口を開ければすぐ手が届く場所に設置すること。
+                    </p>
+                </div>
+                <div style="background:#f0fdf4; border-left:4px solid #22c55e; padding:13px 16px; border-radius:6px;">
+                    <div style="font-weight:700; color:#15803d; margin-bottom:4px;">✅ ブレーカーはすべてプラス線（赤）にのみ挿入</div>
+                    <p style="margin:0; font-size:13.5px; line-height:1.7; color:#374151;">
+                        マイナス（黒）配線はブレーカーを介さずシャント→マイナスバスバーへ直結。本回路はすべてプラス側ブレーカー構成で設計済み。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 車中泊システム設計ダッシュボード | 安全規格準拠・＋側ブレーカー・上下完全分離バスバー配線プラン</p>
+    </footer>
+</div>
+
+<script>
+    const copyStatus = document.getElementById('copyStatus');
+    const diagramSvg = document.getElementById('circuitDiagram');
+
+    function addWireUnderlays() {
+        const wirePaths = diagramSvg.querySelectorAll('path[stroke^="var(--wire"]:not(.wire-underlay)');
+        wirePaths.forEach((path) => {
+            const underlay = path.cloneNode(false);
+            const width = Number.parseFloat(path.getAttribute('stroke-width') || '3');
+            underlay.classList.add('wire-underlay');
+            underlay.setAttribute('stroke', '#ffffff');
+            underlay.setAttribute('stroke-width', String(width + 5));
+            underlay.setAttribute('fill', 'none');
+            underlay.setAttribute('opacity', '0.96');
+            path.parentNode.insertBefore(underlay, path);
+        });
+    }
+
+    addWireUnderlays();
+
+    function setCopyStatus(message) {
+        copyStatus.textContent = message;
+        window.clearTimeout(setCopyStatus.timer);
+        setCopyStatus.timer = window.setTimeout(() => {
+            copyStatus.textContent = '';
+        }, 2800);
+    }
+
+    function getSvgText() {
+        const clone = diagramSvg.cloneNode(true);
+        clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        clone.setAttribute('width', '1350');
+        clone.setAttribute('height', '820');
+
+        // CSS変数を実際の色値に置換（Canvas描画時はCSSコンテキストがないため）
+        clone.querySelectorAll('[stroke]').forEach(el => {
+            const s = el.getAttribute('stroke');
+            if (s === 'var(--wire-pos)') el.setAttribute('stroke', '#ef4444');
+            if (s === 'var(--wire-neg)') el.setAttribute('stroke', '#1e293b');
+        });
+
+        // 外部CSSクラスをSVG内に埋め込む（standalone描画で参照できるように）
+        const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+        style.textContent = [
+            'text { font-family: sans-serif; }',
+            '.font-bold { font-weight: 700; }',
+            '.font-medium { font-weight: 500; }',
+            '.font-regular { font-weight: 400; }',
+            '.wire-label { font-size: 11px; font-weight: 700; fill: #0f172a; }',
+            '.wire-label-muted { font-size: 9px; font-weight: 500; fill: #475569; }',
+        ].join(' ');
+        clone.insertBefore(style, clone.firstChild);
+
+        return new XMLSerializer().serializeToString(clone);
+    }
+
+    function svgToDataUri(svgText) {
+        // btoa+unescape は日本語でエラーになるためURL encoding方式を使用
+        return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
+    }
+
+    async function renderSvgToCanvas(svgText) {
+        const image = new Image();
+        await new Promise((resolve, reject) => {
+            image.onload = resolve;
+            image.onerror = reject;
+            image.src = svgToDataUri(svgText);
+        });
+        const canvas = document.createElement('canvas');
+        canvas.width = 1350;
+        canvas.height = 820;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0);
+        return canvas;
+    }
+
+    async function copyText(text) {
+        if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+            return;
+        }
+
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        textarea.setAttribute('readonly', '');
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+    }
+
+    async function copySvgText() {
+        await copyText(getSvgText());
+        setCopyStatus('SVGをコピーしました');
+    }
+
+    function downloadPng(pngBlob) {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(pngBlob);
+        a.download = 'circuit_diagram.png';
+        a.click();
+        URL.revokeObjectURL(a.href);
+    }
+
+    async function copyPngImage() {
+        const svgText = getSvgText();
+
+        // Step1: PNG生成（失敗したらSVGコピーへ）
+        let pngBlob;
+        try {
+            const canvas = await renderSvgToCanvas(svgText);
+            pngBlob = await new Promise((resolve, reject) => {
+                canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob null')), 'image/png');
+            });
+        } catch (renderError) {
+            console.error('PNG render error:', renderError);
+            try { await copySvgText(); } catch (_) {}
+            setCopyStatus('PNG生成失敗のためSVGをコピー');
+            return;
+        }
+
+        // Step2: クリップボードへ書き込み（失敗したらダウンロードへ）
+        if (window.ClipboardItem && navigator.clipboard?.write) {
+            try {
+                await navigator.clipboard.write([new ClipboardItem({ 'image/png': pngBlob })]);
+                setCopyStatus('PNGをコピーしました');
+                return;
+            } catch (clipError) {
+                console.warn('Clipboard write failed, falling back to download:', clipError);
+            }
+        }
+
+        // Step3: ダウンロードにフォールバック
+        downloadPng(pngBlob);
+        setCopyStatus('PNGをダウンロードしました');
+    }
+
+    document.getElementById('copySvgButton').addEventListener('click', async () => {
+        try {
+            await copySvgText();
+        } catch (error) {
+            setCopyStatus('コピーできませんでした');
+        }
+    });
+
+    document.getElementById('copyPngButton').addEventListener('click', async () => {
+        try {
+            await copyPngImage();
+        } catch (error) {
+            setCopyStatus('コピーできませんでした');
+        }
+    });
+</script>
+
+</body>
+</html>
