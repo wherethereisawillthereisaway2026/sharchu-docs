@@ -382,13 +382,13 @@
             <g>
                 <text x="305" y="220" text-anchor="middle" class="wire-label">(1) 38sq 150A</text>
                 <text x="505" y="88" text-anchor="middle" class="wire-label">(2) 14sq 70A</text>
-                <text x="509" y="165" text-anchor="middle" class="wire-label">(3) 8sq 50A</text>
+                <text x="509" y="165" text-anchor="middle" class="wire-label">(3) 22sq 80A</text>
                 <text x="515" y="302" text-anchor="middle" class="wire-label">(4) 5.5sq 30A</text>
                 <text x="710" y="407" text-anchor="middle" class="wire-label">(5) 38sq 150A</text>
                 <text x="601" y="438" text-anchor="middle" class="wire-label">(6) 14sq 60A</text>
                 <text x="560" y="648" text-anchor="middle" class="wire-label">(7) 8sq 50A 仮</text>
                 <text x="971" y="74" text-anchor="middle" class="wire-label">(8) 14sq 50A</text>
-                <text x="940" y="260" text-anchor="middle" class="wire-label">(9) 22sq 80A</text>
+                <text x="940" y="260" text-anchor="middle" class="wire-label">(9) 38sq 150A</text>
             </g>
 
             <!-- ========================================== -->
@@ -729,7 +729,7 @@
                     冷蔵庫、照明、FFヒーター、換気ファンなどの個別負荷は細かくなるため、現段階では「24V負荷機器」としてまとめ、個別電流・個別配線は省略しています。
                 </li>
                 <li><strong>推奨ケーブル太さ・保護容量（距離反映）:</strong>
-                    推定片道距離と実運用負荷を反映し、(1) 30cm: 38sq / 150A、(2) 40cm: 14sq / 70A、(3) 40cm: 8sq / 50A、(4) 40cm: 5.5sq / 30A、(5) 40cm: 38sq / 150A、(6) 300cm: 14sq / 60A、(7) 60cm: 8sq / 50A、(8) 800cm: 14sq / 50A、(9) 500cm: 22sq / 80A を目安として表示しました。長距離の(8)(9)は電圧降下を抑えるため太めにしています。
+                    推定片道距離と実運用負荷を反映し、(1) 30cm: 38sq / 150A、(2) 40cm: 14sq / 70A、(3) 400cm: 22sq / 80A、(4) 40cm: 5.5sq / 30A、(5) 40cm: 38sq / 150A、(6) 300cm: 14sq / 60A、(7) 60cm: 8sq / 50A、(8) 800cm: 14sq / 50A、(9) 30cm: 38sq / 150A を目安として表示しました。<strong style="color:#15803d;">⚠️ Orion XSをエンジンルーム内・スターターバッテリー直近へ移設したため(3)(9)を再設計：</strong>(9)入力側は距離が5m→30cmに短縮されたが50A運用時の電流(約105A)に対応するため38sqへ太径化、(3)出力側は距離が40cm→4mに延長されたが電流が半分(50A)のため既存の22sqを転用。長距離の(8)は電圧降下を抑えるため太めにしています。
                 </li>
                 <li><strong>追加した保護・監視部品:</strong>
                     AC充電器、車載エアコン、ヒューズボックス送りの各プラス分岐に保護器を追加しました。マイナス側には SmartShunt 500A を追加し、バッテリー残量・充放電電流を確認できる構成にしています。ブレーカー(1)は150Aの手動遮断できるDC対応品を想定し、キルスイッチ兼用として扱います。
@@ -823,10 +823,14 @@
                         </tr>
                         <tr>
                             <td>走行充電器</td>
-                            <td>Victron Orion XS 1400 / 12V入力→24V出力 / <strong style="color:#ef4444;">上限40A運用</strong>（機器最大50A）/ 目安 約W140×D80×H190mm</td>
-                            <td>(3) 8sq / 50A、ブレーカー(3) 50A。入力側は(9) 22sq / 80A、ブレーカー(9) 80A</td>
-                            <td>出力側(3): 40cm<br>入力側(9): 500cm</td>
-                            <td>出力側ΔV≈0.07V（無視できる）。入力側ΔV≈0.58V（4.2% @13.8V）→やや大きめだが走行中はOrion XS側で自動補正。<strong style="color:#ef4444;">機器の最大出力は50Aだが、出力側配線(3)8sq/50Aおよびブレーカー③50Aがぎりぎりのスペック、かつ入力側(9)22sq/80Aも余裕が少ないため、Orion XSの出力上限を必ず40Aに設定して運用すること。</strong>入力電流は最大約73A（40A出力時）。エンジン停車後の自動停止設定を確認。<br><strong style="color:#b91c1c;">⚠️ 628Ah化後:</strong> VictronConnectの「User defined」プロファイルでAbsorption電圧を28.0〜28.4V（MPPTと同条件）に設定し、BMSのOVP(29.2V)を最終バックストップとする二段構成にする。</td>
+                            <td>Victron Orion XS 1400 / 12V入力→24V出力 / <strong style="color:#15803d;">50A運用（機器最大値で運用）</strong>/ 目安 約W140×D80×H190mm / IP65 → <strong>エンジンルーム内、スターターバッテリー直近に設置</strong></td>
+                            <td>(3) 22sq / 80A、ブレーカー(3) 80A。入力側は(9) 38sq / 150A、ブレーカー(9) 150A</td>
+                            <td>出力側(3): 400cm<br>入力側(9): 30cm</td>
+                            <td><strong style="color:#15803d;">⚠️ 設置場所変更（Orion XSをエンジンルーム内・スターターバッテリー直近へ移設）に伴う再設計:</strong><br>
+                                入力側(12V, 距離30cm): 50A出力時の入力電流は約105A（24V×50A÷0.95効率÷12V）。38sqケーブル（許容150A、連続安全圏120A）で余裕あり。距離が短いため油圧圧着工具での端子処理必須。<br>
+                                出力側(24V, 距離400cm): 50A出力時、22sqケーブル（許容80A、連続安全圏69A）で対応可。電圧降下ΔV≈0.32V（1.3% @24V）→問題なし。既存の22sqケーブルを出力側に転用可能。<br>
+                                <strong style="color:#b91c1c;">⚠️ 注意:</strong> エンジン本体・エキゾーストマニホールド等の高熱源からは離して設置（Orion XSの動作温度上限を超えると自動的に出力デレーティングがかかる）。エンジン停車後の自動停止設定を確認。<br>
+                                <strong style="color:#b91c1c;">⚠️ 628Ah化後:</strong> VictronConnectの「User defined」プロファイルでAbsorption電圧を28.0〜28.4V（MPPTと同条件）に設定し、BMSのOVP(29.2V)を最終バックストップとする二段構成にする。</td>
                         </tr>
                         <tr>
                             <td>AC充電器</td>
@@ -859,9 +863,9 @@
                         <tr>
                             <td>スターターバッテリー</td>
                             <td>12V 車両メイン / ハイエース ガソリン ワイドボディ想定</td>
-                            <td>(9) 22sq / 80A、ブレーカー(9) 80A</td>
-                            <td>500cm</td>
-                            <td>ΔV≈0.58V（4.2% @13.8V）→ やや大きめ。Orion XS出力上限を40Aに設定して運用。入力電流は最大73A（40A出力時）で22sqの許容80Aに対して余裕少なめ。アイドリング停車中は入力電圧が低下し充電効率が落ちる場合あり。</td>
+                            <td>(9) 38sq / 150A、ブレーカー(9) 150A</td>
+                            <td>30cm</td>
+                            <td>Orion XSをスターターバッテリー直近（エンジンルーム内）に設置することで配線距離を5m→30cmに短縮。50A出力時の入力電流は約105Aで、38sqの連続安全圏（約120A）に収まる。ΔV≈0.04V（無視できる）。アイドリング停車中は入力電圧が低下し充電効率が落ちる場合がある点は変わらず留意。</td>
                         </tr>
                         <tr>
                             <td>バスバー</td>
@@ -872,8 +876,8 @@
                         </tr>
                         <tr>
                             <td>保護器・ヒューズ</td>
-                            <td>DCブレーカー/遮断器: 150A×2、80A×1、70A×1、60A×1、50A×3、30A×1<br>ソーラーパネル個別ヒューズ: 15A×3</td>
-                            <td>150A: 主幹(1)・インバーター(5)<br>80A: オルタ側(9)<br>70A: MPPT(2)<br>60A: 車載エアコン(6)<br>50A: 走行充電(3)・ヒューズボックス(7)・PV入力(8)<br>30A: AC充電器(4)<br>15A: ソーラー各パネル</td>
+                            <td>DCブレーカー/遮断器: 150A×3、80A×1、70A×1、60A×1、50A×2、30A×1<br>ソーラーパネル個別ヒューズ: 15A×3</td>
+                            <td>150A: 主幹(1)・インバーター(5)・オルタ側(9)<br>80A: 走行充電(3)<br>70A: MPPT(2)<br>60A: 車載エアコン(6)<br>50A: ヒューズボックス(7)・PV入力(8)<br>30A: AC充電器(4)<br>15A: ソーラー各パネル</td>
                             <td>—</td>
                             <td>合計: DCブレーカー9個 + 15Aヒューズ3個。すべてDC対応品を選定。PV側ヒューズは太陽光発電用のDC定格品を使用。予備として15Aヒューズは追加で数個用意すると安心。</td>
                         </tr>
@@ -996,12 +1000,12 @@
             <div style="display:grid; gap:16px;">
 
                 <div style="background:#fff7ed; border-left:4px solid #f97316; padding:14px 16px; border-radius:6px;">
-                    <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">① Orion XS への 22sq 接続はフェルール端子必須</div>
+                    <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">① Orion XS 入力側(38sq)・出力側(22sq)ともにフェルール端子必須</div>
                     <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
-                        Orion XS の端子はコンパクトなブロックターミナルで、22sq はギリギリのサイズ。
+                        Orion XS の端子はコンパクトなブロックターミナルで、38sq・22sqともにギリギリのサイズ。
                         <strong>高品質なフェルール端子（棒端子）をきっちり圧着</strong>して差し込むこと。
-                        芯線を雑にねじると入らない。<br>
-                        どうしても入らない場合は「ブレーカー直前まで 22sq → 本体手前の数十センチのみ 14sq」という現物合わせも選択肢。
+                        芯線を雑にねじると入らない。入力側(38sq)は特に芯線が太いため、対応する大型フェルール端子と圧着工具（12t以上）を用意する。<br>
+                        どうしても入らない場合は「ブレーカー直前まで太い配線 → 本体手前の数十センチのみ細い配線」という現物合わせも選択肢。
                     </p>
                 </div>
 
@@ -1014,10 +1018,11 @@
                 </div>
 
                 <div style="background:#fff7ed; border-left:4px solid #f97316; padding:14px 16px; border-radius:6px;">
-                    <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">③ 走行充電線 (9) はコネクタなしの 1 本直結</div>
+                    <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">③ 走行充電線 (9)(3) はコネクタなしの 1 本直結</div>
                     <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
-                        常時 80A 級が流れる固定配線にアンダーソンコネクタを挟むと、<strong>接点抵抗が発熱・故障リスクになる</strong>。
-                        エンジンルームのブレーカー⑨から Orion XS まで、<strong>22sq ケーブル 1 本を途中コネクタなしで直結</strong>するのが最も安全。
+                        常時 100A 級（入力側）が流れる固定配線にアンダーソンコネクタを挟むと、<strong>接点抵抗が発熱・故障リスクになる</strong>。
+                        スターターバッテリーのブレーカー⑨から Orion XS まで（38sq・30cm）、および Orion XS 出力から主バスバーまで（22sq・4m、ブレーカー③）、
+                        いずれも<strong>途中コネクタなしで直結</strong>するのが最も安全。4m区間は車両床下を通る配線になるため、コルゲートチューブ等で保護し、振動による擦れを防ぐこと。
                     </p>
                 </div>
 
@@ -1075,7 +1080,7 @@
                         </tr>
                         <tr>
                             <td>③</td>
-                            <td>Orion XS出力 50A</td>
+                            <td>Orion XS出力 80A</td>
                             <td>主バスバー直後（電装コンパネ内）</td>
                         </tr>
                         <tr>
@@ -1106,9 +1111,9 @@
                         </tr>
                         <tr>
                             <td style="color:#b91c1c;">⑨</td>
-                            <td>オルタ側 80A</td>
+                            <td>オルタ側 150A</td>
                             <td><strong>スターターバッテリー＋端子から 30cm 以内（エンジンルーム内）</strong></td>
-                            <td>5m の 22sq 配線が車両床下を通る。リア側に設置すると全区間が無保護になりハイエース車体が燃えるリスク。</td>
+                            <td>Orion XS本体もエンジンルーム内・スターターバッテリー直近に設置するため配線距離は30cmのみ。38sqケーブルの保護として150Aブレーカーを採用。距離が短くなったことで無保護ゾーンのリスクも大幅に低減。</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1119,7 +1124,7 @@
                     <div style="font-weight:700; color:#b91c1c; margin-bottom:4px;">🛑 ① と ⑨ は「30cm 以内」が絶対ルール</div>
                     <p style="margin:0; font-size:13.5px; line-height:1.7; color:#374151;">
                         バッテリーからブレーカーまでの区間はブレーカーが保護できない無防備ゾーン。この距離を 30cm 以内に抑えることで、配線が車の振動でボディに擦れてショートし火災になるリスクを極限まで低減できる。
-                        特に⑨はエンジンルームに必ず設置すること。リア側に置くと 5m の 22sq が全区間無保護になる。
+                        特に⑨はエンジンルームに必ず設置すること。Orion XS本体もスターターバッテリー直近（エンジンルーム内）に設置する設計のため、長距離配線(38sq/30cm)は短く完結し、無保護ゾーンのリスクが大幅に下がる。
                     </p>
                 </div>
                 <div style="background:#eff6ff; border-left:4px solid #3b82f6; padding:13px 16px; border-radius:6px;">
