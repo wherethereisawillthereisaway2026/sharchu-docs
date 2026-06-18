@@ -492,7 +492,7 @@
                 <circle cx="11" cy="11" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
                 <text x="11" y="14" fill="#856404" font-size="8" text-anchor="middle" class="font-bold">3</text>
                 <text x="36" y="13" fill="#ffffff" font-size="7" text-anchor="middle">BREAKER</text>
-                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">80A</text>
+                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">70A</text>
                 <text x="31" y="58" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">走行</text>
             </g>
 
@@ -753,7 +753,7 @@
                     <ul>
                         <li><strong>ブレーカー(1):</strong> バッテリー主幹プラス遮断器・キルスイッチ兼用 (150A)</li>
                         <li><strong>ブレーカー(2):</strong> MPPT充電入力保護用 (70A)</li>
-                        <li><strong>ブレーカー(3):</strong> 走行充電（Orion XS）出力保護用 (80A)</li>
+                        <li><strong>ブレーカー(3):</strong> 走行充電（Orion XS）出力保護用 (70A)</li>
                         <li><strong>ブレーカー(4):</strong> AC充電器保護用 (30A)</li>
                         <li><strong>ブレーカー(5):</strong> 大容量インバーター保護用 (150A)</li>
                         <li><strong>ブレーカー(6):</strong> 車載エアコン保護用 (60A)</li>
@@ -761,7 +761,7 @@
                         <li><strong>ブレーカー(8):</strong> ソーラーパネル（PV）入力保護用 (PV＋遮断)</li>
                         <li><strong>ブレーカー(9):</strong> オルタネーター（スターターバッテリー）入力保護用 (150A)</li>
                         <li><strong>追加保護:</strong> 各ソーラーパネル15Aヒューズ × 3個</li>
-                        <li><strong>保護器の必要数:</strong> 150A×3、80A×1、70A×1、60A×1、50A×2、30A×1、15Aヒューズ×3</li>
+                        <li><strong>保護器の必要数:</strong> 150A×3、70A×2、60A×1、50A×2、30A×1、15Aヒューズ×3</li>
                     </ul>
                 </li>
                 <li><strong>628Ahセル化（360Ah×8→628Ah×8）レビュー結果（Codexレビュー反映, 2026-06-15）:</strong>
@@ -824,7 +824,7 @@
                         <tr>
                             <td>走行充電器</td>
                             <td>Victron Orion XS 1400 / 12V入力→24V出力 / <strong style="color:#15803d;">50A運用（機器最大値で運用）</strong>/ 目安 約W140×D80×H190mm / IP65 → <strong>エンジンルーム内、スターターバッテリー直近に設置</strong></td>
-                            <td>(3) 22sq / 80A、ブレーカー(3) 80A。入力側は(9) 38sq / 150A、ブレーカー(9) 150A</td>
+                            <td>(3) 22sq / 80A、ブレーカー(3) 70A。入力側は(9) 38sq / 150A、ブレーカー(9) 150A</td>
                             <td>出力側(3): 400cm<br>入力側(9): 30cm</td>
                             <td><strong style="color:#15803d;">⚠️ 設置場所変更（Orion XSをエンジンルーム内・スターターバッテリー直近へ移設）に伴う再設計:</strong><br>
                                 入力側(12V, 距離30cm): 50A出力時の入力電流は約105A（24V×50A÷0.95効率÷12V）。38sqケーブル（許容150A、連続安全圏120A）で余裕あり。距離が短いため油圧圧着工具での端子処理必須。<br>
@@ -876,8 +876,8 @@
                         </tr>
                         <tr>
                             <td>保護器・ヒューズ</td>
-                            <td>DCブレーカー/遮断器: 150A×3、80A×1、70A×1、60A×1、50A×2、30A×1<br>ソーラーパネル個別ヒューズ: 15A×3</td>
-                            <td>150A: 主幹(1)・インバーター(5)・オルタ側(9)<br>80A: 走行充電(3)<br>70A: MPPT(2)<br>60A: 車載エアコン(6)<br>50A: ヒューズボックス(7)・PV入力(8)<br>30A: AC充電器(4)<br>15A: ソーラー各パネル</td>
+                            <td>DCブレーカー/遮断器: 150A×3、70A×2、60A×1、50A×2、30A×1<br>ソーラーパネル個別ヒューズ: 15A×3</td>
+                            <td>150A: 主幹(1)・インバーター(5)・オルタ側(9)<br>70A: MPPT(2)・走行充電(3)<br>60A: 車載エアコン(6)<br>50A: ヒューズボックス(7)・PV入力(8)<br>30A: AC充電器(4)<br>15A: ソーラー各パネル</td>
                             <td>—</td>
                             <td>合計: DCブレーカー9個 + 15Aヒューズ3個。すべてDC対応品を選定。PV側ヒューズは太陽光発電用のDC定格品を使用。予備として15Aヒューズは追加で数個用意すると安心。</td>
                         </tr>
@@ -1080,7 +1080,7 @@
                         </tr>
                         <tr>
                             <td>③</td>
-                            <td>Orion XS出力 80A</td>
+                            <td>Orion XS出力 70A</td>
                             <td>主バスバー直後（電装コンパネ内）</td>
                         </tr>
                         <tr>
