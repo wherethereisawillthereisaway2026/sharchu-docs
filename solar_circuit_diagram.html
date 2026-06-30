@@ -388,7 +388,7 @@
                 <text x="601" y="438" text-anchor="middle" class="wire-label">(6) 14sq 60A</text>
                 <text x="560" y="648" text-anchor="middle" class="wire-label">(7) 8sq 50A 仮</text>
                 <text x="971" y="74" text-anchor="middle" class="wire-label">(8) 14sq 50A</text>
-                <text x="940" y="260" text-anchor="middle" class="wire-label">(9) 38sq 150A</text>
+                <text x="940" y="260" text-anchor="middle" class="wire-label">(9) 22sq 110A</text>
             </g>
 
             <!-- ========================================== -->
@@ -681,7 +681,7 @@
                 <circle cx="11" cy="11" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
                 <text x="11" y="14" fill="#856404" font-size="8" text-anchor="middle" class="font-bold">9</text>
                 <text x="36" y="13" fill="#ffffff" font-size="7" text-anchor="middle">BREAKER</text>
-                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">150A</text>
+                <text x="31" y="47" fill="#ffffff" font-size="10" text-anchor="middle" class="font-bold">110A</text>
                 <text x="31" y="58" fill="#fca5a5" font-size="7" text-anchor="middle" class="font-bold">オルタ</text>
             </g>
 
@@ -729,7 +729,7 @@
                     冷蔵庫、照明、FFヒーター、換気ファンなどの個別負荷は細かくなるため、現段階では「24V負荷機器」としてまとめ、個別電流・個別配線は省略しています。
                 </li>
                 <li><strong>推奨ケーブル太さ・保護容量（距離反映）:</strong>
-                    推定片道距離と実運用負荷を反映し、(1) 30cm: 38sq / 150A、(2) 40cm: 14sq / 70A、(3) 400cm: 22sq / 80A、(4) 40cm: 5.5sq / 30A、(5) 40cm: 38sq / 150A、(6) 300cm: 14sq / 60A、(7) 60cm: 8sq / 50A、(8) 800cm: 14sq / 50A、(9) 30cm: 38sq / 150A を目安として表示しました。<strong style="color:#15803d;">⚠️ Orion XSをエンジンルーム内・スターターバッテリー直近へ移設したため(3)(9)を再設計：</strong>(9)入力側は距離が5m→30cmに短縮されたが50A運用時の電流(約105A)に対応するため38sqへ太径化、(3)出力側は距離が40cm→4mに延長されたが電流が半分(50A)のため既存の22sqを転用。長距離の(8)は電圧降下を抑えるため太めにしています。
+                    推定片道距離と実運用負荷を反映し、(1) 30cm: 38sq / 150A、(2) 40cm: 14sq / 70A、(3) 400cm: 22sq / 80A、(4) 40cm: 5.5sq / 30A、(5) 40cm: 38sq / 150A、(6) 300cm: 14sq / 60A、(7) 60cm: 8sq / 50A、(8) 800cm: 14sq / 50A、(9) 30cm: 22sq / 110A を目安として表示しました。<strong style="color:#15803d;">⚠️ Orion XSをエンジンルーム内・スターターバッテリー直近へ移設したため(3)(9)を再設計：</strong>(9)入力側は距離が5m→30cmに短縮され、Orion XS本体の端子物理上限（4AWG/21.2mm²≒22sq）にも合わせて22sqを採用（許容115A、実電流約105A）。距離が30cmと短く耐熱グレードのKIV線を使うことで、継続通電としては余裕がタイトな分を実務的に補う設計とした。(3)出力側は距離が40cm→4mに延長されたが電流が半分(50A)のため既存の22sqを転用。長距離の(8)は電圧降下を抑えるため太めにしています。
                 </li>
                 <li><strong>追加した保護・監視部品:</strong>
                     AC充電器、車載エアコン、ヒューズボックス送りの各プラス分岐に保護器を追加しました。マイナス側には SmartShunt 500A を追加し、バッテリー残量・充放電電流を確認できる構成にしています。ブレーカー(1)は150Aの手動遮断できるDC対応品を想定し、キルスイッチ兼用として扱います。
@@ -759,9 +759,9 @@
                         <li><strong>ブレーカー(6):</strong> 車載エアコン保護用 (60A)</li>
                         <li><strong>ブレーカー(7):</strong> ヒューズボックス送り保護用 (50A)</li>
                         <li><strong>ブレーカー(8):</strong> ソーラーパネル（PV）入力保護用 (PV＋遮断)</li>
-                        <li><strong>ブレーカー(9):</strong> オルタネーター（スターターバッテリー）入力保護用 (150A)</li>
+                        <li><strong>ブレーカー(9):</strong> オルタネーター（スターターバッテリー）入力保護用 (110A)</li>
                         <li><strong>追加保護:</strong> 各ソーラーパネル15Aヒューズ × 3個</li>
-                        <li><strong>保護器の必要数:</strong> 150A×3、70A×2、60A×1、50A×2、30A×1、15Aヒューズ×3</li>
+                        <li><strong>保護器の必要数:</strong> 150A×2、110A×1、70A×2、60A×1、50A×2、30A×1、15Aヒューズ×3</li>
                     </ul>
                 </li>
                 <li><strong>628Ahセル化（360Ah×8→628Ah×8）レビュー結果（Codexレビュー反映, 2026-06-15）:</strong>
@@ -824,13 +824,14 @@
                         <tr>
                             <td>走行充電器</td>
                             <td>Victron Orion XS 1400 / 12V入力→24V出力 / <strong style="color:#15803d;">50A運用（機器最大値で運用）</strong>/ 目安 約W140×D80×H190mm / IP65 → <strong>エンジンルーム内、スターターバッテリー直近に設置</strong></td>
-                            <td>(3) 22sq / 80A、ブレーカー(3) 70A。入力側は(9) 38sq / 150A、ブレーカー(9) 150A</td>
+                            <td>(3) 22sq / 80A、ブレーカー(3) 70A。入力側は(9) 22sq / 110A、ブレーカー(9) 110A</td>
                             <td>出力側(3): 400cm<br>入力側(9): 30cm</td>
                             <td><strong style="color:#15803d;">⚠️ 設置場所変更（Orion XSをエンジンルーム内・スターターバッテリー直近へ移設）に伴う再設計:</strong><br>
-                                入力側(12V, 距離30cm): 50A出力時の入力電流は約105A（24V×50A÷0.95効率÷12V）。38sqケーブル（許容150A、連続安全圏120A）で余裕あり。距離が短いため油圧圧着工具での端子処理必須。<br>
+                                入力側(12V, 距離30cm): 50A出力時の入力電流は約105A（24V×50A÷0.95効率÷12V）。Orion XS端子の物理上限（4AWG/21.2mm²≒22sq）に合わせて22sq（許容115A、気中1条30℃基準）を採用。<strong style="color:#b91c1c;">⚠️ 継続通電の安全マージンとしては105A×1.25=131A推奨に対し115Aとタイトだが、距離30cmと短いこと・耐熱グレードのKIV線を使うことで実務上許容と判断。</strong>端子サイズの制約上、これより太いケーブル（38sq等）は物理的に入らないため選択不可。<br>
                                 出力側(24V, 距離400cm): 50A出力時、22sqケーブル（許容80A、連続安全圏69A）で対応可。電圧降下ΔV≈0.32V（1.3% @24V）→問題なし。既存の22sqケーブルを出力側に転用可能。<br>
                                 <strong style="color:#b91c1c;">⚠️ 注意:</strong> エンジン本体・エキゾーストマニホールド等の高熱源からは離して設置（Orion XSの動作温度上限を超えると自動的に出力デレーティングがかかる）。エンジン停車後の自動停止設定を確認。<br>
-                                <strong style="color:#b91c1c;">⚠️ 628Ah化後:</strong> VictronConnectの「User defined」プロファイルでAbsorption電圧を28.0〜28.4V（MPPTと同条件）に設定し、BMSのOVP(29.2V)を最終バックストップとする二段構成にする。</td>
+                                <strong style="color:#b91c1c;">⚠️ 628Ah化後:</strong> VictronConnectの「User defined」プロファイルでAbsorption電圧を28.0〜28.4V（MPPTと同条件）に設定し、BMSのOVP(29.2V)を最終バックストップとする二段構成にする。<br>
+                                <strong style="color:#1d4ed8;">💡 出力側400cmの電圧降下対策:</strong> 既設のSmartShunt（500A）をそのままVE.Smart NetworkingでOrion XSと無線連携（追加部品の購入は不要、標準のBluetooth機能でVictronConnect上のペアリング設定のみ）。Orion XSがサブバッテリー端子の実電圧を直接認識し配線の電圧降下分を自動補正する（詳細は下記「施工上の注意点⑥」参照）。</td>
                         </tr>
                         <tr>
                             <td>AC充電器</td>
@@ -840,11 +841,11 @@
                             <td>ΔV≈0.05V（無視できる）。出力は29.2V×20A=584W。停車時・外部AC100V電源使用時のみ稼働。アース（GND）接続必須。整備時に切り離せるようバスバー直後に保護器を配置。<br><strong style="color:#b91c1c;">⚠️ 出力29.2V固定（電圧調整機能なし、3段階充電CC/CV固定）。</strong>628Ahセル化後はBMS側のセル過充電保護を主な安全マージンとして運用すること。</td>
                         </tr>
                         <tr>
-                            <td>インバーター</td>
-                            <td>24V / 2000W / 最大4000W / DC24V→AC100V / 純正弦波 / 約W380×D170×H105mm</td>
+                            <td>インバーター<br><small style="color:#64748b;">MWXNE 正弦波インバーター 24V</small></td>
+                            <td>24V / 2000W / 最大4000W / DC24V→AC100V / 純正弦波 / 約W380×D170×H105mm<br><a href="https://www.amazon.co.jp/dp/B0C8RSFSFH" target="_blank" rel="noopener">Amazon (B0C8RSFSFH)</a></td>
                             <td>(5) 38sq / 150A、ブレーカー(5) 150A</td>
                             <td>40cm</td>
-                            <td>ΔV≈0.03V（無視できる）。38sqのため端子処理に油圧圧着工具必須。突入電流が大きいため接触不良は厳禁。定格2000W運用前提。最大4000Wを長時間使用する設計では配線・ブレーカーの再計算が必要。</td>
+                            <td>ΔV≈0.03V（無視できる）。38sqのため端子処理に油圧圧着工具必須。突入電流が大きいため接触不良は厳禁。定格2000W運用前提。最大4000Wを長時間使用する設計では配線・ブレーカーの再計算が必要。<br><strong style="color:#b91c1c;">⚠️ 付属ケーブルの太さは商品ページに記載なし（未確認）。</strong>定格2000W時の電流は2000W÷24V≈83A、最大4000W時は約167A。中華系インバーターは付属ケーブルが細すぎるケースが多いとされるため、現物到着後に実測し、38sq相当に対応していなければ別途38sqケーブルへ交換すること。</td>
                         </tr>
                         <tr>
                             <td>車載エアコン</td>
@@ -863,9 +864,9 @@
                         <tr>
                             <td>スターターバッテリー</td>
                             <td>12V 車両メイン / ハイエース ガソリン ワイドボディ想定</td>
-                            <td>(9) 38sq / 150A、ブレーカー(9) 150A</td>
+                            <td>(9) 22sq / 110A、ブレーカー(9) 110A</td>
                             <td>30cm</td>
-                            <td>Orion XSをスターターバッテリー直近（エンジンルーム内）に設置することで配線距離を5m→30cmに短縮。50A出力時の入力電流は約105Aで、38sqの連続安全圏（約120A）に収まる。ΔV≈0.04V（無視できる）。アイドリング停車中は入力電圧が低下し充電効率が落ちる場合がある点は変わらず留意。</td>
+                            <td>Orion XSをスターターバッテリー直近（エンジンルーム内）に設置することで配線距離を5m→30cmに短縮。50A出力時の入力電流は約105Aで、Orion XS端子の物理上限に合わせた22sq（許容115A）を採用。継続通電の125%安全マージン推奨（131A）には届かないが、距離30cm・耐熱KIV線で実務上のリスクを抑える設計。ΔV≈0.04V（無視できる）。アイドリング停車中は入力電圧が低下し充電効率が落ちる場合がある点は変わらず留意。</td>
                         </tr>
                         <tr>
                             <td>バスバー</td>
@@ -876,8 +877,8 @@
                         </tr>
                         <tr>
                             <td>保護器・ヒューズ</td>
-                            <td>DCブレーカー/遮断器: 150A×3、70A×2、60A×1、50A×2、30A×1<br>ソーラーパネル個別ヒューズ: 15A×3</td>
-                            <td>150A: 主幹(1)・インバーター(5)・オルタ側(9)<br>70A: MPPT(2)・走行充電(3)<br>60A: 車載エアコン(6)<br>50A: ヒューズボックス(7)・PV入力(8)<br>30A: AC充電器(4)<br>15A: ソーラー各パネル</td>
+                            <td>DCブレーカー/遮断器: 150A×2、110A×1、70A×2、60A×1、50A×2、30A×1<br>ソーラーパネル個別ヒューズ: 15A×3</td>
+                            <td>150A: 主幹(1)・インバーター(5)<br>110A: オルタ側(9)<br>70A: MPPT(2)・走行充電(3)<br>60A: 車載エアコン(6)<br>50A: ヒューズボックス(7)・PV入力(8)<br>30A: AC充電器(4)<br>15A: ソーラー各パネル</td>
                             <td>—</td>
                             <td>合計: DCブレーカー9個 + 15Aヒューズ3個。すべてDC対応品を選定。PV側ヒューズは太陽光発電用のDC定格品を使用。予備として15Aヒューズは追加で数個用意すると安心。</td>
                         </tr>
@@ -1000,12 +1001,11 @@
             <div style="display:grid; gap:16px;">
 
                 <div style="background:#fff7ed; border-left:4px solid #f97316; padding:14px 16px; border-radius:6px;">
-                    <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">① Orion XS 入力側(38sq)・出力側(22sq)ともにフェルール端子必須</div>
+                    <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">① Orion XS 入力側・出力側ともに22sq、フェルール端子必須</div>
                     <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
-                        Orion XS の端子はコンパクトなブロックターミナルで、38sq・22sqともにギリギリのサイズ。
-                        <strong>高品質なフェルール端子（棒端子）をきっちり圧着</strong>して差し込むこと。
-                        芯線を雑にねじると入らない。入力側(38sq)は特に芯線が太いため、対応する大型フェルール端子と圧着工具（12t以上）を用意する。<br>
-                        どうしても入らない場合は「ブレーカー直前まで太い配線 → 本体手前の数十センチのみ細い配線」という現物合わせも選択肢。
+                        Orion XS の端子はコンパクトなブロックターミナルで、最大22sq（4AWG/21.2mm²相当）が物理上限。これより太いケーブル（38sq等）は端子に入らない。
+                        <strong>高品質なフェルール端子（棒端子）をきっちり圧着</strong>して差し込むこと。芯線を雑にねじると入らない。入力側・出力側ともに22sq用の対応するフェルール端子と圧着工具を用意する。<br>
+                        入力側(22sq・30cm)は連続105A通電とタイトな構成のため、耐熱グレード(KIV等)のケーブルを使用し、端子の締め付けトルク不足による発熱に特に注意する。
                     </p>
                 </div>
 
@@ -1021,7 +1021,7 @@
                     <div style="font-weight:700; color:#c2410c; margin-bottom:6px;">③ 走行充電線 (9)(3) はコネクタなしの 1 本直結</div>
                     <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
                         常時 100A 級（入力側）が流れる固定配線にアンダーソンコネクタを挟むと、<strong>接点抵抗が発熱・故障リスクになる</strong>。
-                        スターターバッテリーのブレーカー⑨から Orion XS まで（38sq・30cm）、および Orion XS 出力から主バスバーまで（22sq・4m、ブレーカー③）、
+                        スターターバッテリーのブレーカー⑨から Orion XS まで（22sq・30cm）、および Orion XS 出力から主バスバーまで（22sq・4m、ブレーカー③）、
                         いずれも<strong>途中コネクタなしで直結</strong>するのが最も安全。4m区間は車両床下を通る配線になるため、コルゲートチューブ等で保護し、振動による擦れを防ぐこと。
                     </p>
                 </div>
@@ -1040,6 +1040,17 @@
                     <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
                         レンジ（≈63A）＋エアコン最大（≈55A）＋その他（≈5A）＝<strong>約 123A</strong> で主ブレーカー 150A に対して余裕あり（82%使用）。
                         ただし将来の機器追加や起動突入電流が重なる瞬間を考慮し、<strong>電子レンジ使用時は他の大電流機器の同時使用を避ける</strong>習慣を持っておくと安心。
+                    </p>
+                </div>
+
+                <div style="background:#eff6ff; border-left:4px solid #3b82f6; padding:14px 16px; border-radius:6px;">
+                    <div style="font-weight:700; color:#1d4ed8; margin-bottom:6px;">⑥ Orion XSをエンジンルーム設置にする場合は VE.Smart Networking（既設のSmartShuntを活用）で出力側電圧降下を補正</div>
+                    <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
+                        Orion XSの設置場所はエンジンルーム内（スターターバッテリー直近）が正解（入力側105A・出力側50Aと、入力側の方が電流が大きいため、太く高電流な区間を短く・低電流な出力側を長距離にする方が電気的損失で有利）。<br>
+                        ただし出力側が400cmと長いため、Orion XS本体が認識する電圧と、実際にサブバッテリー端子に届く電圧の間にズレ（電圧降下分）が生じる。これを解消するため、Victron公式マニュアル記載の<strong>VE.Smart Networking</strong>機能を使い、サブバッテリー側に設置済みの<strong>SmartShunt（500A）をそのままBluetoothでOrion XSと無線連携</strong>させる。<br>
+                        <strong style="color:#15803d;">💡 追加購入は不要：</strong>VE.Smart Networking自体はOrion XS・SmartShuntともに標準搭載のBluetooth機能（Victron公式対応表で両方とも「Yes」）。専用センサー「Smart Battery Sense」を別途買わなくても、すでに設計に入っているSmartShuntが同じ役割を果たせる。設定はVictronConnectアプリ上でのペアリング（SmartShunt側でネットワーク作成→Orion XS側でJoin Existing）だけで完了する。<br>
+                        これによりOrion XSはサブバッテリー端子の実電圧を直接認識し、配線の電圧降下分（最大2Vまで自動補正、Victron公式仕様）を上乗せして出力するため、距離による充電不足を防げる。<br>
+                        <strong style="color:#b91c1c;">⚠️ SmartShuntとのBluetooth接続が切れた場合</strong>、Orion XSは「電圧が低い」と誤認識し続けて出力電圧を上げ続け、最大+2Vまで上昇する（Vbattery=12.6V想定なら14.6Vまで）。配線取り回し時にコネクタ・通信状態を必ず確認すること。
                     </p>
                 </div>
 
@@ -1111,9 +1122,9 @@
                         </tr>
                         <tr>
                             <td style="color:#b91c1c;">⑨</td>
-                            <td>オルタ側 150A</td>
+                            <td>オルタ側 110A</td>
                             <td><strong>スターターバッテリー＋端子から 30cm 以内（エンジンルーム内）</strong></td>
-                            <td>Orion XS本体もエンジンルーム内・スターターバッテリー直近に設置するため配線距離は30cmのみ。38sqケーブルの保護として150Aブレーカーを採用。距離が短くなったことで無保護ゾーンのリスクも大幅に低減。</td>
+                            <td>Orion XS本体もエンジンルーム内・スターターバッテリー直近に設置するため配線距離は30cmのみ。22sqケーブル（Orion XS端子の物理上限、許容115A）の保護として110Aブレーカーを採用（実電流約105Aより上、ケーブル許容115Aより下のタイトな設定）。距離が短くなったことで無保護ゾーンのリスクも大幅に低減。</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1124,7 +1135,7 @@
                     <div style="font-weight:700; color:#b91c1c; margin-bottom:4px;">🛑 ① と ⑨ は「30cm 以内」が絶対ルール</div>
                     <p style="margin:0; font-size:13.5px; line-height:1.7; color:#374151;">
                         バッテリーからブレーカーまでの区間はブレーカーが保護できない無防備ゾーン。この距離を 30cm 以内に抑えることで、配線が車の振動でボディに擦れてショートし火災になるリスクを極限まで低減できる。
-                        特に⑨はエンジンルームに必ず設置すること。Orion XS本体もスターターバッテリー直近（エンジンルーム内）に設置する設計のため、長距離配線(38sq/30cm)は短く完結し、無保護ゾーンのリスクが大幅に下がる。
+                        特に⑨はエンジンルームに必ず設置すること。Orion XS本体もスターターバッテリー直近（エンジンルーム内）に設置する設計のため、入力配線(22sq/30cm)は短く完結し、無保護ゾーンのリスクが大幅に下がる。
                     </p>
                 </div>
                 <div style="background:#eff6ff; border-left:4px solid #3b82f6; padding:13px 16px; border-radius:6px;">
