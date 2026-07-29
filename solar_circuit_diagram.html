@@ -848,13 +848,6 @@
                             <td>ΔV≈0.03V（無視できる）。38sqのため端子処理に油圧圧着工具必須。突入電流が大きいため接触不良は厳禁。定格2000W運用前提。最大4000Wを長時間使用する設計では配線・ブレーカーの再計算が必要。<br><strong style="color:#b91c1c;">⚠️ 付属ケーブルの太さは商品ページに記載なし（未確認）。</strong>定格2000W時の電流は2000W÷24V≈83A、最大4000W時は約167A。中華系インバーターは付属ケーブルが細すぎるケースが多いとされるため、現物到着後に実測し、38sq相当に対応していなければ別途38sqケーブルへ交換すること。</td>
                         </tr>
                         <tr>
-                            <td>DC-DCコンバーター<br><small style="color:#64748b;">24V→12V, 20A/240W</small></td>
-                            <td>24V入力→12V出力 / 定格20A・240W / 約W74〜75×D74×H31〜32mm<br><a href="https://www.amazon.co.jp/dp/B0DFWGXV2N" target="_blank" rel="noopener">Amazon (B0DFWGXV2N)</a></td>
-                            <td>ヒューズボックス以降、12V系アクセサリー用。推奨ヒューズ15A（定格フルロード240W÷24V＝10A×1.5）</td>
-                            <td>—</td>
-                            <td>実運用時の消費電力は12V側負荷次第だが、実測ベースで1日あたり約0.5〜1.2Ah（24Vバッテリー側換算、約12〜30Wh/日）程度と軽微。ヒューズは実消費ではなく定格フルロード（10A）基準で選定。</td>
-                        </tr>
-                        <tr>
                             <td>車載エアコン</td>
                             <td>24V DC / 最大55A / 通常15〜45A / 冷房能力2200〜2400W級</td>
                             <td>(6) 14sq / 60A、ブレーカー(6) 60A</td>
@@ -867,20 +860,6 @@
                             <td>(7) 8sq / 50A、ブレーカー(7) 50A</td>
                             <td>60cm</td>
                             <td>ΔV≈0.08V（無視できる）。BOX内の個別ヒューズは各機器定格×1.25以下で選定。幹線ブレーカー(7)とBOX内ヒューズの保護協調（BOX内ヒューズが先に飛ぶ）を確認。</td>
-                        </tr>
-                        <tr>
-                            <td>シガーソケット 電源ソケット（メス端子）<br><small style="color:#64748b;">エスネット / 12V-24V対応</small></td>
-                            <td>出力10A（12V時相当、電流上限として24V配線時も同様に適用）/ ヒューズ内蔵 / ケーブル長約40cm / 耐熱PVC＋銅導体 / 動作温度-20〜80℃<br><a href="https://www.amazon.co.jp/dp/B0875FRYL6/" target="_blank" rel="noopener">Amazon (B0875FRYL6)</a></td>
-                            <td>ヒューズボックス以降、24V本線に直結。推奨ヒューズ10A</td>
-                            <td>—</td>
-                            <td>200Wのシガーソケット充電器（ROADRESS、下記行参照）を接続予定（200W÷24V≈8.3A、ソケット定格10Aの83%）。定格超過はしないが余裕は薄いため、連続使用は避け断続使用にとどめるか150W前後の機器に留めるのが望ましい。</td>
-                        </tr>
-                        <tr>
-                            <td>シガーソケット充電器<br><small style="color:#64748b;">ROADRESS 200W 3ポート</small></td>
-                            <td>入力24V DC / 最大200W / USB-C×2（各100W、PD3.0・PPS対応）＋USB-A 18W（QC3.0/QC4.0対応）/ UL・CE・FCC・ROHS認証・過電流/過電圧/過負荷/過熱/短絡保護内蔵<br><a href="https://www.amazon.co.jp/dp/B0DJVQXHLZ" target="_blank" rel="noopener">Amazon (B0DJVQXHLZ)</a></td>
-                            <td>上記シガーソケット電源ソケット（B0875FRYL6）経由でヒューズボックス24V本線に接続</td>
-                            <td>—</td>
-                            <td>200W時の電流は200W÷24V≈8.3A。商品仕様表記の「アンペア数5A」はワット数200Wと数値が整合しない（テンプレート由来の誤記の可能性）ため参考にせず、W数から計算した8.3Aを設計基準とする。レビューに3ポート同時使用時は出力が配分される旨・発熱の指摘あり。常時フル200W運用は想定せず余裕を見て評価。</td>
                         </tr>
                         <tr>
                             <td>スターターバッテリー</td>
@@ -1002,13 +981,34 @@
                             <td>5A（3台まとめて）</td>
                             <td>常時録画用途（ドラレコ等）の場合は電源オン連動制御を検討。</td>
                         </tr>
+                        <tr>
+                            <td>シガーソケット 電源ソケット（メス端子）<br><small style="color:#64748b;">エスネット / 12V-24V対応</small></td>
+                            <td>—（ソケット自体は非消費。下流の「シガーソケット充電器」欄参照）</td>
+                            <td>定格上限10A（12V時相当、電流上限として24V配線時も同様に適用）</td>
+                            <td>10A</td>
+                            <td>ヒューズ内蔵 / ケーブル長約40cm / 耐熱PVC＋銅導体 / 動作温度-20〜80℃。ヒューズボックス以降、24V本線に直結。<a href="https://www.amazon.co.jp/dp/B0875FRYL6/" target="_blank" rel="noopener">Amazon (B0875FRYL6)</a></td>
+                        </tr>
+                        <tr>
+                            <td>シガーソケット充電器<br><small style="color:#64748b;">ROADRESS 200W 3ポート</small></td>
+                            <td>最大200W</td>
+                            <td>8.3A（200W÷24V）</td>
+                            <td>10A（上流のシガーソケット電源ソケットの定格上限に合わせる）</td>
+                            <td>入力24V DC / USB-C×2（各100W、PD3.0・PPS対応）＋USB-A 18W（QC3.0/QC4.0対応）/ UL・CE・FCC・ROHS認証・過電流/過電圧/過負荷/過熱/短絡保護内蔵。上記シガーソケット電源ソケット経由で接続。商品仕様表記の「アンペア数5A」は200Wと数値が整合しない（テンプレート由来の誤記の可能性）ため参考にせず、W数から計算した8.3Aを設計基準とする。レビューに3ポート同時使用時は出力が配分される旨・発熱の指摘あり。常時フル200W運用は想定せず余裕を見て評価。<a href="https://www.amazon.co.jp/dp/B0DJVQXHLZ" target="_blank" rel="noopener">Amazon (B0DJVQXHLZ)</a></td>
+                        </tr>
+                        <tr>
+                            <td>DC-DCコンバーター<br><small style="color:#64748b;">24V→12V, 20A/240W</small></td>
+                            <td>定格240W（フルロード時）/ 実測ベース12〜30Wh/日</td>
+                            <td>10A（定格フルロード時、240W÷24V）</td>
+                            <td>15A</td>
+                            <td>24V入力→12V出力 / 定格20A・240W / 約W74〜75×D74×H31〜32mm。ヒューズボックス以降、12V系アクセサリー用。実運用時の消費電力は12V側負荷次第だが、実測ベースで1日あたり約0.5〜1.2Ah（24Vバッテリー側換算、約12〜30Wh/日）程度と軽微。ヒューズは実消費ではなく定格フルロード（10A）基準で選定。<a href="https://www.amazon.co.jp/dp/B0DFWGXV2N" target="_blank" rel="noopener">Amazon (B0DFWGXV2N)</a></td>
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr style="background: #f1f5f9;">
                             <td><strong>合計（W数判明分）</strong></td>
-                            <td><strong>431W</strong></td>
-                            <td><strong>≈18A</strong></td>
-                            <td colspan="2">換気扇・センサー・LEDライト類（推定+100W）を含めると <strong>≈22〜25A</strong> 想定。ヒューズボックス送り50Aブレーカーに対して十分な余裕あり。FFヒーターとエアコンの同時使用はしない前提。</td>
+                            <td><strong>631W</strong></td>
+                            <td><strong>≈26.3A</strong></td>
+                            <td colspan="2">換気扇・センサー・LEDライト類（推定+100W）を含めると <strong>≈30〜31A</strong> 想定。さらにDC-DCコンバーター（24V→12V, 20A/240W）が定格フルロードで動作した場合は+10A（実運用は12〜30Wh/日と軽微だが、フル稼働を想定した予備として計上すると合計 <strong>約40〜41A</strong>）。ヒューズボックス送り50Aブレーカーに対しては、フル稼働想定でも約20%弱の余裕を確保。FFヒーターとエアコンの同時使用はしない前提。</td>
                         </tr>
                     </tfoot>
                 </table>
