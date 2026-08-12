@@ -254,7 +254,8 @@
     <h2>ACC 連動走行前チェックシステム（Phase 4）</h2>
     <p style="font-size:.85rem;color:#334155;margin-bottom:.75rem;">
       ACC 電源 ON を検知し、走行前に収納忘れ・開けっぱなしを自動チェック。異常があれば圧電ブザー + LED + ntfy.sh で警告。<br>
-      センサー数: ソーラー×2（チルト+スライド）/ ジャッキ×4（前後左右）/ 窓×3（リア+サイドF+サイドR）/ 他4 = <strong>合計13個以上</strong><br>
+      センサー数（RPi 側）: ソーラー×2（チルト+スライド）/ ジャッキ×4（前後左右）/ 他4 = <strong>合計10個以上</strong><br>
+      <span style="color:#b91c1c;">窓×3（リア+サイドF+サイドR）は RPi 非依存の独立回路に分離 → 下記「窓開閉 独立警告システム」参照</span><br>
       <em>Codex (gpt-5.5) レビュー反映: ACC 検知はフォトカプラ絶縁必須。デバウンス・抑制込みの設計。</em>
     </p>
     <table>
@@ -266,7 +267,7 @@
         <tr><td class="b">RV ジャッキ展開中（前右）</td><td class="p">★★★</td><td>前右ジャッキアーム基部</td></tr>
         <tr><td class="b">RV ジャッキ展開中（後左）</td><td class="p">★★★</td><td>後左ジャッキアーム基部</td></tr>
         <tr><td class="b">RV ジャッキ展開中（後右）</td><td class="p">★★★</td><td>後右ジャッキアーム基部</td></tr>
-        <tr><td class="b">RV 窓開放中（リア）</td><td class="p">★★★</td><td>リア窓枠 + 窓パネル間 × 1</td><td rowspan="3">走行風で破損・通行障害。3箇所すべて閉確認が必要</td></tr>
+        <tr><td class="b">RV 窓開放中（リア）</td><td class="p">★★★</td><td>リア窓枠 + 窓パネル間 × 1</td><td rowspan="3">走行風で破損・通行障害。3箇所すべて閉確認が必要。<strong style="color:#b91c1c;">RPi非依存の独立リレー回路で判定（下記参照）</strong></td></tr>
         <tr><td class="b">RV 窓開放中（サイドフロント）</td><td class="p">★★★</td><td>サイドフロント窓枠間 × 1</td></tr>
         <tr><td class="b">RV 窓開放中（サイドリア）</td><td class="p">★★★</td><td>サイドリア窓枠間 × 1</td></tr>
         <tr><td class="b">サイドオーニング展開中</td><td class="p">★★★</td><td>オーニングアーム付根</td><td>展開したまま走行で車体ごと破壊</td></tr>
@@ -296,6 +297,43 @@
     <div class="note note-red" style="margin-top:.5rem;">
       <strong>配線注意:</strong>
       センサー線をインバーター・DC-DC・モーター配線に近接させない。ルーフ等長距離配線はコルゲートチューブ保護 + 防水コネクタ（IP67以上）必須。シールド片端接地。
+    </div>
+  </div>
+
+  <!-- 窓開閉 独立警告システム -->
+  <div class="card">
+    <h2>窓開閉 独立警告システム（RPi非依存・リレー回路）</h2>
+    <p style="font-size:.85rem;color:#334155;margin-bottom:.75rem;">
+      RV窓（サイド・リア・バック）の開閉チェックはRPiに依存させず、リレー1個だけのシンプルな回路で完結させる。ACC ON中のみ動作し、いずれかの窓が開いていれば警告ランプ点灯。
+    </p>
+    <table>
+      <thead><tr><th>部品</th><th>仕様</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td class="b">リレー</td><td class="p">12V自動車用 SPDT（NC接点付き）</td><td>数百円で入手可</td></tr>
+        <tr><td class="b">フライバックダイオード</td><td class="p">1N4007等</td><td>コイル逆起電力保護。コイルに並列</td></tr>
+        <tr><td class="b">警告ランプ</td><td class="p">LED＋抵抗 or パイロットランプ</td><td>ブザー追加時は同じNC接点に並列接続</td></tr>
+        <tr><td class="b">窓センサー</td><td class="p">磁気リードスイッチ 常閉(NC) × 3</td><td>サイド・リア・バック。直列（ループ状）に配線</td></tr>
+        <tr><td class="b">ヒューズ</td><td class="p">1A程度</td><td>ACC分岐部</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note note-blue" style="margin-top:.75rem;">
+      <strong>配線構成:</strong><br>
+      ACC 12V+ → ヒューズ → 窓①(直列) → 窓②(直列) → 窓③(直列) → リレーコイル(+) → リレーコイル(-) → GND（コイルに並列でフライバックダイオード）<br>
+      ACC 12V+ → リレーNC接点(COM側) → 警告ランプ(+) → ランプ(-) → GND
+    </div>
+
+    <div class="note" style="margin-top:.5rem;">
+      <strong>動作原理:</strong><br>
+      ① 窓が全部閉：3つのリードスイッチが直列で全て導通 → リレーコイル励磁 → NC接点「開」→ <strong>ランプ消灯</strong><br>
+      ② いずれか1つでも開：ループが切れる → リレー非励磁 → NC接点「閉」→ <strong>ランプ点灯</strong><br>
+      ③ センサー線の断線も回路が切れるため開扱いになりランプ点灯（フェイルセーフ）<br>
+      ④ ACC電源が入っているときだけ動作（ACC OFF中は無通電）
+    </div>
+
+    <div class="note note-red" style="margin-top:.5rem;">
+      <strong>配線注意:</strong> リードスイッチは<strong>直列（ループ状）</strong>で配線（並列にすると「全部開いたときだけ検知」の逆挙動になる）。窓枠側の接続部は防水コネクタ（IP67以上）必須。信号線はインバーター・DC-DC・モーター配線から離し、GND線と軽くツイストしてノイズ対策。<br>
+      拡張時（スライドドア等）は同じループに直列でスイッチを追加するだけで回路変更不要。
     </div>
   </div>
 
