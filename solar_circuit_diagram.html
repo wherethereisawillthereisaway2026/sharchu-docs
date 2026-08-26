@@ -286,9 +286,8 @@
             
             <!-- Battery Cells to BMS B- (Black Wire, Negative) -->
             <path d="M 120 280 L 120 460 L 190 460" stroke="var(--wire-neg)" stroke-width="4.5" fill="none" />
-            <!-- BMS P- to SmartShunt, then Black Bus Bar ② -->
-            <path d="M 290 460 L 305 460" stroke="var(--wire-neg)" stroke-width="4.5" fill="none" />
-            <path d="M 355 460 L 370 460" stroke="var(--wire-neg)" stroke-width="4.5" fill="none" />
+            <!-- BMS P- to Black Bus Bar ② (直結) -->
+            <path d="M 290 460 L 370 460" stroke="var(--wire-neg)" stroke-width="4.5" fill="none" />
 
             <!-- --- CENTER SECTION: RED BUS BAR ① DISTRIBUTIONS (POSITIVE - TOP BUSBAR) --- -->
             <!-- x折り返し点: R1=450, R2=500, R3=456, R4=516, R5=542, R6=440 → 上段行きほど左、下段行きほど右に逃がして交差を防止 -->
@@ -426,14 +425,6 @@
 
                 <line x1="15" y1="95" x2="85" y2="95" stroke="#cbd5e1" stroke-width="2" />
                 <text x="50" y="115" fill="#10b981" font-size="11" text-anchor="middle" class="font-bold">正常動作監視中</text>
-            </g>
-
-            <!-- Battery Monitor Shunt -->
-            <g class="component-group" transform="translate(305, 442)">
-                <rect width="50" height="36" rx="5" fill="#e2e8f0" stroke="#475569" stroke-width="1.5" />
-                <rect x="6" y="13" width="38" height="10" rx="3" fill="#94a3b8" />
-                <text x="25" y="11" fill="#1e293b" font-size="7.5" text-anchor="middle" class="font-bold">SmartShunt</text>
-                <text x="25" y="32" fill="#334155" font-size="8" text-anchor="middle" class="font-bold">500A</text>
             </g>
 
             <!-- Main Battery Breaker (Positive side - Breaker ①) -->
@@ -732,7 +723,7 @@
                     推定片道距離と実運用負荷を反映し、(1) 30cm: 38sq / 150A、(2) 40cm: 14sq / 70A、(3) 400cm: 22sq / 80A、(4) 40cm: 5.5sq / 30A、(5) 40cm: 38sq / 150A、(6) 300cm: 14sq / 60A、(7) 60cm: 8sq / 50A、(8) 800cm: 14sq / 50A、(9) 30cm: 22sq / 110A を目安として表示しました。<strong style="color:#15803d;">⚠️ Orion XSをエンジンルーム内・スターターバッテリー直近へ移設したため(3)(9)を再設計：</strong>(9)入力側は距離が5m→30cmに短縮され、Orion XS本体の端子物理上限（4AWG/21.2mm²≒22sq）にも合わせて22sqを採用（許容115A、実電流約105A）。距離が30cmと短く耐熱グレードのKIV線を使うことで、継続通電としては余裕がタイトな分を実務的に補う設計とした。(3)出力側は距離が40cm→4mに延長されたが電流が半分(50A)のため既存の22sqを転用。長距離の(8)は電圧降下を抑えるため太めにしています。
                 </li>
                 <li><strong>追加した保護・監視部品:</strong>
-                    AC充電器、車載エアコン、ヒューズボックス送りの各プラス分岐に保護器を追加しました。マイナス側には SmartShunt 500A を追加し、バッテリー残量・充放電電流を確認できる構成にしています。ブレーカー(1)は150Aの手動遮断できるDC対応品を想定し、キルスイッチ兼用として扱います。
+                    AC充電器、車載エアコン、ヒューズボックス送りの各プラス分岐に保護器を追加しました。ブレーカー(1)は150Aの手動遮断できるDC対応品を想定し、キルスイッチ兼用として扱います。
                 </li>
                 <li><strong>バスバー容量:</strong>
                     バスバー【1】は 600A級、バスバー【2】は 100A級の目安を表示しました。実物は連続電流・端子サイズ・絶縁カバーの有無を確認してください。
@@ -789,23 +780,16 @@
                         <tr>
                             <td>EVE MB56 バッテリー<br><small style="color:#64748b;">628Ah 3.2V LiFePO4セル</small></td>
                             <td>24V系 / 3.2V 628Ahセル(EVE MB56)×8直列 / 約16.08kWh（実使用約11.26kWh @20-90%）/ 横8個1列配置: セル352.2×71.7×206.7mm(公式データシート値) → パック W574×D207×H352mm / セル重量 公称11.3kg±0.3kg×8個＝約90kg（ケース込み100kg超想定）</td>
-                            <td>(1) 38sq / 150A、主ブレーカー(1) キルスイッチ兼用。マイナス側はBMS→SmartShunt→バスバー【1】ー</td>
+                            <td>(1) 38sq / 150A、主ブレーカー(1) キルスイッチ兼用。マイナス側はBMS→バスバー【1】ー</td>
                             <td>30cm</td>
                             <td>ΔV≈0.04V（無視できる）。38sqは剛性が高く曲げが困難なため取り回しルートを事前確認。端子圧着には油圧圧着工具（12t以上）が必須。作業前にキルスイッチ①を必ず遮断。<br><strong style="color:#b91c1c;">⚠️ 628Ah化に伴う追加対応:</strong> ①バッテリー＋端子直近30cm以内にHIC（高遮断容量）DCヒューズを新設（短絡保護を主ブレーカーと分離）。②セル高さ352mm（現行+157mm）・総重量約90kg（現行+34kg）に対応するため設置棚の床面補強・固定強度・重心/車軸荷重を再計算すること。</td>
                         </tr>
                         <tr>
                             <td>BMS（保護ボード）<br><small style="color:#64748b;">JK-B2A8S30PHCR</small></td>
                             <td>JK BMS / 8S 24V LiFePO4専用 / アクティブバランサー内蔵 2A / 連続電流300A / Bluetooth・Wi-Fi対応</td>
-                            <td>バッテリーマイナス → BMS(B-) → BMS(P-) → SmartShunt → バスバー【1】ー</td>
+                            <td>バッテリーマイナス → BMS(B-) → BMS(P-) → バスバー【1】ー</td>
                             <td>—</td>
                             <td>連続電流300A。150Aシステムに対して2倍の余裕あり。B-（セル側マイナス）とP-（出力側マイナス）の接続方向を誤ると保護機能が動作しないため必ず確認。Bluetoothアプリでセル電圧・SOC・温度・過電流履歴をリアルタイム監視可能。<br><strong style="color:#b91c1c;">⚠️ 628Ah化後の設定変更:</strong> アプリの「バッテリー容量」設定値を360Ah→628Ahに変更し、SOC計算・電流センサーのキャリブレーションを再実施。Cell OVP閾値（3.65V/セル＝29.2V）は変更不要だが、充電器側CV電圧を28.0〜28.4Vに抑えてOVP誤発動を防ぐバックストップとして運用する。</td>
-                        </tr>
-                        <tr>
-                            <td>SmartShunt</td>
-                            <td>500A</td>
-                            <td>バッテリーマイナス系統に直列</td>
-                            <td>—</td>
-                            <td>残量・充放電電流・消費電力量の監視用。Victron GX連携でスマホ監視も可能。シャント端子の締め付けトルクを守る。</td>
                         </tr>
                         <tr>
                             <td>ソーラーパネル<br><small style="color:#64748b;">AIKO-A440-MAH54Tm</small></td>
@@ -830,8 +814,7 @@
                                 入力側(12V, 距離30cm): 50A出力時の入力電流は約105A（24V×50A÷0.95効率÷12V）。Orion XS端子の物理上限（4AWG/21.2mm²≒22sq）に合わせて22sq（許容115A、気中1条30℃基準）を採用。<strong style="color:#b91c1c;">⚠️ 継続通電の安全マージンとしては105A×1.25=131A推奨に対し115Aとタイトだが、距離30cmと短いこと・耐熱グレードのKIV線を使うことで実務上許容と判断。</strong>端子サイズの制約上、これより太いケーブル（38sq等）は物理的に入らないため選択不可。<br>
                                 出力側(24V, 距離400cm): 50A出力時、22sqケーブル（許容80A、連続安全圏69A）で対応可。電圧降下ΔV≈0.32V（1.3% @24V）→問題なし。既存の22sqケーブルを出力側に転用可能。<br>
                                 <strong style="color:#b91c1c;">⚠️ 注意:</strong> エンジン本体・エキゾーストマニホールド等の高熱源からは離して設置（Orion XSの動作温度上限を超えると自動的に出力デレーティングがかかる）。エンジン停車後の自動停止設定を確認。<br>
-                                <strong style="color:#b91c1c;">⚠️ 628Ah化後:</strong> VictronConnectの「User defined」プロファイルでAbsorption電圧を28.0〜28.4V（MPPTと同条件）に設定し、BMSのOVP(29.2V)を最終バックストップとする二段構成にする。<br>
-                                <strong style="color:#1d4ed8;">💡 出力側400cmの電圧降下対策:</strong> 既設のSmartShunt（500A）をそのままVE.Smart NetworkingでOrion XSと無線連携（追加部品の購入は不要、標準のBluetooth機能でVictronConnect上のペアリング設定のみ）。Orion XSがサブバッテリー端子の実電圧を直接認識し配線の電圧降下分を自動補正する（詳細は下記「施工上の注意点⑥」参照）。</td>
+                                <strong style="color:#b91c1c;">⚠️ 628Ah化後:</strong> VictronConnectの「User defined」プロファイルでAbsorption電圧を28.0〜28.4V（MPPTと同条件）に設定し、BMSのOVP(29.2V)を最終バックストップとする二段構成にする。</td>
                         </tr>
                         <tr>
                             <td>AC充電器</td>
@@ -1093,17 +1076,6 @@
                     </p>
                 </div>
 
-                <div style="background:#eff6ff; border-left:4px solid #3b82f6; padding:14px 16px; border-radius:6px;">
-                    <div style="font-weight:700; color:#1d4ed8; margin-bottom:6px;">⑥ Orion XSをエンジンルーム設置にする場合は VE.Smart Networking（既設のSmartShuntを活用）で出力側電圧降下を補正</div>
-                    <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
-                        Orion XSの設置場所はエンジンルーム内（スターターバッテリー直近）が正解（入力側105A・出力側50Aと、入力側の方が電流が大きいため、太く高電流な区間を短く・低電流な出力側を長距離にする方が電気的損失で有利）。<br>
-                        ただし出力側が400cmと長いため、Orion XS本体が認識する電圧と、実際にサブバッテリー端子に届く電圧の間にズレ（電圧降下分）が生じる。これを解消するため、Victron公式マニュアル記載の<strong>VE.Smart Networking</strong>機能を使い、サブバッテリー側に設置済みの<strong>SmartShunt（500A）をそのままBluetoothでOrion XSと無線連携</strong>させる。<br>
-                        <strong style="color:#15803d;">💡 追加購入は不要：</strong>VE.Smart Networking自体はOrion XS・SmartShuntともに標準搭載のBluetooth機能（Victron公式対応表で両方とも「Yes」）。専用センサー「Smart Battery Sense」を別途買わなくても、すでに設計に入っているSmartShuntが同じ役割を果たせる。設定はVictronConnectアプリ上でのペアリング（SmartShunt側でネットワーク作成→Orion XS側でJoin Existing）だけで完了する。<br>
-                        これによりOrion XSはサブバッテリー端子の実電圧を直接認識し、配線の電圧降下分（最大2Vまで自動補正、Victron公式仕様）を上乗せして出力するため、距離による充電不足を防げる。<br>
-                        <strong style="color:#b91c1c;">⚠️ SmartShuntとのBluetooth接続が切れた場合</strong>、Orion XSは「電圧が低い」と誤認識し続けて出力電圧を上げ続け、最大+2Vまで上昇する（Vbattery=12.6V想定なら14.6Vまで）。配線取り回し時にコネクタ・通信状態を必ず確認すること。
-                    </p>
-                </div>
-
             </div>
         </div>
     </div>
@@ -1199,7 +1171,7 @@
                 <div style="background:#f0fdf4; border-left:4px solid #22c55e; padding:13px 16px; border-radius:6px;">
                     <div style="font-weight:700; color:#15803d; margin-bottom:4px;">✅ ブレーカーはすべてプラス線（赤）にのみ挿入</div>
                     <p style="margin:0; font-size:13.5px; line-height:1.7; color:#374151;">
-                        マイナス（黒）配線はブレーカーを介さずシャント→マイナスバスバーへ直結。本回路はすべてプラス側ブレーカー構成で設計済み。
+                        マイナス（黒）配線はブレーカーを介さずマイナスバスバーへ直結。本回路はすべてプラス側ブレーカー構成で設計済み。
                     </p>
                 </div>
             </div>
