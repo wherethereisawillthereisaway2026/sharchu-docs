@@ -76,12 +76,12 @@
 <div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
 <div>  <span class="c">├─ I2C    :</span> <span class="v">SHT31 バッテリ庫 / SHT31 室内 / SCD41（CO₂）</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">MQ-7+閾値モジュール / CO警報GPIO / 水漏れ / ブザー</span></div>
-<div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（IRLZ44N）← タッチサイクル 切→弱→強→弱→切</span></div>
+<div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（Akozon YYNMOS-4 ドライバーモジュール）← タッチサイクル 切→弱→強→弱→切</span></div>
 <div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span></div>
 <div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span></div>
-<div>  <span class="c">├─ GPIO   :</span> <span class="v">AM312人感センサー入力 → 足元LED（IRLZ44N）</span></div>
-<div>  <span class="c">├─ GPIO   :</span> <span class="v">足元LED（IRLZ44N）← スライドドア人感連動</span></div>
-<div>  <span class="c">└─ USB Hub（Anker PowerExpand+ 7-in-1）</span> <span class="w">← 既存品流用。USB-A×2 / PD 60W給電 / Ethernet内蔵</span></div>
+<div>  <span class="c">├─ GPIO   :</span> <span class="v">AM312人感センサー入力 → 足元LED（Akozon YYNMOS-4 ドライバーモジュール）</span></div>
+<div>  <span class="c">├─ GPIO   :</span> <span class="v">足元LED（Akozon YYNMOS-4 ドライバーモジュール）← スライドドア人感連動</span></div>
+<div>  <span class="c">└─ USB Hub（Anker PowerExpand+ 7-in-1）</span> <span class="w">← 既存品流用。USB-A×2 / PD 60W給電 / Ethernet内蔵 / シガーソケット経由サンワPD65Wカーチャージャーから60W入力→48WをRPiへパススルー</span></div>
 <div>      <span class="c">├─</span> <span class="v">USB カメラ 前（魚眼）← アクティブ延長ケーブル</span></div>
 <div>      <span class="c">├─</span> <span class="v">USB カメラ 後（魚眼）← アクティブ延長ケーブル</span></div>
 <div>      <span class="c">└─</span> <span class="w">Phase 3 以降：左・右カメラ追加</span></div>
@@ -126,6 +126,7 @@
         <tr><td class="b">水漏れセンサー</td><td class="p">¥300</td><td>短時間パルス読み取り（常時通電は腐食）</td></tr>
         <tr><td class="b">バイメタルサーモスタット</td><td class="p">¥500</td><td>換気ファン直結</td></tr>
         <tr><td class="b">Anker PowerExpand+ 7-in-1 USB Hub</td><td class="p">¥0（既存品）</td><td>USB-A×2・PD 60W・Ethernet内蔵。60W PDチャージャー接続で12Wをハブ自己給電・48WをRPiへパススルー</td></tr>
+        <tr><td class="b">サンワダイレクト カーチャージャー PD65W対応（200-CAR124AC）</td><td class="p">¥2,780</td><td>Ankerハブ用電源。12V/24V対応、シガーソケット経由で接続（既存のシガーソケット電源ソケット配線を共用）。USB-C 65W出力でハブの60W入力要件を満たす</td></tr>
         <tr><td class="b">USB 魚眼カメラ × 2（まず）</td><td class="p">¥5,000</td><td>ELP 170° 等。検証後に +2 台</td></tr>
         <tr><td class="b">アクティブ USB 延長 × 2</td><td class="p">¥3,000</td><td class="warn">3m 超えはアクティブ必須。パッシブは信号減衰</td></tr>
         <tr><td class="b">コルゲートチューブ・圧着端子</td><td class="p">¥2,000</td><td>全配線保護。振動・擦れ対策</td></tr>
@@ -139,9 +140,8 @@
         <tr><td class="b">フォトカプラ（PC817）+ TVS ダイオード + 抵抗</td><td class="p">¥300</td><td>ACC 12V 検知回路。GPIO への絶縁入力。車載ノイズ・サージから RPi 保護。Phase 4</td></tr>
         <tr><td class="b">TTP223 タッチセンサーモジュール × 3</td><td class="p">¥300〜</td><td>メインLED調光サイクル用。MODEピン=オープン（モーメンタリ）。スライドドア/ベッド横①/ベッド横②に設置、各GPIOへ個別配線しソフトでOR判定。Phase 4</td></tr>
         <tr><td class="b">AM312 人感センサー（PIR）</td><td class="p">¥200〜</td><td>スライドドア足元LED自動点灯。3.3V直接駆動可。Phase 4</td></tr>
-        <tr><td class="b">IRLZ44N MOSFETモジュール × 2</td><td class="p">¥400〜</td><td>メインLED（PWM調光）+ 足元LED（ON/OFF）各1個。GND共通化必須。Phase 4</td></tr>
-        <tr><td class="b">Walfront DC24V 4pinPWMブロワーファン</td><td class="p">¥2,185</td><td>室内換気扇（天井、1台）。黒GND/赤VCC/黄Tach/青PWM。青をGPIO13へ直結、赤黒は24V本線へ常時通電。MOSFET不使用のシンプル構成</td></tr>
-        <tr><td class="b">カーボン抵抗 1kΩ（1/4W）</td><td class="p">数円</td><td>換気扇PWM信号線(青)の保護抵抗。GPIO13との間に直列。任意だが推奨</td></tr>
+        <tr><td class="b">Akozon YYNMOS-4 4chドライバーモジュール</td><td class="p">¥966</td><td>フォトカプラ絶縁PWM MOSFETドライバ、10A/ch。DC+/DC-/PWM/GND/OUT+/OUT-の6端子でGPIOと直結、抵抗・はんだ付け不要。メインLED（PWM調光）+ 足元LED（ON/OFF）で2ch使用、残り2chは予備。PWM周波数0〜1kHz・入力信号3〜20V（RPi 3.3Vは範囲内）。Phase 4</td></tr>
+        <tr><td class="b">Walfront DC24V 4pinPWMブロワーファン</td><td class="p">¥2,185</td><td>室内換気扇（天井、1台）。黒GND/赤VCC/黄Tach/青PWM。青をGPIO13へ直結、赤黒は24V本線へ常時通電。MOSFET不使用のシンプル構成、保護抵抗も省略</td></tr>
         <tr style="background:#f0fdf4;"><td class="b ok">合計（最小構成）</td><td class="p">約 ¥47,700〜54,000</td><td>MEAN WELL・ネットワーク除く。カメラ Phase 3・リモコン・走行前チェック・LED制御 Phase 4 含む</td></tr>
       </tbody>
     </table>
@@ -358,9 +358,9 @@
       <thead><tr><th>モジュール</th><th>型番</th><th>設定・接続</th></tr></thead>
       <tbody>
         <tr><td class="b">タッチセンサー ×3</td><td>TTP223</td><td>MODEピン = オープン（モーメンタリ）→ GPIO5(スライドドア)/GPIO6(ベッド横①)/GPIO16(ベッド横②) 入力（立ち上がりエッジ割り込み）。VCC/GNDは共通バスから分岐、OUTのみ個別配線</td></tr>
-        <tr><td class="b">MOSFET</td><td>IRLZ44N</td><td>GPIO12（ハードウェア PWM）→ ゲート。GND 共通化必須</td></tr>
-        <tr><td class="b">PWM 設定</td><td>—</td><td>周波数 1kHz 以上（ちらつき防止）。duty: 切=0% / 弱=30% / 強=100%</td></tr>
-        <tr><td class="b">LED</td><td>24V 対応テープ / パネル</td><td>ヒューズボックスから直給電。RPi は MOSFET でスイッチのみ</td></tr>
+        <tr><td class="b">ドライバーモジュール</td><td>Akozon YYNMOS-4（1ch使用）</td><td>DC+/DC- = 24V本線。PWM ← GPIO12（ハードウェアPWM）。GND ← RPi GND。OUT+/OUT- = LEDテープへ。抵抗・はんだ付け不要</td></tr>
+        <tr><td class="b">PWM 設定</td><td>—</td><td>周波数 1kHz（YYNMOS-4の上限に合わせる）。duty: 切=0% / 弱=30% / 強=100%</td></tr>
+        <tr><td class="b">LED</td><td>24V 対応テープ / パネル</td><td>ヒューズボックスから直給電。RPi はドライバーモジュールでスイッチのみ</td></tr>
       </tbody>
     </table>
     <div class="note" style="margin-top:.5rem;">
