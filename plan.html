@@ -77,7 +77,8 @@
 <div>  <span class="c">├─ I2C    :</span> <span class="v">SHT31 バッテリ庫 / SHT31 室内 / SCD41（CO₂）</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">MQ-7+閾値モジュール / CO警報GPIO / 水漏れ / ブザー</span></div>
 <div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（IRLZ44N）← タッチサイクル 切→弱→強→弱→切</span></div>
-<div>  <span class="c">├─ GPIO   :</span> <span class="v">TTP223タッチセンサー入力（メインライト）</span></div>
+<div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span></div>
+<div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">AM312人感センサー入力 → 足元LED（IRLZ44N）</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">足元LED（IRLZ44N）← スライドドア人感連動</span></div>
 <div>  <span class="c">└─ USB Hub（Anker PowerExpand+ 7-in-1）</span> <span class="w">← 既存品流用。USB-A×2 / PD 60W給電 / Ethernet内蔵</span></div>
@@ -89,6 +90,9 @@
 <div></div>
 <div><span class="k">換気ファン（バッテリ庫）</span></div>
 <div>  <span class="c">└→</span> <span class="v">バイメタルサーモスタット直結</span> <span class="w">← RPi 非依存。フェイルセーフ</span></div>
+<div></div>
+<div><span class="k">室内換気扇（天井、1台）</span></div>
+<div>  <span class="c">└→</span> <span class="v">RPi GPIO13 直結（GPIO PWM出力）</span> <span class="w">← 物理スイッチなし。Pico不使用。「切」もPWM=0%依存</span></div>
 <div></div>
 <div><span class="k">ネットワーク</span></div>
 <div>  <span class="c">→</span> <span class="v">古いスマホ + 楽天SIM（USB テザリング → RPi）</span> <span class="w">← 安価。バッテリー常時充電問題に注意</span></div>
@@ -133,9 +137,11 @@
         <tr><td class="b">Bluetooth リモコン（プロジェクター兼用）</td><td class="p">¥0（既存）</td><td>RPi 5 BT 内蔵のため追加モジュール不要。evdev でボタン割り当て。Phase 4</td></tr>
         <tr><td class="b">磁気リードスイッチ（NC接点）× 13以上</td><td class="p">¥4,000〜5,000</td><td>走行前チェック用。ソーラー×2・ジャッキ×4・窓×3・他4。防水品（IP67）推奨。Phase 4</td></tr>
         <tr><td class="b">フォトカプラ（PC817）+ TVS ダイオード + 抵抗</td><td class="p">¥300</td><td>ACC 12V 検知回路。GPIO への絶縁入力。車載ノイズ・サージから RPi 保護。Phase 4</td></tr>
-        <tr><td class="b">TTP223 タッチセンサーモジュール</td><td class="p">¥100〜</td><td>メインLED調光サイクル用。MODEピン=オープン（モーメンタリ）。Phase 4</td></tr>
+        <tr><td class="b">TTP223 タッチセンサーモジュール × 3</td><td class="p">¥300〜</td><td>メインLED調光サイクル用。MODEピン=オープン（モーメンタリ）。スライドドア/ベッド横①/ベッド横②に設置、各GPIOへ個別配線しソフトでOR判定。Phase 4</td></tr>
         <tr><td class="b">AM312 人感センサー（PIR）</td><td class="p">¥200〜</td><td>スライドドア足元LED自動点灯。3.3V直接駆動可。Phase 4</td></tr>
         <tr><td class="b">IRLZ44N MOSFETモジュール × 2</td><td class="p">¥400〜</td><td>メインLED（PWM調光）+ 足元LED（ON/OFF）各1個。GND共通化必須。Phase 4</td></tr>
+        <tr><td class="b">Walfront DC24V 4pinPWMブロワーファン</td><td class="p">¥2,185</td><td>室内換気扇（天井、1台）。黒GND/赤VCC/黄Tach/青PWM。青をGPIO13へ直結、赤黒は24V本線へ常時通電。MOSFET不使用のシンプル構成</td></tr>
+        <tr><td class="b">カーボン抵抗 1kΩ（1/4W）</td><td class="p">数円</td><td>換気扇PWM信号線(青)の保護抵抗。GPIO13との間に直列。任意だが推奨</td></tr>
         <tr style="background:#f0fdf4;"><td class="b ok">合計（最小構成）</td><td class="p">約 ¥47,700〜54,000</td><td>MEAN WELL・ネットワーク除く。カメラ Phase 3・リモコン・走行前チェック・LED制御 Phase 4 含む</td></tr>
       </tbody>
     </table>
@@ -200,10 +206,11 @@
           <li>エアコン IR 制御（VS1838B 学習 → IR LED 送信）</li>
           <li>インバーター RF 制御（433MHz ON/OFF）</li>
           <li>換気ファン遠隔制御（リレー + Tailscale）</li>
+          <li>室内換気扇 GPIO13 PWM制御（切/弱/中/強）</li>
           <li>BT リモコン統合（evdev ボタン割り当て）</li>
           <li>USB SSD 録画</li>
           <li>ACC 連動走行前チェック（リードスイッチ × N + フォトカプラ ACC 検知）</li>
-          <li>LED 照明制御（メインライト PWM 調光 + 足元ライト人感）</li>
+          <li>LED 照明制御（メインライト PWM 調光 タッチセンサー×3箇所 + 足元ライト人感）</li>
         </ul>
       </div>
     </div>
@@ -340,20 +347,25 @@
   <!-- LED照明制御 -->
   <div class="card">
     <h2>LED 照明制御（Phase 4）</h2>
-    <h3>① 車内メインライト — PWM 調光サイクル</h3>
+    <h3>① 車内メインライト — PWM 調光サイクル・タッチ3箇所</h3>
     <div class="note note-blue" style="margin-bottom:.5rem;">
       タッチごとに状態が1段階進む: <strong>切 → 弱（30%）→ 強（100%）→ 弱（30%）→ 切</strong><br>
-      スマホ（Flask / MQTT）からも同じ state 変数を操作して連携。
+      3箇所（スライドドア/ベッド横①/ベッド横②）どこからタッチしても同じ state 変数を1段階進める（ソフト側で3 GPIOの立ち上がりエッジを OR 判定）。<br>
+      スマホ（Flask / MQTT）からも同じ state 変数を操作して連携。<br>
+      LED本体: DC24V/5A（120W）COBテープ、実機スペック確認済み。天井幹線(25A/2sq)からサブヒューズブロック経由で7.5Aヒューズ・0.5sqケーブルで分岐。
     </div>
     <table>
       <thead><tr><th>モジュール</th><th>型番</th><th>設定・接続</th></tr></thead>
       <tbody>
-        <tr><td class="b">タッチセンサー</td><td>TTP223</td><td>MODEピン = オープン（モーメンタリ）→ GPIO 入力（立ち上がりエッジ割り込み）</td></tr>
+        <tr><td class="b">タッチセンサー ×3</td><td>TTP223</td><td>MODEピン = オープン（モーメンタリ）→ GPIO5(スライドドア)/GPIO6(ベッド横①)/GPIO16(ベッド横②) 入力（立ち上がりエッジ割り込み）。VCC/GNDは共通バスから分岐、OUTのみ個別配線</td></tr>
         <tr><td class="b">MOSFET</td><td>IRLZ44N</td><td>GPIO12（ハードウェア PWM）→ ゲート。GND 共通化必須</td></tr>
         <tr><td class="b">PWM 設定</td><td>—</td><td>周波数 1kHz 以上（ちらつき防止）。duty: 切=0% / 弱=30% / 強=100%</td></tr>
         <tr><td class="b">LED</td><td>24V 対応テープ / パネル</td><td>ヒューズボックスから直給電。RPi は MOSFET でスイッチのみ</td></tr>
       </tbody>
     </table>
+    <div class="note" style="margin-top:.5rem;">
+      <strong>タッチセンサー設置の注意:</strong> TTP223は自己容量式のため、木材パネル越しの検出は厚み3〜5mm程度が実用限界（ガラス/アクリルでも同程度）。羽目板が10mm程度ある場合はセンサー設置箇所だけ3〜5mmまで薄く削って埋め込む。
+    </div>
 
     <h3 style="margin-top:1rem;">② スライドドア足元ライト — 人感自動点灯</h3>
     <table>
@@ -368,9 +380,26 @@
     <div class="note note-red" style="margin-top:.5rem;">
       <strong>共通注意:</strong> MOSFET の GND と RPi の GND を必ず共通化。浮いていると誤動作する。
     </div>
+
+    <h3 style="margin-top:1rem;">③ 室内換気扇（天井、1台） — PWM風量制御</h3>
+    <div class="note note-blue" style="margin-bottom:.5rem;">
+      物理スイッチなし、Pico不使用。RPi5 GPIO13から直接ファンのPWM線を駆動するシンプル構成（MOSFET・ゲート抵抗・プルダウン抵抗は不使用）。
+    </div>
+    <table>
+      <thead><tr><th>モジュール</th><th>型番</th><th>設定・接続</th></tr></thead>
+      <tbody>
+        <tr><td class="b">換気扇</td><td>Walfront DC24V 4pinPWMブロワー</td><td>黒GND/赤VCC/黄Tach/青PWM。実機スペック確認済み（24V・0.75A・18W）</td></tr>
+        <tr><td class="b">主電源(赤/黒)</td><td>—</td><td>サブヒューズブロック(0.3sq/2Aヒューズ)から常時通電で直結</td></tr>
+        <tr><td class="b">PWM(青)</td><td>—</td><td>保護抵抗1kΩ経由でGPIO13(ハードウェアPWM)に直結。デューティ比で切/弱/中/強を制御</td></tr>
+        <tr><td class="b">Tach(黄)</td><td>—</td><td>未使用。絶縁して放置</td></tr>
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:.5rem;">
+      「切」はPWM=0%指令のみに依存（MOSFETによる主回路遮断は行わない）。個体差で微弱回転が残る可能性があるため実機で要確認。
+    </div>
   </div>
 
-  <footer>ラズパイ車中泊PJT メモ — 2026-06-15</footer>
+  <footer>ラズパイ車中泊PJT メモ — 2026-09-04</footer>
 </div>
 </body>
 </html>
