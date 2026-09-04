@@ -75,7 +75,8 @@
 <div><span class="k">RPi 5 の接続</span></div>
 <div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
 <div>  <span class="c">├─ I2C    :</span> <span class="v">SHT31 室内 / SCD41（CO₂）</span></div>
-<div>  <span class="c">├─ GPIO   :</span> <span class="v">MQ-7+閾値モジュール / CO警報GPIO / 水漏れ / ブザー</span></div>
+<div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZE07-CO（電気化学式CO、ppm値）</span></div>
+<div>  <span class="c">├─ GPIO   :</span> <span class="v">水漏れ / ブザー</span></div>
 <div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（Akozon YYNMOS-4 ドライバーモジュール）← タッチサイクル 切→弱→強→弱→切</span></div>
 <div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span></div>
 <div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span></div>
@@ -85,8 +86,6 @@
 <div>      <span class="c">├─</span> <span class="v">USB カメラ 前（魚眼）← アクティブ延長ケーブル</span></div>
 <div>      <span class="c">├─</span> <span class="v">USB カメラ 後（魚眼）← アクティブ延長ケーブル</span></div>
 <div>      <span class="c">└─</span> <span class="w">Phase 3 以降：左・右カメラ追加</span></div>
-<div></div>
-<div><span class="k">独立型 CO 警報器（電池駆動）</span> <span class="w">← RPi 停止時も単独で鳴ること必須</span></div>
 <div></div>
 <div><span class="k">換気ファン（バッテリ庫、Walfront DC24V 4pinPWMブロワー）</span></div>
 <div>  <span class="c">└→</span> <span class="v">RPi GPIO18 直結（GPIO PWM出力）</span> <span class="w">← MPPT BLEバッテリー温度データで閾値制御。RPi依存（フェイルセーフなし、リスク許容済み）</span></div>
@@ -108,7 +107,7 @@
 <div>  <span class="c">├─</span> <span class="v">Grafana → エネルギー・センサー一元ダッシュボード</span></div>
 <div>  <span class="c">└─</span> <span class="v">ntfy.sh → CO / CO₂超過 / 高温 / 浸水 / 走行前チェック異常 アラート</span></div>
     </div>
-    <div class="note note-red">CO 警報は ntfy.sh だけに依存禁止。圏外・RPi 停止時も独立ハードウェア警報器が単独で鳴ること。</div>
+    <div class="note note-red">CO 警報は RPi 依存（独立ハードウェア警報器は不採用）。RPi フリーズ・電源断・圏外時は検知不能になるリスクをユーザーが許容した上での設計。</div>
   </div>
 
   <!-- 部品リスト -->
@@ -121,7 +120,7 @@
         <tr><td class="b">RPi 5 Active Cooler</td><td class="p">¥1,500</td><td>必須</td></tr>
         <tr><td class="b">SHT31 × 1</td><td class="p">¥1,000</td><td>室内用のみ。バッテリ庫は湿度監視不要と判断しMPPTのBLEバッテリー温度データで代替、SHT31設置を削除</td></tr>
         <tr><td class="b">Sensirion SCD41</td><td class="p">¥6,000</td><td>CO₂（CO とは別物）</td></tr>
-        <tr><td class="b">MQ-7 + 閾値モジュール</td><td class="p">¥1,200</td><td class="warn">MQ-7 単体は ADC 必要。閾値モジュール付き品で GPIO 入力</td></tr>
+        <tr><td class="b">Winsen ZE07-CO</td><td class="p">¥3,000〜</td><td>電気化学式CO、UART出力で0.1ppm分解能のppm値を直接取得。MQ-7より高精度。電気化学セルは2〜5年で劣化するため定期交換前提</td></tr>
         <tr><td class="b">圧電ブザー</td><td class="p">¥300</td><td>ローカル警報。圏外でも鳴る</td></tr>
         <tr><td class="b">水漏れセンサー</td><td class="p">¥300</td><td>短時間パルス読み取り（常時通電は腐食）</td></tr>
         <tr><td class="b">Walfront DC24V 4pinPWMブロワーファン（バッテリ庫用、2台目）</td><td class="p">¥2,185</td><td>室内換気扇と同一機種。黒GND/赤VCC/黄Tach/青PWM。青をGPIO18へ直結、赤黒は24V本線へ常時通電。MOSFET不使用</td></tr>
@@ -181,7 +180,6 @@
           <li>RSD-30G-5 配線・ヒューズ</li>
           <li>RPi 5 設置・温度実測</li>
           <li>Active Cooler 取付</li>
-          <li>独立 CO 警報器 設置</li>
           <li>ネットワーク（スマホ or GL.iNet）</li>
           <li>Tailscale 接続確認</li>
         </ul>
@@ -191,7 +189,7 @@
         <ul>
           <li>SHT31（室内）</li>
           <li>SCD41（CO₂）</li>
-          <li>MQ-7 + 閾値モジュール</li>
+          <li>Winsen ZE07-CO（UART）</li>
           <li>水漏れセンサー</li>
           <li>圧電ブザー</li>
           <li>JK BMS BLE</li>
@@ -240,8 +238,8 @@
       <thead><tr><th>項目</th><th>内容</th></tr></thead>
       <tbody>
         <tr><td class="b">電源ノイズ</td><td>LiFePO4でもインバーター・MPPT・エアコン起動でノイズが出る。安物USB-PDは故障リスク</td></tr>
-        <tr><td class="b">CO 警報</td><td>独立型ハードウェア（電池駆動）必須。ntfy.sh は補助のみ。CO₂（SCD41）とは別物</td></tr>
-        <tr><td class="b">MQ-7</td><td>RPi に ADC がない。閾値モジュール付きで GPIO デジタル入力として使う</td></tr>
+        <tr><td class="b">CO 警報</td><td>RPi依存（独立ハードウェア警報器は不採用、リスク許容済み）。ZE07-CO（UART）でppm監視 + ntfy.sh通知。CO₂（SCD41）とは別物</td></tr>
+        <tr><td class="b">ZE07-CO</td><td>電気化学セルのため2〜5年で応答劣化。定期的なゼロ校正・交換が必要</td></tr>
         <tr><td class="b">USB カメラ配線</td><td>3m 超えはアクティブ延長必須 / セルフパワー Hub 必須 / コネクタはホットメルト固定</td></tr>
         <tr><td class="b">InfluxDB</td><td>tmpfs（RAMディスク）に書いて定期フラッシュ。SD への直書きは短命</td></tr>
         <tr><td class="b">スマホルーター</td><td>USB テザリング推奨（Wi-Fi ホットスポットより安定）。常時充電はバッテリー劣化・膨張に注意</td></tr>
@@ -258,10 +256,9 @@
       <tbody>
         <tr><td class="b">SHT31（室内）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>ADDR → GND でアドレス 0x44（デフォルト）</td></tr>
         <tr><td class="b">SCD41（CO₂）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>I2C アドレス 0x62 固定。SHT31 と同バスに接続可</td></tr>
-        <tr><td class="b">MQ-7 + 閾値モジュール</td><td class="p">3芯</td><td>VCC / GND / DO</td><td>DO = デジタル出力。GPIO 入力として接続</td></tr>
+        <tr><td class="b">Winsen ZE07-CO</td><td class="p">4芯</td><td>VCC / GND / TXD / RXD</td><td>UART（9600bps）。RPi 5 のハードウェアUARTピンに接続</td></tr>
         <tr><td class="b">水漏れセンサー</td><td class="p">3芯</td><td>VCC / GND / Signal</td><td>常時通電は腐食するため GPIO でパルス制御</td></tr>
         <tr><td class="b">圧電ブザー</td><td class="p">2芯</td><td>GPIO / GND</td><td>GPIO 直駆動（20mA 以内）または トランジスタ経由</td></tr>
-        <tr><td class="b">CO 警報器 → RPi GPIO 入力</td><td class="p">2芯</td><td>警報出力 / GND</td><td>警報器のリレー出力を RPi GPIO で読み取る場合のみ</td></tr>
         <tr><td class="b">磁気リードスイッチ（各外装部位）</td><td class="p">2芯</td><td>Signal / GND</td><td>NC接点。10kΩプルアップ + 100nF RCフィルタ。デバウンス 300ms。防水コネクタ必須</td></tr>
       </tbody>
     </table>
