@@ -74,7 +74,7 @@
 <div></div>
 <div><span class="k">RPi 5 の接続</span></div>
 <div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
-<div>  <span class="c">├─ I2C    :</span> <span class="v">SHT31 バッテリ庫 / SHT31 室内 / SCD41（CO₂）</span></div>
+<div>  <span class="c">├─ I2C    :</span> <span class="v">SHT31 室内 / SCD41（CO₂）</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">MQ-7+閾値モジュール / CO警報GPIO / 水漏れ / ブザー</span></div>
 <div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（Akozon YYNMOS-4 ドライバーモジュール）← タッチサイクル 切→弱→強→弱→切</span></div>
 <div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span></div>
@@ -88,10 +88,10 @@
 <div></div>
 <div><span class="k">独立型 CO 警報器（電池駆動）</span> <span class="w">← RPi 停止時も単独で鳴ること必須</span></div>
 <div></div>
-<div><span class="k">換気ファン（バッテリ庫）</span></div>
-<div>  <span class="c">└→</span> <span class="v">バイメタルサーモスタット直結</span> <span class="w">← RPi 非依存。フェイルセーフ</span></div>
+<div><span class="k">換気ファン（バッテリ庫、Walfront DC24V 4pinPWMブロワー）</span></div>
+<div>  <span class="c">└→</span> <span class="v">RPi GPIO18 直結（GPIO PWM出力）</span> <span class="w">← MPPT BLEバッテリー温度データで閾値制御。RPi依存（フェイルセーフなし、リスク許容済み）</span></div>
 <div></div>
-<div><span class="k">室内換気扇（天井、1台）</span></div>
+<div><span class="k">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー、1台）</span></div>
 <div>  <span class="c">└→</span> <span class="v">RPi GPIO13 直結（GPIO PWM出力）</span> <span class="w">← 物理スイッチなし。Pico不使用。「切」もPWM=0%依存</span></div>
 <div></div>
 <div><span class="k">ネットワーク</span></div>
@@ -119,22 +119,21 @@
       <tbody>
         <tr><td class="b">Raspberry Pi 5（4GB）</td><td class="p">¥18,000〜22,000</td><td></td></tr>
         <tr><td class="b">RPi 5 Active Cooler</td><td class="p">¥1,500</td><td>必須</td></tr>
-        <tr><td class="b">SHT31 × 2</td><td class="p">¥2,000</td><td>バッテリ庫 + 室内</td></tr>
+        <tr><td class="b">SHT31 × 1</td><td class="p">¥1,000</td><td>室内用のみ。バッテリ庫は湿度監視不要と判断しMPPTのBLEバッテリー温度データで代替、SHT31設置を削除</td></tr>
         <tr><td class="b">Sensirion SCD41</td><td class="p">¥6,000</td><td>CO₂（CO とは別物）</td></tr>
         <tr><td class="b">MQ-7 + 閾値モジュール</td><td class="p">¥1,200</td><td class="warn">MQ-7 単体は ADC 必要。閾値モジュール付き品で GPIO 入力</td></tr>
         <tr><td class="b">圧電ブザー</td><td class="p">¥300</td><td>ローカル警報。圏外でも鳴る</td></tr>
         <tr><td class="b">水漏れセンサー</td><td class="p">¥300</td><td>短時間パルス読み取り（常時通電は腐食）</td></tr>
-        <tr><td class="b">バイメタルサーモスタット</td><td class="p">¥500</td><td>換気ファン直結</td></tr>
+        <tr><td class="b">Walfront DC24V 4pinPWMブロワーファン（バッテリ庫用、2台目）</td><td class="p">¥2,185</td><td>室内換気扇と同一機種。黒GND/赤VCC/黄Tach/青PWM。青をGPIO18へ直結、赤黒は24V本線へ常時通電。MOSFET不使用</td></tr>
         <tr><td class="b">Anker PowerExpand+ 7-in-1 USB Hub</td><td class="p">¥0（既存品）</td><td>USB-A×2・PD 60W・Ethernet内蔵。60W PDチャージャー接続で12Wをハブ自己給電・48WをRPiへパススルー</td></tr>
         <tr><td class="b">サンワダイレクト カーチャージャー PD65W対応（200-CAR124AC）</td><td class="p">¥2,780</td><td>Ankerハブ用電源。12V/24V対応、シガーソケット経由で接続（既存のシガーソケット電源ソケット配線を共用）。USB-C 65W出力でハブの60W入力要件を満たす</td></tr>
         <tr><td class="b">USB 魚眼カメラ × 2（まず）</td><td class="p">¥5,000</td><td>ELP 170° 等。検証後に +2 台</td></tr>
         <tr><td class="b">アクティブ USB 延長 × 2</td><td class="p">¥3,000</td><td class="warn">3m 超えはアクティブ必須。パッシブは信号減衰</td></tr>
         <tr><td class="b">コルゲートチューブ・圧着端子</td><td class="p">¥2,000</td><td>全配線保護。振動・擦れ対策</td></tr>
-        <tr><td class="b">Renogy BT-1 Bluetooth モジュール</td><td class="p">¥3,000〜</td><td>Rover 60A の RS232 ポートに接続。BT非内蔵のため必須。Phase 4</td></tr>
+        <tr><td class="b">Renogy BT-1 Bluetooth モジュール</td><td class="p">¥3,000〜</td><td>Rover 60A の RS232 ポートに接続。BT非内蔵のため必須。バッテリ庫換気扇のBLE温度監視制御にも使用（cyrils/renogy-bt等のPythonライブラリでRPiから温度取得）。Phase 4</td></tr>
         <tr><td class="b">433MHz 送受信モジュール（FS1000A + XY-MK-5V）</td><td class="p">¥500</td><td>インバーター無線リモコン ON/OFF 制御。Phase 4</td></tr>
         <tr><td class="b">IR 受信モジュール（VS1838B）</td><td class="p">¥100</td><td>エアコン IR リモコン学習用。Phase 4</td></tr>
         <tr><td class="b">IR LED（940nm）+ 2N2222 + 抵抗</td><td class="p">¥100</td><td>エアコン IR 送信回路。Phase 4</td></tr>
-        <tr><td class="b">5V リレーモジュール（1ch）</td><td class="p">¥300</td><td>換気ファン遠隔 ON/OFF。バイメタルと並列接続。Phase 4</td></tr>
         <tr><td class="b">Bluetooth リモコン（プロジェクター兼用）</td><td class="p">¥0（既存）</td><td>RPi 5 BT 内蔵のため追加モジュール不要。evdev でボタン割り当て。Phase 4</td></tr>
         <tr><td class="b">磁気リードスイッチ（NC接点）× 13以上</td><td class="p">¥4,000〜5,000</td><td>走行前チェック用。ソーラー×2・ジャッキ×4・窓×3・他4。防水品（IP67）推奨。Phase 4</td></tr>
         <tr><td class="b">フォトカプラ（PC817）+ TVS ダイオード + 抵抗</td><td class="p">¥300</td><td>ACC 12V 検知回路。GPIO への絶縁入力。車載ノイズ・サージから RPi 保護。Phase 4</td></tr>
@@ -148,7 +147,7 @@
 
     <div class="note note-blue" style="margin-top:.75rem;">
       <strong>採用しないもの：</strong>
-      UPS HAT（夏の車内でリポ発火リスク）/ Pico W（バイメタルで代替）/ Coral TPU・Frigate（カメラ切替のみ）/
+      UPS HAT（夏の車内でリポ発火リスク）/ Pico W（RPi5 GPIO直結方式で不要）/ Coral TPU・Frigate（カメラ切替のみ）/
       USB SSD（録画なし、Phase 4 以降）/ OLED（スマホで代替）/ BH1750・INA219・リードスイッチ（Phase 4 以降）
     </div>
   </div>
@@ -171,12 +170,11 @@
       <div class="ph ph1">
         <h3>Phase 1 — センシング</h3>
         <ul>
-          <li>SHT31（バッテリ庫 + 室内）</li>
+          <li>SHT31（室内）</li>
           <li>SCD41（CO₂）</li>
           <li>MQ-7 + 閾値モジュール</li>
           <li>水漏れセンサー</li>
           <li>圧電ブザー</li>
-          <li>換気ファン バイメタル直結</li>
           <li>JK BMS BLE</li>
           <li>電圧監視シャットダウン設定</li>
         </ul>
@@ -205,8 +203,8 @@
           <li>Renogy Rover ソーラー監視（RS232→USB or BT-1モジュール経由BLE）</li>
           <li>エアコン IR 制御（VS1838B 学習 → IR LED 送信）</li>
           <li>インバーター RF 制御（433MHz ON/OFF）</li>
-          <li>換気ファン遠隔制御（リレー + Tailscale）</li>
           <li>室内換気扇 GPIO13 PWM制御（切/弱/中/強）</li>
+          <li>バッテリ庫換気扇 GPIO18 PWM制御（MPPT BLEバッテリー温度データで閾値制御）</li>
           <li>BT リモコン統合（evdev ボタン割り当て）</li>
           <li>USB SSD 録画</li>
           <li>ACC 連動走行前チェック（リードスイッチ × N + フォトカプラ ACC 検知）</li>
@@ -239,7 +237,6 @@
     <table>
       <thead><tr><th>モジュール</th><th>芯数</th><th>配線</th><th>備考</th></tr></thead>
       <tbody>
-        <tr><td class="b">SHT31（バッテリ庫）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>ADDR → VCC でアドレス 0x45</td></tr>
         <tr><td class="b">SHT31（室内）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>ADDR → GND でアドレス 0x44（デフォルト）</td></tr>
         <tr><td class="b">SCD41（CO₂）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>I2C アドレス 0x62 固定。SHT31 と同バスに接続可</td></tr>
         <tr><td class="b">MQ-7 + 閾値モジュール</td><td class="p">3芯</td><td>VCC / GND / DO</td><td>DO = デジタル出力。GPIO 入力として接続</td></tr>
@@ -251,8 +248,8 @@
     </table>
     <div class="note note-blue" style="margin-top:.75rem;">
       <strong>シールド線の接地：</strong>RPi 側の GND に片端のみ接続。両端接地するとグランドループになりノイズを拾う。<br>
-      <strong>I2C バス共通化：</strong>SHT31 × 2 と SCD41 は同一 SDA/SCL ラインに並列接続可。T 分岐点はラズパイ近傍で行う。<br>
-      <strong>バイメタルサーモスタット：</strong>RPi 非依存の電源直結。AWG28 は電流容量不足のため対象外。ファン電源線（AWG18〜20）を使うこと。
+      <strong>I2C バス共通化：</strong>SHT31 と SCD41 は同一 SDA/SCL ラインに並列接続可。T 分岐点はラズパイ近傍で行う。<br>
+      <strong>バッテリ庫換気扇：</strong>室内換気扇（GPIO13）と同一パターン。GPIO18（ハードウェアPWM）→ ファンPWM線（青）に直結、赤黒は24V本線へ常時通電。AWG28は電流容量不足のため対象外、ファン電源線はAWG18〜20を使うこと。
     </div>
   </div>
 
@@ -390,12 +387,30 @@
       <tbody>
         <tr><td class="b">換気扇</td><td>Walfront DC24V 4pinPWMブロワー</td><td>黒GND/赤VCC/黄Tach/青PWM。実機スペック確認済み（24V・0.75A・18W）</td></tr>
         <tr><td class="b">主電源(赤/黒)</td><td>—</td><td>サブヒューズブロック(0.3sq/2Aヒューズ)から常時通電で直結</td></tr>
-        <tr><td class="b">PWM(青)</td><td>—</td><td>保護抵抗1kΩ経由でGPIO13(ハードウェアPWM)に直結。デューティ比で切/弱/中/強を制御</td></tr>
+        <tr><td class="b">PWM(青)</td><td>—</td><td>GPIO13(ハードウェアPWM)に直結（保護抵抗も省略）。デューティ比で切/弱/中/強を制御</td></tr>
         <tr><td class="b">Tach(黄)</td><td>—</td><td>未使用。絶縁して放置</td></tr>
       </tbody>
     </table>
     <div class="note" style="margin-top:.5rem;">
       「切」はPWM=0%指令のみに依存（MOSFETによる主回路遮断は行わない）。個体差で微弱回転が残る可能性があるため実機で要確認。
+    </div>
+
+    <h3 style="margin-top:1rem;">④ バッテリ庫換気扇（Walfront、2台目） — MPPT BLE温度連動PWM制御</h3>
+    <div class="note note-blue" style="margin-bottom:.5rem;">
+      室内換気扇と同一機種・同一パターン（MOSFET不使用、GPIO直結）。制御ロジックのみ異なり、RPiがMPPT(Renogy Rover)のBLEバッテリー温度データを読み取って自動制御する。
+    </div>
+    <table>
+      <thead><tr><th>モジュール</th><th>型番</th><th>設定・接続</th></tr></thead>
+      <tbody>
+        <tr><td class="b">換気扇</td><td>Walfront DC24V 4pinPWMブロワー（室内用と同一機種）</td><td>黒GND/赤VCC/黄Tach/青PWM</td></tr>
+        <tr><td class="b">主電源(赤/黒)</td><td>—</td><td>バッテリ庫用サブヒューズ(0.3sq/2Aヒューズ)から常時通電で直結</td></tr>
+        <tr><td class="b">PWM(青)</td><td>—</td><td>GPIO18(ハードウェアPWM)に直結</td></tr>
+        <tr><td class="b">Tach(黄)</td><td>—</td><td>未使用。絶縁して放置</td></tr>
+        <tr><td class="b">温度データ取得</td><td>Renogy BT-1 → BLE</td><td>cyrils/renogy-bt等のPythonライブラリでバッテリー温度を定期取得（例: 30秒毎）。閾値超えでGPIO18のPWMデューティを上げる、ヒステリシスを設けて頻繁なON/OFFを防止</td></tr>
+      </tbody>
+    </table>
+    <div class="note note-red" style="margin-top:.5rem;">
+      RPi非依存のフェイルセーフ（バイメタルサーモスタット直結案）は不採用。RPiがフリーズ・停止すると換気も止まるリスクをユーザーが許容した上での設計。
     </div>
   </div>
 
