@@ -1204,6 +1204,71 @@
         </div>
     </div>
 
+    <div class="container">
+        <div style="margin-bottom:24px;">
+            <h2 style="font-size:1.15rem; font-weight:800; color:#0f172a; margin-bottom:12px;">🔧 ソーラーパネル開閉機構（ガススプリング）設計</h2>
+            <p style="font-size:14px; color:#374151; margin-bottom:16px; line-height:1.7;">
+                屋根上ソーラーパネル（全長1200mm・重量20kg、支点＝丁番から重心600mmと仮定）を持ち上げ式で開閉するための、ガススプリング仕様・取付位置の確定案。幾何モデル（支点を原点としたモーメントアーム計算・座標回転による開き角の直接シミュレーション）はClaudeとCodex（OpenAI Codex CLI）による2系統の独立計算で完全一致を確認済み。
+            </p>
+
+            <div class="spec-table-wrap" style="margin-bottom:20px;">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>仕様・数値</th>
+                            <th>備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ガススプリング</td>
+                            <td>伸長380mm（圧縮229mm）450N × 2本（合計900N）</td>
+                            <td>本体フレーム側・蓋側に1本ずつ左右対称に配置</td>
+                        </tr>
+                        <tr>
+                            <td>取付位置①（下側ボール・本体固定側）</td>
+                            <td>支点から水平120mm・垂直80mm</td>
+                            <td>①水平は120mm以上という制約条件を反映済み</td>
+                        </tr>
+                        <tr>
+                            <td>取付位置②（上側ボール・蓋可動側）</td>
+                            <td>支点から水平355mm・垂直30mm</td>
+                            <td>②垂直30mmは固定条件</td>
+                        </tr>
+                        <tr>
+                            <td>全閉時（0度）の穴間距離</td>
+                            <td>約240.3mm</td>
+                            <td>圧縮長229mmに対しマージン約+11.3mm（底付きなし）</td>
+                        </tr>
+                        <tr>
+                            <td>0度（全閉時）の持ち上げに必要な力</td>
+                            <td>約2.1kgf</td>
+                            <td>先端（支点から1200mm・持ち手側）で計測</td>
+                        </tr>
+                        <tr>
+                            <td>開口角度（自然停止）</td>
+                            <td>約59.3度</td>
+                            <td>ガススプリングが伸長380mmの限界に達し、剛体リンクとして機械的に停止。ベルト等の追加ストッパーは不要</td>
+                        </tr>
+                        <tr>
+                            <td>全開状態からの引き下げに必要な力</td>
+                            <td>約5.2kgf</td>
+                            <td>10kgf以下の目標をクリア</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="background:#f0fdf4; border-left:4px solid #22c55e; padding:14px 16px; border-radius:6px;">
+                <div style="font-weight:700; color:#15803d; margin-bottom:6px;">✅ 検証プロセス</div>
+                <p style="margin:0; font-size:14px; line-height:1.7; color:#374151;">
+                    モーメントアーム（h = |Ax·By − Ay·Bx| / c）による0度時の持ち上げ力計算、および座標回転による力ずくシミュレーション（余弦定理の引き算トリックを使わず、支点まわりに実際に回転させて①②間距離がスプリング伸長限界に到達する角度を直接探索する手法）の両方を、ClaudeとCodex CLIの2系統で独立に実行し、c0・マージン・h0・0度の力・開口角度・引き下げ力の全項目が丸め誤差の範囲で一致することを確認済み。380mm/229mm/450N×2本の全8種スプリング候補中からの選定過程では、①水平120mm以上・①垂直10〜80mm・②垂直30mm固定という制約下でのグリッドサーチも実施した。
+                </p>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>© 車中泊システム設計ダッシュボード | 安全規格準拠・＋側ブレーカー・上下完全分離バスバー配線プラン</p>
     </footer>
