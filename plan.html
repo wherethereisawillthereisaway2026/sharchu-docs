@@ -76,7 +76,6 @@
 <div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
 <div>  <span class="c">├─ I2C    :</span> <span class="v">SCD41（CO₂・温湿度）</span></div>
 <div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZE07-CO（電気化学式CO、ppm値）</span></div>
-<div>  <span class="c">├─ GPIO   :</span> <span class="v">水漏れ / ブザー</span></div>
 <div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（Akozon YYNMOS-4 ドライバーモジュール）← タッチサイクル 切→弱→強→弱→切</span></div>
 <div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span></div>
 <div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span></div>
@@ -105,7 +104,7 @@
 <div><span class="k">スマホ UI</span></div>
 <div>  <span class="c">├─</span> <span class="v">go2rtc ブラウザ → カメラ切替（任意の1台を選んで表示）</span></div>
 <div>  <span class="c">├─</span> <span class="v">Grafana → エネルギー・センサー一元ダッシュボード</span></div>
-<div>  <span class="c">└─</span> <span class="v">ntfy.sh → CO / CO₂超過 / 高温 / 浸水 / 走行前チェック異常 アラート</span></div>
+<div>  <span class="c">└─</span> <span class="v">ntfy.sh → CO / CO₂超過 / 高温 / 走行前チェック異常 アラート</span></div>
     </div>
     <div class="note note-red">CO 警報は RPi 依存（独立ハードウェア警報器は不採用）。RPi フリーズ・電源断・圏外時は検知不能になるリスクをユーザーが許容した上での設計。</div>
   </div>
@@ -120,8 +119,6 @@
         <tr><td class="b">RPi 5 Active Cooler</td><td class="p">¥1,500</td><td>必須</td></tr>
         <tr><td class="b">Sensirion SCD41</td><td class="p">¥6,000</td><td>CO₂・温湿度を1台で計測（CO とは別物）。購入済み</td></tr>
         <tr><td class="b">Winsen ZE07-CO</td><td class="p">¥3,000〜</td><td>電気化学式CO、UART出力で0.1ppm分解能のppm値を直接取得。電気化学セルは2〜5年で劣化するため定期交換前提。購入済み</td></tr>
-        <tr><td class="b">圧電ブザー</td><td class="p">¥300</td><td>ローカル警報。圏外でも鳴る</td></tr>
-        <tr><td class="b">水漏れセンサー</td><td class="p">¥300</td><td>短時間パルス読み取り（常時通電は腐食）</td></tr>
         <tr><td class="b">Walfront DC24V 4pinPWMブロワーファン（バッテリ庫用、2台目）</td><td class="p">¥2,185</td><td>室内換気扇と同一機種。黒GND/赤VCC/黄Tach/青PWM。青をGPIO18へ直結、赤黒は24V本線へ常時通電。MOSFET不使用</td></tr>
         <tr><td class="b">Anker PowerExpand+ 7-in-1 USB Hub</td><td class="p">¥0（既存品）</td><td>USB-A×2・PD 60W・Ethernet内蔵。60W PDチャージャー接続で12Wをハブ自己給電・48WをRPiへパススルー</td></tr>
         <tr><td class="b">サンワダイレクト カーチャージャー PD65W対応（200-CAR124AC）</td><td class="p">¥2,780</td><td>Ankerハブ用電源。12V/24V対応、シガーソケット経由で接続（既存のシガーソケット電源ソケット配線を共用）。USB-C 65W出力でハブの60W入力要件を満たす</td></tr>
@@ -188,8 +185,6 @@
         <ul>
           <li>SCD41（CO₂・温湿度）</li>
           <li>Winsen ZE07-CO（UART）</li>
-          <li>水漏れセンサー</li>
-          <li>圧電ブザー</li>
           <li>JK BMS BLE</li>
           <li>電圧監視シャットダウン設定</li>
         </ul>
@@ -254,8 +249,6 @@
       <tbody>
         <tr><td class="b">SCD41（CO₂・温湿度）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>I2C アドレス 0x62 固定</td></tr>
         <tr><td class="b">Winsen ZE07-CO</td><td class="p">4芯</td><td>VCC / GND / TXD / RXD</td><td>UART（9600bps）。RPi 5 のハードウェアUARTピンに接続</td></tr>
-        <tr><td class="b">水漏れセンサー</td><td class="p">3芯</td><td>VCC / GND / Signal</td><td>常時通電は腐食するため GPIO でパルス制御</td></tr>
-        <tr><td class="b">圧電ブザー</td><td class="p">2芯</td><td>GPIO / GND</td><td>GPIO 直駆動（20mA 以内）または トランジスタ経由</td></tr>
         <tr><td class="b">磁気リードスイッチ（各外装部位）</td><td class="p">2芯</td><td>Signal / GND</td><td>NC接点。10kΩプルアップ + 100nF RCフィルタ。デバウンス 300ms。防水コネクタ必須</td></tr>
       </tbody>
     </table>
@@ -269,7 +262,7 @@
   <div class="card">
     <h2>ACC 連動走行前チェックシステム（Phase 4）</h2>
     <p style="font-size:.85rem;color:#334155;margin-bottom:.75rem;">
-      ACC 電源 ON を検知し、走行前に収納忘れ・開けっぱなしを自動チェック。異常があれば圧電ブザー + LED + ntfy.sh で警告。<br>
+      ACC 電源 ON を検知し、走行前に収納忘れ・開けっぱなしを自動チェック。異常があれば LED + ntfy.sh で警告。<br>
       センサー数（RPi 側）: ソーラー×2（チルト+スライド）/ ジャッキ×4（前後左右）/ 他4 = <strong>合計10個以上</strong><br>
       <span style="color:#b91c1c;">窓×3（リア+サイドF+サイドR）は RPi 非依存の独立回路に分離 → 下記「窓開閉 独立警告システム」参照</span><br>
       <em>Codex (gpt-5.5) レビュー反映: ACC 検知はフォトカプラ絶縁必須。デバウンス・抑制込みの設計。</em>
@@ -305,7 +298,7 @@
       <strong>動作仕様:</strong><br>
       ① ACC ON 検知 → 1〜3秒待機（起動ノイズ除去）<br>
       ② 全センサースキャン（GPIO HIGH = 開放 = 異常）<br>
-      ③ 異常あり → ブザー周期鳴動 + LED 点滅 + ntfy.sh 送信<br>
+      ③ 異常あり → LED 点滅 + ntfy.sh 送信<br>
       ④ 走行中は 5秒間隔で再チェック。同一異常の ntfy 再送は 10分間隔で抑制<br>
       ⑤ センサー線断線もHighになるためフェイルセーフ設計（誤判定注意。デバウンス 300ms 確定）
     </div>
