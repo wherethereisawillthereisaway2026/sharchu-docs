@@ -152,6 +152,25 @@
     </div>
   </div>
 
+  <!-- 監視カメラ（ルーフラック） -->
+  <div class="card">
+    <h2>監視カメラ（ルーフラック設置・検討中）</h2>
+    <div class="note note-blue" style="margin-bottom:.75rem;">
+      Phase 3 の前後カメラ（車内、ELP 170°魚眼×2）とは別件。ルーフラックに広角カメラ2台で360°をカバーする防犯目的の構想。実装時期未定。車内RPi実機はVemico Pi5 8GB版のため、go2rtcでの単純2ストリーム表示なら処理負荷は問題にならない見込み。
+    </div>
+    <table>
+      <thead><tr><th>候補</th><th>内容</th><th>画角/防水</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td class="b">A. ELP USB防水ドームカメラ（既製品）</td><td>1080P/200万画素、暗視IR付き。ハウジング一体でそのまま屋外設置可</td><td class="p">〜180°・IP67相当</td><td>加工不要ですぐ試せる。<a href="https://www.amazon.co.jp/ELP-Raspberry-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%82%AB%E3%83%A1%E3%83%A9-%E3%83%A9%E3%83%83%E3%83%97%E3%83%88%E3%83%83%E3%83%97%E7%94%A8-%E3%82%AB%E3%83%A1%E3%83%A9%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB/dp/B01J58KED0" target="_blank" rel="noopener">Amazon</a></td></tr>
+        <tr><td class="b">B. ELP基板カメラ + Entaniya防水ハウジング</td><td>ELP 170〜180°魚眼ボードカメラ（Phase 3と同一系統、38mm角基板）+ 専用IP67ハウジング</td><td class="p">170〜180°・IP67</td><td>ルーフ専用ブラケット / 2軸ブラケット / 真上・真下ブラケットあり。Phase 3部品と共通化可。<a href="https://e-products.entaniya.co.jp/list/cc/waterproof-cameracase/camerahousing-for-elp/" target="_blank" rel="noopener">Entaniya</a></td></tr>
+      </tbody>
+    </table>
+    <div class="note note-blue" style="margin-top:.75rem;">
+      <strong>画角の考え方：</strong>180°ちょうど2台だと継ぎ目付近が死角になりやすい。200〜220°クラスを対角配置（例：左前・右後）で重なりを作るのが望ましい。合成パノラマ化はせず、go2rtcで2ストリームを個別表示する前提（RPi負荷軽減）。<br>
+      <strong>配線注意：</strong>ルーフ〜車内RPi間はUSBカメラ配線と同じく3m超でアクティブ延長ケーブル必須。ケーブル引き込み口の防水グロメット処理が別途必要。
+    </div>
+  </div>
+
   <!-- 実装フェーズ -->
   <div class="card">
     <h2>実装フェーズ</h2>
