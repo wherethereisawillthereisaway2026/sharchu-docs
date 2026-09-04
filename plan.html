@@ -74,7 +74,7 @@
 <div></div>
 <div><span class="k">RPi 5 の接続</span></div>
 <div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
-<div>  <span class="c">├─ I2C    :</span> <span class="v">SHT31 室内 / SCD41（CO₂）</span></div>
+<div>  <span class="c">├─ I2C    :</span> <span class="v">SCD41（CO₂・温湿度）</span></div>
 <div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZE07-CO（電気化学式CO、ppm値）</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">水漏れ / ブザー</span></div>
 <div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（Akozon YYNMOS-4 ドライバーモジュール）← タッチサイクル 切→弱→強→弱→切</span></div>
@@ -118,8 +118,7 @@
       <tbody>
         <tr><td class="b">Raspberry Pi 5（4GB）</td><td class="p">¥18,000〜22,000</td><td></td></tr>
         <tr><td class="b">RPi 5 Active Cooler</td><td class="p">¥1,500</td><td>必須</td></tr>
-        <tr><td class="b">SHT31 × 1</td><td class="p">¥1,000</td><td>室内用のみ。バッテリ庫は湿度監視不要と判断しMPPTのBLEバッテリー温度データで代替、SHT31設置を削除</td></tr>
-        <tr><td class="b">Sensirion SCD41</td><td class="p">¥6,000</td><td>CO₂（CO とは別物）</td></tr>
+        <tr><td class="b">Sensirion SCD41</td><td class="p">¥6,000</td><td>CO₂・温湿度を1台で計測（CO とは別物）。SHT31は不採用、温湿度はSCD41で代替</td></tr>
         <tr><td class="b">Winsen ZE07-CO</td><td class="p">¥3,000〜</td><td>電気化学式CO、UART出力で0.1ppm分解能のppm値を直接取得。MQ-7より高精度。電気化学セルは2〜5年で劣化するため定期交換前提</td></tr>
         <tr><td class="b">圧電ブザー</td><td class="p">¥300</td><td>ローカル警報。圏外でも鳴る</td></tr>
         <tr><td class="b">水漏れセンサー</td><td class="p">¥300</td><td>短時間パルス読み取り（常時通電は腐食）</td></tr>
@@ -187,8 +186,7 @@
       <div class="ph ph1">
         <h3>Phase 1 — センシング</h3>
         <ul>
-          <li>SHT31（室内）</li>
-          <li>SCD41（CO₂）</li>
+          <li>SCD41（CO₂・温湿度）</li>
           <li>Winsen ZE07-CO（UART）</li>
           <li>水漏れセンサー</li>
           <li>圧電ブザー</li>
@@ -254,8 +252,7 @@
     <table>
       <thead><tr><th>モジュール</th><th>芯数</th><th>配線</th><th>備考</th></tr></thead>
       <tbody>
-        <tr><td class="b">SHT31（室内）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>ADDR → GND でアドレス 0x44（デフォルト）</td></tr>
-        <tr><td class="b">SCD41（CO₂）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>I2C アドレス 0x62 固定。SHT31 と同バスに接続可</td></tr>
+        <tr><td class="b">SCD41（CO₂・温湿度）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>I2C アドレス 0x62 固定</td></tr>
         <tr><td class="b">Winsen ZE07-CO</td><td class="p">4芯</td><td>VCC / GND / TXD / RXD</td><td>UART（9600bps）。RPi 5 のハードウェアUARTピンに接続</td></tr>
         <tr><td class="b">水漏れセンサー</td><td class="p">3芯</td><td>VCC / GND / Signal</td><td>常時通電は腐食するため GPIO でパルス制御</td></tr>
         <tr><td class="b">圧電ブザー</td><td class="p">2芯</td><td>GPIO / GND</td><td>GPIO 直駆動（20mA 以内）または トランジスタ経由</td></tr>
@@ -264,7 +261,6 @@
     </table>
     <div class="note note-blue" style="margin-top:.75rem;">
       <strong>シールド線の接地：</strong>RPi 側の GND に片端のみ接続。両端接地するとグランドループになりノイズを拾う。<br>
-      <strong>I2C バス共通化：</strong>SHT31 と SCD41 は同一 SDA/SCL ラインに並列接続可。T 分岐点はラズパイ近傍で行う。<br>
       <strong>バッテリ庫換気扇：</strong>室内換気扇（GPIO13）と同一パターン。GPIO18（ハードウェアPWM）→ ファンPWM線（青）に直結、赤黒は24V本線へ常時通電。AWG28は電流容量不足のため対象外、ファン電源線はAWG18〜20を使うこと。
     </div>
   </div>
