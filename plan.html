@@ -79,7 +79,7 @@
 <div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（Akozon YYNMOS-4 ドライバーモジュール）← タッチサイクル 切→弱→強→弱→切</span></div>
 <div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span></div>
 <div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span></div>
-<div>  <span class="c">├─ GPIO27 :</span> <span class="v">TTP223タッチセンサー入力×1 ← 室内換気扇専用操作（切→30%→60%→100%→切）</span></div>
+<div>  <span class="c">├─ GPIO17 :</span> <span class="v">TTP223タッチセンサー入力×1 ← 室内換気扇専用操作（切→30%→60%→100%→切）</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">AM312人感センサー入力 → 足元LED（Akozon YYNMOS-4 ドライバーモジュール）</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">足元LED（Akozon YYNMOS-4 ドライバーモジュール）← スライドドア人感連動</span></div>
 <div>  <span class="c">└─ USB Hub（Anker PowerExpand+ 7-in-1）</span> <span class="w">← 既存品流用。USB-A×2 / PD 60W給電 / Ethernet内蔵 / シガーソケット経由サンワPD65Wカーチャージャーから60W入力→48WをRPiへパススルー</span></div>
@@ -110,6 +110,15 @@
     <div class="note note-red">CO 警報は RPi 依存（独立ハードウェア警報器は不採用）。RPi フリーズ・電源断・圏外時は検知不能になるリスクをユーザーが許容した上での設計。</div>
   </div>
 
+  <!-- ソーラーパネル開閉機構 -->
+  <div class="card">
+    <h2>ソーラーパネル開閉機構（ガススプリング）</h2>
+    <div class="note note-blue">
+      <strong>採用仕様：ガススプリング 200N</strong>（2026-09-12 決定）<br>
+      完全開口時にギリギリ自立状態を保持。手で軽く押し下げると閉方向に動く。
+    </div>
+  </div>
+
   <!-- 部品リスト -->
   <div class="card">
     <h2>部品リスト</h2>
@@ -134,7 +143,7 @@
         <tr><td class="b">フライバックダイオード 1N4007</td><td class="p">数十円〜</td><td>リレーコイル逆起電力保護。3系統で計3個。Phase 4</td></tr>
         <tr><td class="b">警告灯用LED(赤/青/黄)+抵抗</td><td class="p">数十円〜</td><td>系統ごとに色分け。3系統で計3個。Phase 4</td></tr>
         <tr><td class="b">フォトカプラ（PC817）+ TVS ダイオード + 抵抗</td><td class="p">¥300</td><td>ACC 12V 検知回路。GPIO への絶縁入力。車載ノイズ・サージから RPi 保護。Phase 4</td></tr>
-        <tr><td class="b">TTP223 タッチセンサーモジュール × 4</td><td class="p">¥300〜</td><td>メインLED調光サイクル用×3（スライドドア/ベッド横①/ベッド横②、各GPIOへ個別配線しソフトでOR判定）+ 室内換気扇操作用×1（GPIO27）。MODEピン=オープン（モーメンタリ）。Phase 4</td></tr>
+        <tr><td class="b">TTP223 タッチセンサーモジュール × 4</td><td class="p">¥300〜</td><td>メインLED調光サイクル用×3（スライドドア/ベッド横①/ベッド横②、各GPIOへ個別配線しソフトでOR判定）+ 室内換気扇操作用×1（GPIO17）。MODEピン=オープン（モーメンタリ）。Phase 4</td></tr>
         <tr><td class="b">AM312 人感センサー（PIR）</td><td class="p">¥200〜</td><td>スライドドア足元LED自動点灯。3.3V直接駆動可。Phase 4</td></tr>
         <tr><td class="b">Akozon YYNMOS-4 4chドライバーモジュール</td><td class="p">¥966</td><td>フォトカプラ絶縁PWM MOSFETドライバ、10A/ch。DC+/DC-/PWM/GND/OUT+/OUT-の6端子でGPIOと直結、抵抗・はんだ付け不要。メインLED（PWM調光）+ 足元LED（ON/OFF）で2ch使用、残り2chは予備。PWM周波数0〜1kHz・入力信号3〜20V（RPi 3.3Vは範囲内）。Phase 4</td></tr>
         <tr><td class="b">Walfront DC24V 4pinPWMブロワーファン</td><td class="p">¥2,185</td><td>室内換気扇（天井、1台）。黒GND/赤VCC/黄Tach/青PWM。青をGPIO13へ直結、赤黒は24V本線へ常時通電。MOSFET不使用のシンプル構成、保護抵抗も省略</td></tr>
@@ -402,7 +411,7 @@
         <tr><td class="b">主電源(赤/黒)</td><td>—</td><td>サブヒューズブロック(0.3sq/2Aヒューズ)から常時通電で直結</td></tr>
         <tr><td class="b">PWM(青)</td><td>—</td><td>GPIO13(ハードウェアPWM)に直結（保護抵抗も省略）。デューティ比で切/弱/中/強を制御</td></tr>
         <tr><td class="b">Tach(黄)</td><td>—</td><td>未使用。絶縁して放置</td></tr>
-        <tr><td class="b">タッチセンサー</td><td>TTP223 × 1</td><td>MODEピン=オープン（モーメンタリ）→ GPIO27入力（物理ピン13番、立ち上がりエッジ）。タッチごとに切→30%→60%→100%→切を1段階進める。VCC/GNDはLED用タッチセンサーと共通の3.3V/GNDバスから分岐可</td></tr>
+        <tr><td class="b">タッチセンサー</td><td>TTP223 × 1</td><td>MODEピン=オープン（モーメンタリ）→ GPIO17入力（物理ピン11番、立ち上がりエッジ）。タッチごとに切→30%→60%→100%→切を1段階進める。VCC/GNDはLED用タッチセンサーと共通の3.3V/GNDバスから分岐可</td></tr>
       </tbody>
     </table>
     <div class="note" style="margin-top:.5rem;">
