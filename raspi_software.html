@@ -49,6 +49,43 @@
     <p class="meta" style="margin-top:2px;">→ <a href="https://wherethereisawillthereisaway2026.github.io/sharchu-docs/plan.html" style="color:#2563eb;">ラズパイ車中泊PJT メモ</a>（RPi接続設計・センサー・Phase計画）</p>
   </div>
 
+  <!-- 取得可能なデータ一覧 -->
+  <div class="card">
+    <h2>取得可能なデータ一覧（自動制御ルール設計用）</h2>
+    <p style="font-size:.85rem;color:#334155;margin-bottom:.75rem;">
+      「室温が◯℃になったら室内ファンを◯%に」「バッテリ庫が◯℃以上になったらバッテリ庫ファンを◯%に」等の閾値制御を設計する前提として、現状ラズパイから取得できる情報を棚卸し。ファン制御自体は<code>server.py</code>の<code>FAN_PINS = {"indoor": 13, "battery": 18}</code>・<code>/api/fan</code>で実装済み（手動のタッチ操作/API操作のみ、自動閾値判定ロジックは未実装）。
+    </p>
+
+    <h3 style="margin-bottom:.5rem;">実装済み（collector.pyが30秒毎にstatus.jsonへ書き出し中）</h3>
+    <table>
+      <thead><tr><th>機器</th><th>接続方式</th><th>主なデータ</th><th>自動制御での使い道</th></tr></thead>
+      <tbody>
+        <tr><td class="b">JK BMS</td><td>BLE</td><td>SOC(%)・電圧・電流・消費電力・本日充放電量・サイクル数・セル電圧差・健康度・<strong>セル温度(複数)</strong>・RSSI</td><td>セル温度をバッテリ庫温度の補助ソースに使える</td></tr>
+        <tr><td class="b">Renogy Rover(MPPT)</td><td>BLE</td><td>MPPT本体温度・<strong>庫内温度(battery_temperature)</strong>・バッテリー電圧/電流・PV電圧/電流/電力・本日発電量・負荷状態/電力・RSSI</td><td class="ok">バッテリ庫ファン制御の主要ソース。plan.html Phase4で「閾値超えでPWMデューティを上げる、ヒステリシス設定」まで設計済み</td></tr>
+        <tr><td class="b">Victron Orion XS(走行充電器)</td><td>BLE(Instant Readout)</td><td>充電状態・入力電圧/電流・出力電圧/電流・RSSI</td><td>走行充電の稼働状況把握。温度データなし</td></tr>
+        <tr><td class="b">OBD2(OBDBLE)</td><td>BLE(GATT)</td><td>オドメーター(01A6・実装済み)。回転数(010C)・瞬間燃費(015E)・VIN(0902)・DTC距離(0131)・気圧(0133)は対応確認済みだが<code>collector.py</code>未統合。冷却水温(0105)・外気温(0146)・電圧(0142)・速度(010D)は要再検証</td><td>エンジン始動検知（上記参照）。冷却水温が安定取得できれば走行中の温度ソース候補（未検証）</td></tr>
+        <tr><td class="b">ACC/リードスイッチ/PIR(plan.html Phase4計画)</td><td>GPIO直結</td><td>ACC ON/OFF・窓/ソーラー/ジャッキ開閉・人感</td><td>温度データではないが、ACC ON=走行中の判定に使える</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin:1rem 0 .5rem;">未実装（部材購入済みだがソフト・配線とも未着手、または構想段階）</h3>
+    <table>
+      <thead><tr><th>機器</th><th>接続方式</th><th>想定データ</th><th>自動制御での使い道</th></tr></thead>
+      <tbody>
+        <tr><td class="b">Sensirion SCD41</td><td>I2C(購入済み・未接続)</td><td><strong>室内温度</strong>・湿度・CO2濃度</td><td class="ng">室内ファン制御に必須。現状これが唯一の室内温度ソース候補だが未実装</td></tr>
+        <tr><td class="b">Winsen ZE07-CO</td><td>UART(購入済み・未接続)</td><td>CO濃度(ppm)</td><td>温度制御とは別軸（換気トリガーの候補）</td></tr>
+        <tr><td class="b">Androidタブレット(Termux構想)</td><td>HTTP POST</td><td>GPS位置・傾き(rotation_vector)・音声コマンド</td><td>温度系データなし。位置ベース制御の候補</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note note-red" style="margin-top:.75rem;">
+      <strong>室内ファンの自動温度制御は未着手:</strong> SCD41の配線・I2C読み取りスクリプト・<code>collector.py</code>への統合が前提条件。ここから着手する必要がある。
+    </div>
+    <div class="note note-green" style="margin-top:.5rem;">
+      <strong>バッテリ庫ファンの自動温度制御は着手しやすい:</strong> データソース（Rover <code>battery_temperature</code>）・ファン制御口（<code>server.py</code> <code>FAN_PINS["battery"]</code>=GPIO18、<code>PWMOutputDevice</code>）とも実装済みのため、閾値判定ロジックを追加するだけで実現可能。
+    </div>
+  </div>
+
   <!-- OBD2運行データ連携 -->
   <div class="card">
     <h2>OBD2 運行データ連携 <span class="status status-done">実装済み</span></h2>
