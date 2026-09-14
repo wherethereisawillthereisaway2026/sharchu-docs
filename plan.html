@@ -75,12 +75,12 @@
 <div></div>
 <div><span class="k">RPi 5 の接続</span></div>
 <div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
-<div>  <span class="c">├─ I2C    :</span> <span class="v">SCD40（CO₂・温湿度）</span></div>
-<div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZP16（TVOC複合指標、CO単体不可）</span> <span class="w">← CO専用ではない。リスク承知で採用</span></div>
-<div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（Akozon YYNMOS-4 ドライバーモジュール）← タッチサイクル 切→弱→強→弱→切</span></div>
-<div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span></div>
-<div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span></div>
-<div>  <span class="c">├─ GPIO17 :</span> <span class="v">TTP223タッチセンサー入力×1 ← 室内換気扇専用操作（切→30%→60%→100%→切）</span></div>
+<div>  <span class="c">├─ I2C    :</span> <span class="v">SCD40（CO₂・温湿度）</span> <span class="w">← SDA=GPIO2(Pin3) / SCL=GPIO3(Pin5)</span></div>
+<div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZP16（TVOC複合指標、CO単体不可）</span> <span class="w">← CO専用ではない。リスク承知で採用 / A(TX)=GPIO15(Pin10)※要レベル変換 / B(RX)=GPIO14(Pin8)</span></div>
+<div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（Akozon YYNMOS-4 ドライバーモジュール）← タッチサイクル 切→弱→強→弱→切</span> <span class="w">← Pin32</span></div>
+<div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span> <span class="w">← Pin29/Pin31/Pin36</span></div>
+<div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span> <span class="w">← Pin33</span></div>
+<div>  <span class="c">├─ GPIO17 :</span> <span class="v">TTP223タッチセンサー入力×1 ← 室内換気扇専用操作（切→30%→60%→100%→切）</span> <span class="w">← Pin11</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">AM312人感センサー入力 → 足元LED（Akozon YYNMOS-4 ドライバーモジュール）</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">足元LED（Akozon YYNMOS-4 ドライバーモジュール）← スライドドア人感連動</span></div>
 <div>  <span class="c">└─ USB Hub（Anker PowerExpand+ 7-in-1）</span> <span class="w">← 既存品流用。USB-A×2 / PD 60W給電 / Ethernet内蔵 / シガーソケット経由サンワPD65Wカーチャージャーから60W入力→48WをRPiへパススルー</span></div>
@@ -89,7 +89,7 @@
 <div>      <span class="c">└─</span> <span class="w">Phase 3 以降：左・右カメラ追加</span></div>
 <div></div>
 <div><span class="k">換気ファン（バッテリ庫、Walfront DC24V 4pinPWMブロワー）</span></div>
-<div>  <span class="c">└→</span> <span class="v">RPi GPIO18 直結（GPIO PWM出力）</span> <span class="w">← MPPT BLEバッテリー温度データで閾値制御。RPi依存（フェイルセーフなし、リスク許容済み）</span></div>
+<div>  <span class="c">└→</span> <span class="v">RPi GPIO18(Pin12) 直結（GPIO PWM出力）</span> <span class="w">← MPPT BLEバッテリー温度データで閾値制御。RPi依存（フェイルセーフなし、リスク許容済み）</span></div>
 <div></div>
 <div><span class="k">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー、1台）</span></div>
 <div>  <span class="c">└→</span> <span class="v">RPi GPIO13 直結（GPIO PWM出力）</span> <span class="w">← 物理スイッチなし。Pico不使用。「切」もPWM=0%依存</span></div>
