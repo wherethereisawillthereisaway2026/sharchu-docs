@@ -75,8 +75,8 @@
 <div></div>
 <div><span class="k">RPi 5 の接続</span></div>
 <div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
-<div>  <span class="c">├─ I2C    :</span> <span class="v">SCD41（CO₂・温湿度）</span></div>
-<div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZE07-CO（電気化学式CO、ppm値）</span></div>
+<div>  <span class="c">├─ I2C    :</span> <span class="v">SCD40（CO₂・温湿度）</span></div>
+<div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZP16（TVOC複合指標、CO単体不可）</span> <span class="w">← CO専用ではない。リスク承知で採用</span></div>
 <div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（Akozon YYNMOS-4 ドライバーモジュール）← タッチサイクル 切→弱→強→弱→切</span></div>
 <div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span></div>
 <div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span></div>
@@ -128,8 +128,8 @@
       <tbody>
         <tr><td class="b">Raspberry Pi 5（4GB）</td><td class="p">¥18,000〜22,000</td><td></td></tr>
         <tr><td class="b">RPi 5 Active Cooler</td><td class="p">¥1,500</td><td>必須</td></tr>
-        <tr><td class="b">Sensirion SCD41</td><td class="p">¥6,000</td><td>CO₂・温湿度を1台で計測（CO とは別物）。購入済み</td></tr>
-        <tr><td class="b">Winsen ZE07-CO</td><td class="p">¥3,000〜</td><td>電気化学式CO、UART出力で0.1ppm分解能のppm値を直接取得。電気化学セルは2〜5年で劣化するため定期交換前提。購入済み</td></tr>
+        <tr><td class="b">Sensirion SCD40</td><td class="p">¥4,000〜（要確認）</td><td>CO₂・温湿度を1台で計測（CO とは別物）。SCD41の廉価版で精度はやや劣るがI2Cインターフェース・アドレス(0x62)は共通。購入済み</td></tr>
+        <tr><td class="b">Winsen ZP16</td><td class="p">（要確認）</td><td class="warn">TVOC複合指標のみでCO単体のppm値は取得不可。メーカーはpersonal safety用途への使用を禁止と明記しているが、リスク承知で採用（2026-09-14決定）。購入済み</td></tr>
         <tr><td class="b">Walfront DC24V 4pinPWMブロワーファン（バッテリ庫用、2台目）</td><td class="p">¥2,185</td><td>室内換気扇と同一機種。黒GND/赤VCC/黄Tach/青PWM。青をGPIO18へ直結、赤黒は24V本線へ常時通電。MOSFET不使用</td></tr>
         <tr><td class="b">Anker PowerExpand+ 7-in-1 USB Hub</td><td class="p">¥0（既存品）</td><td>USB-A×2・PD 60W・Ethernet内蔵。60W PDチャージャー接続で12Wをハブ自己給電・48WをRPiへパススルー</td></tr>
         <tr><td class="b">サンワダイレクト カーチャージャー PD65W対応（200-CAR124AC）</td><td class="p">¥2,780</td><td>Ankerハブ用電源。12V/24V対応、シガーソケット経由で接続（既存のシガーソケット電源ソケット配線を共用）。USB-C 65W出力でハブの60W入力要件を満たす</td></tr>
@@ -195,8 +195,8 @@
       <div class="ph ph1">
         <h3>Phase 1 — センシング</h3>
         <ul>
-          <li>SCD41（CO₂・温湿度）</li>
-          <li>Winsen ZE07-CO（UART）</li>
+          <li>SCD40（CO₂・温湿度）</li>
+          <li>Winsen ZP16（UART、TVOC複合指標）</li>
           <li>JK BMS BLE</li>
           <li>電圧監視シャットダウン設定</li>
         </ul>
@@ -242,8 +242,8 @@
       <thead><tr><th>項目</th><th>内容</th></tr></thead>
       <tbody>
         <tr><td class="b">電源ノイズ</td><td>LiFePO4でもインバーター・MPPT・エアコン起動でノイズが出る。安物USB-PDは故障リスク</td></tr>
-        <tr><td class="b">CO 警報</td><td>RPi依存（独立ハードウェア警報器は不採用、リスク許容済み）。ZE07-CO（UART）でppm監視 + ntfy.sh通知。CO₂（SCD41）とは別物</td></tr>
-        <tr><td class="b">ZE07-CO</td><td>電気化学セルのため2〜5年で応答劣化。定期的なゼロ校正・交換が必要</td></tr>
+        <tr><td class="b">CO 警報</td><td class="warn">RPi依存（独立ハードウェア警報器は不採用、リスク許容済み）。ZP16（UART）はTVOC複合指標のみでCO単体のppm値は取得不可。「CO検知」ではなく「空気質異常検知」として運用 + ntfy.sh通知。CO₂（SCD40）とは別物</td></tr>
+        <tr><td class="b">ZP16</td><td class="warn">メーカーがpersonal safety用途への使用を禁止と明記。CO専用の高精度測定は不可。Aピン(TX)は0-5V出力のためラズパイGPIO直結前にレベル変換必須（5.5V超入力で本体破損）</td></tr>
         <tr><td class="b">USB カメラ配線</td><td>3m 超えはアクティブ延長必須 / セルフパワー Hub 必須 / コネクタはホットメルト固定</td></tr>
         <tr><td class="b">InfluxDB</td><td>tmpfs（RAMディスク）に書いて定期フラッシュ。SD への直書きは短命</td></tr>
         <tr><td class="b">スマホルーター</td><td>USB テザリング推奨（Wi-Fi ホットスポットより安定）。常時充電はバッテリー劣化・膨張に注意</td></tr>
@@ -258,8 +258,8 @@
     <table>
       <thead><tr><th>モジュール</th><th>芯数</th><th>配線</th><th>備考</th></tr></thead>
       <tbody>
-        <tr><td class="b">SCD41（CO₂・温湿度）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>I2C アドレス 0x62 固定</td></tr>
-        <tr><td class="b">Winsen ZE07-CO</td><td class="p">4芯</td><td>VCC / GND / TXD / RXD</td><td>UART（9600bps）。RPi 5 のハードウェアUARTピンに接続</td></tr>
+        <tr><td class="b">SCD40（CO₂・温湿度）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>I2C アドレス 0x62 固定</td></tr>
+        <tr><td class="b">Winsen ZP16</td><td class="p">4芯</td><td>5V / GND / A(TX) / B(RX)</td><td>UART（9600bps, 8N1, チェックサムなし）。A(TX)は0-5V出力のためレベル変換を挟んでRXD(GPIO15)へ、Bはそのまま TXD(GPIO14) へ接続</td></tr>
         <tr><td class="b">磁気リードスイッチ（各外装部位）</td><td class="p">2芯</td><td>Signal / GND</td><td>NC接点。10kΩプルアップ + 100nF RCフィルタ。デバウンス 300ms。防水コネクタ必須</td></tr>
       </tbody>
     </table>
@@ -438,7 +438,7 @@
     </div>
   </div>
 
-  <footer>ラズパイ車中泊PJT メモ — 2026-09-06</footer>
+  <footer>ラズパイ車中泊PJT メモ — 2026-09-14</footer>
 </div>
 </body>
 </html>
