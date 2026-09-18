@@ -63,7 +63,7 @@
         <tr><td class="b">JK BMS</td><td>BLE</td><td>SOC(%)・電圧・電流・消費電力・本日充放電量・サイクル数・セル電圧差・健康度・<strong>セル温度(複数)</strong>・RSSI</td><td>セル温度をバッテリ庫温度の補助ソースに使える</td></tr>
         <tr><td class="b">Renogy Rover(MPPT)</td><td>BLE</td><td>MPPT本体温度・<strong>庫内温度(battery_temperature)</strong>・バッテリー電圧/電流・PV電圧/電流/電力・本日発電量・負荷状態/電力・RSSI</td><td class="ok">バッテリ庫ファン制御の主要ソース。plan.html Phase4で「閾値超えでPWMデューティを上げる、ヒステリシス設定」まで設計済み</td></tr>
         <tr><td class="b">Victron Orion XS(走行充電器)</td><td>BLE(Instant Readout)</td><td>充電状態・入力電圧/電流・出力電圧/電流・RSSI</td><td>走行充電の稼働状況把握。温度データなし</td></tr>
-        <tr><td class="b">OBD2(OBDBLE)</td><td>BLE(GATT)</td><td>オドメーター(01A6・実装済み)。回転数(010C)・瞬間燃費(015E)・VIN(0902)・DTC距離(0131)・気圧(0133)は対応確認済みだが<code>collector.py</code>未統合。冷却水温(0105)・外気温(0146)・電圧(0142)・速度(010D)は要再検証</td><td>エンジン始動検知（上記参照）。冷却水温が安定取得できれば走行中の温度ソース候補（未検証）</td></tr>
+        <tr><td class="b">OBD2(OBDBLE)</td><td>BLE(GATT)</td><td>オドメーター(01A6)・冷却水温(0105)・外気温(0146)・電圧(0142)・速度(010D)は実機確認済み。回転数(010C)・瞬間燃費(015E)・VIN(0902)・DTC距離(0131)・気圧(0133)は対応確認済みだが<code>collector.py</code>未統合</td><td>エンジン始動検知はOrion充電検知方式で実装済み（下記参照）。冷却水温は走行中の温度ソース候補として利用可能（実測72℃）</td></tr>
         <tr><td class="b">ACC/リードスイッチ/PIR(plan.html Phase4計画)</td><td>GPIO直結</td><td>ACC ON/OFF・窓/ソーラー/ジャッキ開閉・人感</td><td>温度データではないが、ACC ON=走行中の判定に使える</td></tr>
       </tbody>
     </table>
@@ -103,11 +103,11 @@
         <tr><td class="b">0131</td><td>DTCクリア後走行距離</td><td class="ok">対応</td><td>3040km時点で取得、01A6との整合性確認済み</td></tr>
         <tr><td class="b">012F</td><td>燃料残量(%)</td><td class="ng">非対応</td><td>本車両のECUは非公開。<code>obd/fuel_range_check.py</code>は現状動作しない</td></tr>
         <tr><td class="b">015C</td><td>エンジン油温</td><td class="ng">非対応</td><td></td></tr>
-        <tr><td class="b">0105 / 010D / 0146 / 0142</td><td>水温・速度・外気温・電圧</td><td>要再検証</td><td>コマンド連投による通信詰まりの可能性。個別リトライで再検証が必要</td></tr>
+        <tr><td class="b">0105 / 010D / 0146 / 0142</td><td>水温・速度・外気温・電圧</td><td class="ok">対応</td><td>ATSP0直後の初回クエリでプロトコル自動検出が不安定になる既知の問題（ELM327共通）。本番PIDの前にダミーの<code>0100</code>クエリを送るウォームアップを追加して解決。実機確認済み(2026-09-17、水温72℃・速度0km/h・外気温27℃・電圧13.862V)。<code>collector.py</code>には一度きりの検証用関数として統合済みだが、常時ポーリングへの本格統合は未着手</td></tr>
       </tbody>
     </table>
     <div class="note note-green" style="margin-top:.75rem;">
-      <strong>給油記録機能:</strong> <code>server.py</code>の<code>GET/POST /api/fillup</code>で「満タンにした」ボタンに対応。押下時に<code>read_odometer()</code>で走行距離を取得し<code>fillup_state.json</code>に保存、ダッシュボード（<code>static/index.html</code>）に即時反映。実機確認済み（2026-09-13）。
+      <strong>給油記録機能（2026-09-17に自動化）:</strong> 給油直後はエンジンが止まっておりOBD2が応答しないため、「満タンにした」を押した時点(<code>POST /api/fillup</code>)では<code>fillup_pending.json</code>に「記録待ち」フラグを立てるだけにし、実際の読み取りは<code>collector.py</code>が走行充電器(Orion)の通電を検知した時点(=エンジン再始動時)に自動で<code>read_odometer()</code>を実行して<code>fillup_state.json</code>に保存する設計に変更。ユーザーは給油後にボタンを押すだけで、エンジン再始動時の追加操作は不要。ダッシュボードには「記録待ち(エンジン始動待ち)」バッジで進行状況を表示。実機確認済み（2026-09-17、3248.4km）。
     </div>
     <div class="note" style="margin-top:.5rem;">
       <strong>未着手:</strong> 平均燃費の実測値確定と、（現在の01A6 − 給油時01A6）÷平均燃費 による残燃料・走行可能距離の計算処理。設計方針（距離ベース方式、015E時間積分方式より運用が楽）は合意済み。
@@ -116,10 +116,13 @@
 
   <!-- エンジン始動自動検知 -->
   <div class="card">
-    <h2>エンジン始動自動検知 <span class="status status-plan">設計合意・未実装</span></h2>
+    <h2>エンジン始動自動検知 <span class="status status-done">実装済み（方式変更）</span></h2>
     <p style="font-size:.85rem;color:#334155;margin-bottom:.75rem;">
-      OBD2 BLEアダプタの接続挙動を使い、ユーザーの手動通知なしでエンジン始動をラズパイ側から自動判定する設計。
+      当初はOBD2 BLEアダプタの接続挙動（下記の判定アルゴリズム）で判定する設計だったが、2026-09-17に<strong>より単純で既に安定しているOrion走行充電器のBLEポーリング</strong>で代替する方式に変更・実装した。<code>collector.py</code>のOrion読み取りで<code>output_voltage * output_current &gt; 1.0W</code>を検知した瞬間を「エンジン始動」とみなす（<code>is_charging_now</code>）。既存の30秒ポーリングに相乗りするだけで新規のGATT接続ループが不要になり、給油記録の自動化（上記）とOBD2 PID再検証診断（上記）の両方のトリガーとして実機で使用中。
     </p>
+    <div class="note note-green" style="margin-top:.5rem;margin-bottom:.75rem;">
+      下記のOBD2接続挙動ベースの判定アルゴリズムは、当初の設計として合意はしたが、Orion方式の方が単純・低コストで確実だったため<strong>未実装のまま採用を見送った</strong>。将来Orionを撤去する等でこの前提が崩れた場合の代替案として記録を残す。
+    </div>
     <table>
       <thead><tr><th>状態</th><th>GATT接続</th><th>PIDクエリ(010C等)応答</th></tr></thead>
       <tbody>
@@ -139,7 +142,7 @@
       <strong>接続成功だけでは判定不可:</strong> アダプタは常時アドバタイズしており「接続可能になった」を受動的に検知する仕組みがない。またACC状態でもGATT接続自体は成功することがあるため、接続成功のみをフラグにすると誤検知する。PID応答の有無まで含めて初めて確実な判定になる。
     </div>
     <div class="note" style="margin-top:.5rem;">
-      現状、このポーリングループは<code>collector.py</code>に未実装。既存実装は「満タンにした」ボタン押下時の単発接続のみ（手動トリガー）。実装は用途確定待ちで保留中。
+      このGATT+PID方式は結局実装しなかった（上記の通りOrion方式に置き換え）。
     </div>
   </div>
 
