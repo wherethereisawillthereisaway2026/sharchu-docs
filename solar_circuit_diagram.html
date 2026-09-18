@@ -1054,6 +1054,64 @@
         </div>
     </div>
 
+    <div class="notes-card" style="margin-top: 1.5rem;">
+        <h3 class="notes-title">🔋 MPPTコントローラー（Renogy Rover）充電ステージ</h3>
+        <div class="notes-body">
+            <p style="margin-bottom: 0.75rem; color: #475569;">
+                実測設定値（表示は12V換算のため実際は×2、本システムは24V系）。<code>charging_status</code>としてRover自身が現在の段階を返すため、コントロールパネル上でも「バルク充電中」「ブースト充電中」「フロート充電中」等として表示している。
+            </p>
+            <div class="spec-table-wrap">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>mppt（バルク）</th>
+                            <th>boost（ブースト）</th>
+                            <th>floating（フロート）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>制御方式</td>
+                            <td>定電流(CC) / MPPT追従</td>
+                            <td>定電圧(CV)</td>
+                            <td>定電圧(CV、より低い電圧)</td>
+                        </tr>
+                        <tr>
+                            <td>目標</td>
+                            <td>とにかく最大電力を注ぐ</td>
+                            <td>ブースト電圧 26.8V を維持</td>
+                            <td>フロート電圧 26.4V を維持</td>
+                        </tr>
+                        <tr>
+                            <td>電流の挙動</td>
+                            <td>パネルが出せる最大電流を流し続ける</td>
+                            <td>電圧を保ちながら電流は徐々に減っていく</td>
+                            <td>ごく少量の電流のみ（ほぼ維持だけ）</td>
+                        </tr>
+                        <tr>
+                            <td>電圧の挙動</td>
+                            <td>まだ低いので上昇していく</td>
+                            <td>26.8Vで一定</td>
+                            <td>26.4Vで一定</td>
+                        </tr>
+                        <tr>
+                            <td>続く条件</td>
+                            <td>電圧がブースト電圧に届くまで</td>
+                            <td>設定時間(30分)経過するまで</td>
+                            <td>負荷電流が充電電流を超えるまで</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top: 0.75rem; font-size: 14px; line-height: 1.7; color: #374151;">
+                一番の違いは、<strong>mppt（バルク）は「電流優先（出せるだけ出す）」、boost/floatingは「電圧優先（その電圧を保つよう電流を調整）」</strong>という制御方式の違い。boostとfloatingの違いは、保つ目標電圧が高いか低いかだけ。<br>
+                フロート中からバルクに戻る条件は「電圧が下がったら」ではなく、公式マニュアル（Rover Series, Version 1.3）に明記されている通り「負荷電流が充電電流を超えたら」。日次リセット（夜間の電圧低下）ではない。<br>
+                同じ26.4〜26.8Vの電圧帯でも、上昇中に通過しているだけならバルク、既に落ち着いて維持されているならフロートであり、電圧だけでは判別できない（<code>charging_status</code>を見るのが確実）。
+            </p>
+        </div>
+    </div>
+
     <div class="container">
         <div class="section-card" style="margin-bottom:24px;">
             <h2 class="section-title">🛠️ 施工上の注意点（実機確認事項）</h2>
