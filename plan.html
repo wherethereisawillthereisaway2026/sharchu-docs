@@ -20,6 +20,20 @@
     td { padding: .5rem .75rem; border-top: 1px solid #e2e8f0; vertical-align: top; color: #334155; }
     tr:hover td { background: #f8fafc; }
     .pintbl tr.g td { border-top: 2px solid #cbd5e1; }
+    .hdr { background: #d0e0e2; border-radius: 8px; padding: 1rem 1.1rem 1.1rem; max-width: 460px; margin: 1rem auto .4rem; }
+    .hdr-title { text-align: center; font-size: 1.1rem; color: #334155; margin-bottom: .7rem; }
+    .hdr-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: .75rem; row-gap: .4rem; font-size: .78rem; color: #0f172a; }
+    .hdr-grid > div { display: flex; align-items: center; gap: .55rem; min-width: 0; }
+    .hdr-grid > div.r { justify-content: flex-end; text-align: right; }
+    .dot { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1px solid; }
+    .c-3v3 { background: #ffd000; border-color: #e0a800; }
+    .c-5v { background: #ff0000; border-color: #cc0000; }
+    .c-gnd { background: #000; border-color: #000; }
+    .c-i2c { background: #7fb8f5; border-color: #3b82f6; }
+    .c-uart { background: #ff9c9c; border-color: #e05555; }
+    .c-spi { background: #ffa85c; border-color: #e07a1f; }
+    .c-gpio { background: #c8dcfa; border-color: #8fb3e8; }
+    .c-sp { background: #d3dde0; border-color: #8a9a9e; }
     .b { font-weight: 700; color: #0f172a; }
     .p { font-weight: 700; color: #0369a1; }
     .warn { color: #b91c1c; font-size: .8rem; }
@@ -198,6 +212,52 @@
     </table>
     </div>
     <div class="note note-blue">ピン番号は物理ピン（1〜40）。「未記載」は従来の計画にピンの記載がない項目、「未定」はGPIO未割り当ての項目。3.3V（1番）とGND（6番）は、TTP223 4個で共通のバスに接続する（ライト用3個も室内換気扇用と同じ配線。2026-09-20ユーザー確認）。</div>
+    <div class="hdr">
+      <div class="hdr-title">Raspberry Pi 5 GPIO Header</div>
+      <div class="hdr-grid">
+      <div><span class="dot c-3v3"></span><span>1 (3V3 power)</span></div>
+      <div class="r"><span>2 (5V power)</span><span class="dot c-5v"></span></div>
+      <div><span class="dot c-i2c"></span><span>3 (GPIO 2 / SDA)</span></div>
+      <div class="r"><span>4 (5V power)</span><span class="dot c-5v"></span></div>
+      <div><span class="dot c-i2c"></span><span>5 (GPIO 3 / SCL)</span></div>
+      <div class="r"><span>6 (Ground)</span><span class="dot c-gnd"></span></div>
+      <div><span class="dot c-gpio"></span><span>7 (GPIO 4 / GPCLK0)</span></div>
+      <div class="r"><span>8 (GPIO 14 / TXD)</span><span class="dot c-uart"></span></div>
+      <div><span class="dot c-gnd"></span><span>9 (Ground)</span></div>
+      <div class="r"><span>10 (GPIO 15 / RXD)</span><span class="dot c-uart"></span></div>
+      <div><span class="dot c-gpio"></span><span>11 (GPIO 17)</span></div>
+      <div class="r"><span>12 (GPIO 18 / PCM_CLK)</span><span class="dot c-gpio"></span></div>
+      <div><span class="dot c-gpio"></span><span>13 (GPIO 27)</span></div>
+      <div class="r"><span>14 (Ground)</span><span class="dot c-gnd"></span></div>
+      <div><span class="dot c-gpio"></span><span>15 (GPIO 22)</span></div>
+      <div class="r"><span>16 (GPIO 23)</span><span class="dot c-gpio"></span></div>
+      <div><span class="dot c-3v3"></span><span>17 (3V3 power)</span></div>
+      <div class="r"><span>18 (GPIO 24)</span><span class="dot c-gpio"></span></div>
+      <div><span class="dot c-spi"></span><span>19 (GPIO 10 / MOSI)</span></div>
+      <div class="r"><span>20 (Ground)</span><span class="dot c-gnd"></span></div>
+      <div><span class="dot c-spi"></span><span>21 (GPIO 9 / MISO)</span></div>
+      <div class="r"><span>22 (GPIO 25)</span><span class="dot c-gpio"></span></div>
+      <div><span class="dot c-spi"></span><span>23 (GPIO 11 / SCLK)</span></div>
+      <div class="r"><span>24 (GPIO 8 / CE0)</span><span class="dot c-spi"></span></div>
+      <div><span class="dot c-gnd"></span><span>25 (Ground)</span></div>
+      <div class="r"><span>26 (GPIO 7 / CE1)</span><span class="dot c-spi"></span></div>
+      <div><span class="dot c-i2c"></span><span>27 (GPIO 0 / ID_SD)</span></div>
+      <div class="r"><span>28 (GPIO 1 / ID_SC)</span><span class="dot c-i2c"></span></div>
+      <div><span class="dot c-gpio"></span><span>29 (GPIO 5)</span></div>
+      <div class="r"><span>30 (Ground)</span><span class="dot c-gnd"></span></div>
+      <div><span class="dot c-gpio"></span><span>31 (GPIO 6)</span></div>
+      <div class="r"><span>32 (GPIO 12 / PWM0)</span><span class="dot c-sp"></span></div>
+      <div><span class="dot c-sp"></span><span>33 (GPIO 13 / PWM1)</span></div>
+      <div class="r"><span>34 (Ground)</span><span class="dot c-gnd"></span></div>
+      <div><span class="dot c-sp"></span><span>35 (GPIO 19 / PCM_FS)</span></div>
+      <div class="r"><span>36 (GPIO 16)</span><span class="dot c-gpio"></span></div>
+      <div><span class="dot c-gpio"></span><span>37 (GPIO 26)</span></div>
+      <div class="r"><span>38 (GPIO 20 / PCM_DIN)</span><span class="dot c-spi"></span></div>
+      <div><span class="dot c-gnd"></span><span>39 (Ground)</span></div>
+      <div class="r"><span>40 (GPIO 21 / PCM_DOUT)</span><span class="dot c-spi"></span></div>
+      </div>
+    </div>
+    <p class="meta" style="text-align:center;">Raspberry Pi 5 GPIOヘッダー図（物理ピン番号順）</p>
   </div>
 
   <!-- ソーラーパネル開閉機構 -->
