@@ -19,6 +19,7 @@
     th { background: #f1f5f9; font-weight: 700; padding: .5rem .75rem; text-align: left; }
     td { padding: .5rem .75rem; border-top: 1px solid #e2e8f0; vertical-align: top; color: #334155; }
     tr:hover td { background: #f8fafc; }
+    .pintbl tr.g td { border-top: 2px solid #cbd5e1; }
     .b { font-weight: 700; color: #0f172a; }
     .p { font-weight: 700; color: #0369a1; }
     .warn { color: #b91c1c; font-size: .8rem; }
@@ -92,7 +93,7 @@
       <thead><tr><th>#</th><th>項目</th><th>待ち条件・次の一手</th></tr></thead>
       <tbody>
         <tr><td class="b">1</td><td class="b">Orion（走行充電器）のVE.Direct対応</td><td>純正USBケーブルを購入済み、到着待ち（2026-09-27以降）。USBで読み取り → デバイスモード書き込みの実機検証 → SOC自動制御へ組み込み → 過熱の調査 → 「一時的な90%充電モード」（エアコン長時間使用向け）の設計</td></tr>
-        <tr><td class="b">2</td><td class="b">エアコンIR制御</td><td>モジュール到着済み、配線待ち。ピンは下の構成図（案）。配線後に起動設定へgpio-irのoverlay追記＋Pi再起動 → リモコン信号の学習</td></tr>
+        <tr><td class="b">2</td><td class="b">エアコンIR制御</td><td>モジュール到着済み、配線待ち。ピンは下の構成図・ピン割り当て表（案）。配線後に起動設定へgpio-irのoverlay追記＋Pi再起動 → リモコン信号の学習</td></tr>
         <tr><td class="b">3</td><td class="b">車内温度センサー（SCD40）</td><td>購入済み・未配線。I2C配線 → 読み取り → ヘッダー表示 → 室内ファンの自動制御</td></tr>
         <tr><td class="b">4</td><td class="b">Pushover通知</td><td>アカウント作成とAPIトークンの設定（低SOC警告・BMS操作失敗・空気質異常の通知が実際に届くようになる）</td></tr>
         <tr><td class="b">5</td><td class="b">インバーター（MWXNE 24V 2000W）の制御・状態取得</td><td>有線リモコン（RCU）の通信の解析と、無線リモコン信号の受信機（購入済み・到着待ち）。ON/OFF・出力Wの取得が狙い</td></tr>
@@ -154,6 +155,49 @@
 <div>  <span class="c">└─</span> <span class="v">ntfy.sh → CO / CO₂超過 / 高温 / 走行前チェック異常 アラート</span></div>
     </div>
     <div class="note note-red">CO 警報は RPi 依存（独立ハードウェア警報器は不採用）。RPi フリーズ・電源断・圏外時は検知不能になるリスクをユーザーが許容した上での設計。</div>
+  </div>
+
+  <!-- ラズパイ ピン割り当て表 -->
+  <div class="card">
+    <h2>ラズパイ ピン割り当て表（部材別）</h2>
+    <div style="overflow-x:auto;">
+    <table class="pintbl">
+      <thead><tr><th>部材</th><th>説明</th><th>接続元</th><th>ラズパイ</th><th>ピン番号</th><th>説明</th></tr></thead>
+      <tbody>
+        <tr class="g"><td class="b" rowspan="3">TTP223</td><td rowspan="3">タッチセンサー<br>ライト用（スライドドア）</td><td>VCC</td><td class="p">3.3V</td><td class="b" style="white-space:nowrap">1</td><td>3.3V プラス電源（共通バス）</td></tr>
+        <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">6</td><td>GND マイナス電源（共通バス）</td></tr>
+        <tr><td>OUT</td><td class="p">GPIO5</td><td class="b" style="white-space:nowrap">29</td><td>タッチ信号（メインLED調光）</td></tr>
+        <tr class="g"><td class="b" rowspan="3">TTP223</td><td rowspan="3">タッチセンサー<br>ライト用（ベッド横①）</td><td>VCC</td><td class="p">3.3V</td><td class="b" style="white-space:nowrap">1</td><td>3.3V プラス電源（共通バス）</td></tr>
+        <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">6</td><td>GND マイナス電源（共通バス）</td></tr>
+        <tr><td>OUT</td><td class="p">GPIO6</td><td class="b" style="white-space:nowrap">31</td><td>タッチ信号（メインLED調光）</td></tr>
+        <tr class="g"><td class="b" rowspan="3">TTP223</td><td rowspan="3">タッチセンサー<br>ライト用（ベッド横②）</td><td>VCC</td><td class="p">3.3V</td><td class="b" style="white-space:nowrap">1</td><td>3.3V プラス電源（共通バス）</td></tr>
+        <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">6</td><td>GND マイナス電源（共通バス）</td></tr>
+        <tr><td>OUT</td><td class="p">GPIO16</td><td class="b" style="white-space:nowrap">36</td><td>タッチ信号（メインLED調光）</td></tr>
+        <tr class="g"><td class="b" rowspan="3">TTP223</td><td rowspan="3">タッチセンサー<br>室内換気扇用</td><td>VCC</td><td class="p">3.3V</td><td class="b" style="white-space:nowrap">1</td><td>3.3V プラス電源（共通バス）</td></tr>
+        <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">6</td><td>GND マイナス電源（共通バス）</td></tr>
+        <tr><td>OUT</td><td class="p">GPIO17</td><td class="b" style="white-space:nowrap">11</td><td>タッチ信号（風量 切→30→60→100%）</td></tr>
+        <tr class="g"><td class="b" rowspan="2">Akozon YYNMOS-4</td><td rowspan="2">LEDドライバー<br>メインLED（DC+/DC-は24V本線）</td><td>PWM入力</td><td class="p">GPIO12</td><td class="b" style="white-space:nowrap">32</td><td>PWM信号（調光）</td></tr>
+        <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">未記載</td><td>計画上はRPiのGNDに接続</td></tr>
+        <tr class="g"><td class="b" rowspan="1">Walfront DC24V ブロワー</td><td rowspan="1">室内換気扇（天井）<br>赤・黒は24V本線、ラズパイ非接続</td><td>PWM（青）</td><td class="p">GPIO13</td><td class="b" style="white-space:nowrap">33</td><td>PWM信号（風量。「切」もPWM=0%）</td></tr>
+        <tr class="g"><td class="b" rowspan="1">Walfront DC24V ブロワー</td><td rowspan="1">バッテリ庫ファン<br>赤・黒は24V本線、ラズパイ非接続</td><td>PWM（青）</td><td class="p">GPIO18</td><td class="b" style="white-space:nowrap">12</td><td>PWM信号（バッテリ温度で制御）</td></tr>
+        <tr class="g"><td class="b" rowspan="3">Sensirion SCD40</td><td rowspan="3">CO₂・温湿度センサー（I2C）<br>購入済み・未配線</td><td>SDA</td><td class="p">GPIO2</td><td class="b" style="white-space:nowrap">3</td><td>I2Cデータ</td></tr>
+        <tr><td>SCL</td><td class="p">GPIO3</td><td class="b" style="white-space:nowrap">5</td><td>I2Cクロック</td></tr>
+        <tr><td>VCC / GND</td><td class="p">未記載</td><td class="b" style="white-space:nowrap">未記載</td><td>電源（従来の計画に記載なし）</td></tr>
+        <tr class="g"><td class="b" rowspan="3">Winsen ZP16</td><td rowspan="3">TVOC複合指標センサー（UART）</td><td>A（TX）</td><td class="p">GPIO15（RXD）</td><td class="b" style="white-space:nowrap">10</td><td>UART受信。出力は0-5Vのためレベル変換が必要</td></tr>
+        <tr><td>B（RX）</td><td class="p">GPIO14（TXD）</td><td class="b" style="white-space:nowrap">8</td><td>UART送信</td></tr>
+        <tr><td>5V / GND</td><td class="p">未記載</td><td class="b" style="white-space:nowrap">未記載</td><td>電源（従来の計画に記載なし）</td></tr>
+        <tr class="g"><td class="b" rowspan="4">Swagell 360°</td><td rowspan="4">IR送受信モジュール（エアコン用）<br>案・配線前</td><td>VCC</td><td class="p">3.3V</td><td class="b" style="white-space:nowrap">17</td><td>3.3V プラス電源（案）</td></tr>
+        <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">9</td><td>GND マイナス電源（案）</td></tr>
+        <tr><td>REC</td><td class="p">GPIO4</td><td class="b" style="white-space:nowrap">7</td><td>受信信号（案）</td></tr>
+        <tr><td>SND</td><td class="p">GPIO27</td><td class="b" style="white-space:nowrap">13</td><td>送信信号（案。Pin13の空き要確認）</td></tr>
+        <tr class="g"><td class="b" rowspan="1">AM312</td><td rowspan="1">人感センサー（スライドドア）</td><td>OUT</td><td class="p">未定</td><td class="b" style="white-space:nowrap">未定</td><td>GPIO入力（足元LEDと連動）</td></tr>
+        <tr class="g"><td class="b" rowspan="1">Akozon YYNMOS-4</td><td rowspan="1">LEDドライバー<br>足元LED</td><td>PWM入力</td><td class="p">未定</td><td class="b" style="white-space:nowrap">未定</td><td>GPIO出力</td></tr>
+        <tr class="g"><td class="b" rowspan="1">PC817 フォトカプラ</td><td rowspan="1">ACC ON検知</td><td>出力</td><td class="p">未定</td><td class="b" style="white-space:nowrap">未定</td><td>GPIO入力（絶縁必須）</td></tr>
+        <tr class="g"><td class="b" rowspan="1">磁気リードスイッチ（NC）</td><td rowspan="1">走行前チェック（他4項目のみ）</td><td>信号</td><td class="p">未定</td><td class="b" style="white-space:nowrap">未定</td><td>GPIO入力（10kΩプルアップ＋100nF）</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="note note-blue">ピン番号は物理ピン（1〜40）。「未記載」は従来の計画にピンの記載がない項目、「未定」はGPIO未割り当ての項目。3.3V（1番）とGND（6番）は、TTP223 4個で共通のバスに接続する。</div>
   </div>
 
   <!-- ソーラーパネル開閉機構 -->
