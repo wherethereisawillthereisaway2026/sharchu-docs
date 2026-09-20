@@ -527,8 +527,9 @@
       <thead><tr><th>モジュール</th><th>型番</th><th>設定・接続</th></tr></thead>
       <tbody>
         <tr><td class="b">タッチセンサー ×3</td><td>TTP223</td><td>MODEピン = オープン（モーメンタリ）→ GPIO5(スライドドア)/GPIO6(ベッド横①)/GPIO16(ベッド横②) 入力（立ち上がりエッジ割り込み）。VCC/GNDは共通バスから分岐、OUTのみ個別配線</td></tr>
-        <tr><td class="b">ドライバーモジュール</td><td>MOSトリガースイッチ基板（Amazon B0C2H7X13F、1ch）</td><td>LEDの黒（GND）側をスイッチ（ローサイド方式）。PWM ← GPIO12（ハードウェアPWM）。端子名・RPi GNDとの接続は新基板で要確認</td></tr>
-        <tr><td class="b">PWM 設定</td><td>—</td><td>周波数 1kHz（現行の設定。新基板は0〜20kHz対応のため変更も可能）。duty: 切=0% / 弱=30% / 強=100%</td></tr>
+        <tr><td class="b">ドライバーモジュール</td><td>MOSトリガースイッチ基板（Amazon B0C2H7X13F、1ch）</td><td>LEDの黒（GND）側をスイッチ（ローサイド方式）。PWM ← GPIO12（現状はlgpioのソフトウェアPWM）。端子名・RPi GNDとの接続は新基板で要確認</td></tr>
+        <tr><td class="b">PWM 設定</td><td>—</td><td>周波数 1kHz（現行の設定。新基板は0〜20kHz対応のため変更も可能）。duty: 切=0% / 30% / 60% / 100%の4段階。点灯・消灯・光量変更のすべてを3秒かけてフェード（2026-09-20）。<span class="warn">実機のPWMはlgpioのソフトウェアPWM（2026-09-20確認）。低い光量でゆらぎが出る場合は、RP1のハードウェアPWMへの切り替えを検討</span></td></tr>
+        <tr><td class="b">消費電力（実測メモ）</td><td>メインLED</td><td>30%: 20W / 60%: 37W / 100%: 67W（ユーザー記録、2026-09-20）。24V換算の電流の目安は約0.8A / 1.5A / 2.8A</td></tr>
         <tr><td class="b">LED</td><td>24V 対応テープ / パネル</td><td>ヒューズボックスから直給電。RPi はドライバーモジュールでスイッチのみ</td></tr>
       </tbody>
     </table>
