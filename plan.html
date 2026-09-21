@@ -97,7 +97,7 @@
       <tbody>
         <tr><td class="b">監視基盤</td><td>InfluxDB + Grafana</td><td>自作ダッシュボード（status.json / activity_log.jsonl）</td></tr>
         <tr><td class="b">通知</td><td>ntfy.sh</td><td>Pushoverに決定（アカウント・トークン未設定）</td></tr>
-        <tr><td class="b">充電電圧・BMS設定</td><td>Absorption 28.4V、低電圧カット25.6V</td><td>Roverはブースト26.8V/フロート26.4V、BMSはセルUVP 3.15V（実機の設定値を読み出して確認）</td></tr>
+        <tr><td class="b">充電電圧・BMS設定</td><td>Absorption 28.4V、低電圧カット25.6V</td><td>Roverはブースト26.8V/フロート26.6V（フロートは2026-09-21に26.4Vから変更。BMS基準では機器間の電圧差で約26.75V相当）、BMSはセルUVP 3.15V（実機の設定値を読み出して確認）</td></tr>
         <tr><td class="b">IRモジュール</td><td>DAOKAI 1838受信 + 送信の10個セット</td><td>Swagell 360°送受信一体モジュールに変更（到着済み・未配線）</td></tr>
       </tbody>
     </table>
@@ -124,7 +124,7 @@
     <div class="arch">
 <div><span class="k">ソーラーパネル（並列）</span></div>
 <div>  <span class="c">└─</span> <span class="v">AIKO-A440-MAH54Tm × 3枚</span> <span class="w">← 440W / Vmp 34.23V / Voc 40.47V / 1762×1134mm</span></div>
-<div>      <span class="c">└→</span> <span class="v">Renogy Rover 60A MPPT（BT-1 RS232経由 BLE監視）</span> <span class="w">← 実機: ブースト26.8V / フロート26.4V。90%上限はBMSのSOC基準で自動停止（2026-09-20）</span></div>
+<div>      <span class="c">└→</span> <span class="v">Renogy Rover 60A MPPT（BT-1 RS232経由 BLE監視）</span> <span class="w">← 実機: ブースト26.8V / フロート26.6V（2026-09-21に26.4Vから変更）。90%上限はBMSのSOC基準で自動停止</span></div>
 <div>          <span class="c">└→</span> <span class="v">LiFePO4 24V 16.08kWh（3.2V 628Ahセル×8、JK BMS B2A8S30PHCR セルUVP 3.15V＝25.2V（SOC約20%で放電停止））</span></div>
 <div>              <span class="c">└→</span> <span class="v">実使用容量: 約 11.26kWh（20〜90% 運用）</span></div>
 <div></div>
