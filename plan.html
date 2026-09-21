@@ -136,7 +136,7 @@
 <div><span class="k">RPi 5 の接続</span></div>
 <div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
 <div>  <span class="c">├─ I2C    :</span> <span class="v">SCD40（CO₂・温湿度）</span> <span class="w">← SDA=GPIO2(Pin3) / SCL=GPIO3(Pin5) / VCC=3.3V(Pin17・専用) / GND(Pin9)。案・配線前</span></div>
-<div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZP16（TVOC複合指標、CO単体不可）</span> <span class="w">← CO専用ではない。リスク承知で採用 / A(TX)=GPIO15(Pin10)※要レベル変換 / B(RX)=GPIO14(Pin8)</span></div>
+<div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZP16（TVOC複合指標、CO単体不可）</span> <span class="w">← CO専用ではない。リスク承知で採用 / 5V=Pin4 / GND=Pin14 / A(TX)=GPIO15(Pin10)※1kΩ+2kΩで分圧 / B(RX)は未接続（初期設定で1秒ごとに自動送信するため）。案・配線前</span></div>
 <div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（MOSトリガースイッチ基板（Amazon B0C2H7X13F））← タッチサイクル 切→弱→強→弱→切</span> <span class="w">← Pin32</span></div>
 <div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span> <span class="w">← Pin29/Pin31/Pin36</span></div>
 <div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span> <span class="w">← Pin33</span></div>
@@ -198,9 +198,9 @@
         <tr class="g"><td class="b" rowspan="3">Sensirion SCD40</td><td rowspan="3">CO₂・温湿度センサー（I2C）<br>購入済み・未配線</td><td>SDA</td><td class="p">GPIO2</td><td class="b" style="white-space:nowrap">3</td><td>I2Cデータ</td></tr>
         <tr><td>SCL</td><td class="p">GPIO3</td><td class="b" style="white-space:nowrap">5</td><td>I2Cクロック</td></tr>
         <tr><td>VCC / GND</td><td class="p">3.3V / GND</td><td class="b" style="white-space:nowrap">17 / 9</td><td>電源（案・配線前）。<b>3.3V専用</b>: 基板にレギュレーターがなく、5Vを入れるとI2C線にも5Vがかかりピンを壊す。ピーク電流が大きく電圧の揺れに弱いため、他の機器と分けて専用の3.3Vピン(17番)から給電</td></tr>
-        <tr class="g"><td class="b" rowspan="3">Winsen ZP16</td><td rowspan="3">TVOC複合指標センサー（UART）</td><td>A（TX）</td><td class="p">GPIO15（RXD）</td><td class="b" style="white-space:nowrap">10</td><td>UART受信。出力は0-5Vのためレベル変換が必要</td></tr>
-        <tr><td>B（RX）</td><td class="p">GPIO14（TXD）</td><td class="b" style="white-space:nowrap">8</td><td>UART送信</td></tr>
-        <tr><td>5V / GND</td><td class="p">未記載</td><td class="b" style="white-space:nowrap">未記載</td><td>電源（従来の計画に記載なし）</td></tr>
+        <tr class="g"><td class="b" rowspan="3">Winsen ZP16</td><td rowspan="3">TVOC複合指標センサー（UART）</td><td>A（TX）</td><td class="p">GPIO15（RXD）</td><td class="b" style="white-space:nowrap">10</td><td>UART受信（9600bps）。出力は0〜5Vのため、<b>1kΩ+2kΩの分圧（約3.3V）を挟む</b>。接続前にテスターで確認</td></tr>
+        <tr><td>B（RX）</td><td class="p">未接続</td><td class="b" style="white-space:nowrap">—</td><td>使わない。センサーは初期設定で濃度を1秒ごとに自動送信するため、こちらから送る必要がない（GPIO14/8番は空く）</td></tr>
+        <tr><td>5V / GND</td><td class="p">5V / GND</td><td class="b" style="white-space:nowrap">4 / 14</td><td>電源（案・配線前）。5.0±0.2V・60mA以下（メーカーのマニュアル）。<b>逆接続保護なし: 極性を必ず確認</b>。ウォームアップ約3分</td></tr>
         <tr class="g"><td class="b" rowspan="4">Swagell 360°</td><td rowspan="4">IR送受信モジュール（エアコン用）<br>案・配線前</td><td>VCC</td><td class="p">5V</td><td class="b" style="white-space:nowrap">4</td><td>電源（案）。同型の出品ページは動作電圧3.3〜5V（同一製品かは未確認）。5V給電なら送信が強く、3.3V側に影響しない。17番はSCD40専用</td></tr>
         <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">9</td><td>GND マイナス電源（案）</td></tr>
         <tr><td>REC</td><td class="p">GPIO4</td><td class="b" style="white-space:nowrap">7</td><td>受信信号（案）。<b>5V給電では出力が5Vになるため、1kΩ+2kΩの分圧（約3.3V）を挟む。</b>接続前にテスターで確認</td></tr>
@@ -409,7 +409,7 @@
       <thead><tr><th>モジュール</th><th>芯数</th><th>配線</th><th>備考</th></tr></thead>
       <tbody>
         <tr><td class="b">SCD40（CO₂・温湿度）</td><td class="p">4芯</td><td>VCC / GND / SDA / SCL</td><td>I2C アドレス 0x62 固定</td></tr>
-        <tr><td class="b">Winsen ZP16</td><td class="p">4芯</td><td>5V / GND / A(TX) / B(RX)</td><td>UART（9600bps, 8N1, チェックサムなし）。A(TX)は0-5V出力のためレベル変換を挟んでRXD(GPIO15)へ、Bはそのまま TXD(GPIO14) へ接続</td></tr>
+        <tr><td class="b">Winsen ZP16</td><td class="p">4芯</td><td>5V / GND / A(TX) / B(RX)</td><td>UART（9600bps, 8N1, チェックサムなし）。A(TX)は0-5V出力のため、1kΩ+2kΩの分圧を挟んでRXD(GPIO15)へ。B(RX)は未接続（センサーは初期設定で1秒ごとに自動送信）。5VはPin4、GNDはPin14</td></tr>
         <tr><td class="b">磁気リードスイッチ（各外装部位）</td><td class="p">2芯</td><td>Signal / GND</td><td>NC接点。10kΩプルアップ + 100nF RCフィルタ。デバウンス 300ms。防水コネクタ必須</td></tr>
       </tbody>
     </table>
