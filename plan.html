@@ -114,6 +114,7 @@
         <tr><td class="b">6</td><td class="b">信頼性の底上げ</td><td>Pi 5のRTC電池、USB電源ケーブルの抜け止め。Bluetooth単体の固着への段階的な復旧（サービス再起動 → 電源入れ直し → Pi再起動）は、実際に不調が出てから対応</td></tr>
         <tr><td class="b">7</td><td class="b">OBD2の残り</td><td>水温・外気温・電圧・速度の常時取得への統合の判断、給油後の平均燃費・走行可能距離の計算</td></tr>
         <tr><td class="b">8</td><td class="b">検証待ち（運用しながら観察）</td><td>SOC 90%停止の発動条件、BMSのSOC自動校正が働いているか、停止解除後のRoverのバルク再開</td></tr>
+        <tr><td class="b">9</td><td class="b">車内タブレット常設（GPS・傾き）と移動履歴</td><td>検討中（開発メモ 2026-09-22）。Androidタブレットを常設し、GPS位置・傾き等をPiへ送ってダッシュボードに「移動履歴」（Googleマップのタイムライン風。日別の走行・停車地点の地図）を表示する。方式の構想は<a href="https://wherethereisawillthereisaway2026.github.io/sharchu-docs/raspi_software.html" style="color:#2563eb;">ソフトウェア設計ページ</a>（Termux+Termux:API）。最初の確認事項: タブレットの機種とGPSの有無（Wi-Fiのみの機種は内蔵GPSがない場合が多い）、電源と固定方法。位置情報を扱うため、ダッシュボードのログイン（認証）が前提。</td></tr>
       </tbody>
     </table>
   </div>
