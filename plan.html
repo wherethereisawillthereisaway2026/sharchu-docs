@@ -110,7 +110,7 @@
         <tr><td class="b">2</td><td class="b">エアコンIR制御</td><td>モジュール到着済み、配線待ち。ピンは下の構成図・ピン割り当て表（案）。配線後に起動設定へgpio-irのoverlay追記＋Pi再起動 → リモコン信号の学習</td></tr>
         <tr><td class="b">3</td><td class="b">車内温度センサー（SCD40）</td><td>購入済み・未配線。I2C配線 → 読み取り → ヘッダー表示 → 室内ファンの自動制御</td></tr>
         <tr><td class="b">4</td><td class="b">Pushover通知</td><td>アカウント作成とAPIトークンの設定（低SOC警告・BMS操作失敗・空気質異常の通知が実際に届くようになる）</td></tr>
-        <tr><td class="b">5</td><td class="b">インバーター（MWXNE 24V 2000W）の制御・状態取得</td><td>有線リモコン（RCU）の通信の解析と、無線リモコン信号の受信機（購入済み・到着待ち）。ON/OFF・出力Wの取得が狙い</td></tr>
+        <tr><td class="b">5</td><td class="b">インバーター（MWXNE 24V 2000W）の制御・状態取得</td><td>有線リモコン（RCU）の通信の解析と、無線リモコン信号の受信機。<strong>433/315MHz RFリンクキット（XRY、到着済み・配線待ち）</strong>で無線リモコンの信号受信を試す。ON/OFF・出力Wの取得が狙い</td></tr>
         <tr><td class="b">6</td><td class="b">信頼性の底上げ</td><td>Pi 5のRTC電池、USB電源ケーブルの抜け止め。Bluetooth単体の固着への段階的な復旧（サービス再起動 → 電源入れ直し → Pi再起動）は、実際に不調が出てから対応</td></tr>
         <tr><td class="b">7</td><td class="b">OBD2の残り</td><td>水温・外気温・電圧・速度の常時取得への統合の判断、給油後の平均燃費・走行可能距離の計算</td></tr>
         <tr><td class="b">8</td><td class="b">検証待ち（運用しながら観察）</td><td>SOC 90%停止の発動条件、BMSのSOC自動校正が働いているか、停止解除後のRoverのバルク再開</td></tr>
@@ -143,6 +143,7 @@
 <div>  <span class="c">├─ GPIO13 PWM :</span> <span class="v">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー）← 切/弱/中/強</span> <span class="w">← Pin33</span></div>
 <div>  <span class="c">├─ GPIO17 :</span> <span class="v">TTP223タッチセンサー入力×1 ← 室内換気扇専用操作（切→30%→60%→100%→切）</span> <span class="w">← Pin11</span></div>
 <div>  <span class="c">├─ GPIO4 / GPIO27 :</span> <span class="v">IR送受信モジュール（Swagell 360°）← RX(REC)→ロジックレベル変換モジュール→GPIO4(Pin7) / TX(SND)=GPIO27(Pin13、変換不要) / VCC=5V(Pin4) / GND(Pin9)</span> <span class="w">← 2026-09-23実機確認: 3.3V給電では送信距離が約50cmしか届かず不足。5V化してレベル変換モジュール(VKLSVAN、Amazon B086WWCJGQ、4ch×6枚セット)経由でGPIO4へ。ZP16と同じ基板を共用（1枚4ch、2ch使用・2ch予備）。GPIO13は室内換気扇で使用中のため送信はGPIO27</span></div>
+<div>  <span class="c">├─ GPIO22 / GPIO23 :</span> <span class="v">433/315MHz RFリンクキット（XRY、送受信セット）← 受信機DATA→ロジックレベル変換モジュール(3ch目)→GPIO22(Pin15) / 送信機DATA=GPIO23(Pin16、変換不要) / VCC=5V(Pin4) / GND共通</span> <span class="w">← 案・配線前。到着済み。受信機(XY-MK-5V)は5V専用仕様のためDATA出力もレベル変換が必須。用途はインバーターの無線リモコン信号の受信を想定（Phase4 #5）。周波数(315/433MHz)は実機のリモコンと要一致確認</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">AM312人感センサー入力 → 足元LED（MOSトリガースイッチ基板（Amazon B0C2H7X13F））</span></div>
 <div>  <span class="c">├─ GPIO   :</span> <span class="v">足元LED（MOSトリガースイッチ基板（Amazon B0C2H7X13F））← スライドドア人感連動</span></div>
 <div>  <span class="c">└─ USB Hub（Anker PowerExpand+ 7-in-1）</span> <span class="w">← 既存品流用。USB-A×2 / PD 60W給電 / Ethernet内蔵 / シガーソケット経由サンワPD65Wカーチャージャーから60W入力→48WをRPiへパススルー</span></div>
