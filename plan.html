@@ -115,6 +115,7 @@
         <tr><td class="b">7</td><td class="b">OBD2の残り</td><td>水温・外気温・電圧・速度の常時取得への統合の判断、給油後の平均燃費・走行可能距離の計算</td></tr>
         <tr><td class="b">8</td><td class="b">検証待ち（運用しながら観察）</td><td>SOC 90%停止の発動条件、BMSのSOC自動校正が働いているか、停止解除後のRoverのバルク再開</td></tr>
         <tr><td class="b">9</td><td class="b">車内タブレット常設（GPS・傾き）と移動履歴</td><td>検討中（開発メモ 2026-09-22）。Androidタブレットを常設し、GPS位置・傾き等をPiへ送ってダッシュボードに「移動履歴」（Googleマップのタイムライン風。日別の走行・停車地点の地図）を表示する。方式の構想は<a href="https://wherethereisawillthereisaway2026.github.io/sharchu-docs/raspi_software.html" style="color:#2563eb;">ソフトウェア設計ページ</a>（Termux+Termux:API）。最初の確認事項: タブレットの機種とGPSの有無（Wi-Fiのみの機種は内蔵GPSがない場合が多い）、電源と固定方法。位置情報を扱うため、ダッシュボードのログイン（認証）が前提。</td></tr>
+        <tr><td class="b">10</td><td class="b">SOC校正のための月次フル充電（2026-09-23方針決定）</td><td>クーロンカウント方式のBMS SOCは、90%運用を続ける限り満充電（基準点）に到達せずズレが蓄積する。<strong>月1回、Rover・Orionとも90%の自動停止を外して、物理的に充電が止まるまでフル充電</strong>し、BMSのSOC校正を促す運用に決定。目標電圧はBMSのOVP（セル3.50V×8＝28.0V）を超えない範囲で調整中（確認中の数値あり）。頻度の管理はGoogleカレンダーを予定（要連携設定）。「フル充電ボタン」はOrion VE.Direct対応（#1）の後に実装。監視強化として、BMSの最高/最低セル電圧をダッシュボードに表示する対応も合わせて実施</td></tr>
       </tbody>
     </table>
   </div>
