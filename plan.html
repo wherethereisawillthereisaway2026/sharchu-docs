@@ -108,7 +108,7 @@
       <tbody>
         <tr><td class="b">1</td><td class="b">Orion（走行充電器）のVE.Direct対応</td><td>純正USBケーブルを購入済み、到着待ち（2026-09-27以降）。USBで読み取り → デバイスモード書き込みの実機検証 → SOC自動制御へ組み込み → 過熱の調査 → 「一時的な90%充電モード」（エアコン長時間使用向け）の設計</td></tr>
         <tr><td class="b">2</td><td class="b">エアコンIR制御</td><td>モジュール到着済み、配線待ち。ピンは下の構成図・ピン割り当て表（案）。配線後に起動設定へgpio-irのoverlay追記＋Pi再起動 → リモコン信号の学習</td></tr>
-        <tr><td class="b">3</td><td class="b">車内温度センサー（SCD40）</td><td>購入済み・未配線。I2C配線 → 読み取り → ヘッダー表示 → 室内ファンの自動制御</td></tr>
+        <tr><td class="b">3</td><td class="b">車内温度センサー（SCD40）</td><td>配線・読み取り・ヘッダー表示まで完了（2026-09-25。VCC=17番、GND=20番、SDA=3番、SCL=5番。CO₂・温度・湿度をダッシュボードに表示）。残り: 室内ファンの自動制御。予備の基板1枚は通信不良（シリアル番号c1d4fd073b34、Pi 5の2台で失敗）のため返品・交換を検討</td></tr>
         <tr><td class="b">4</td><td class="b">Pushover通知</td><td>アカウント作成とAPIトークンの設定（低SOC警告・BMS操作失敗・空気質異常の通知が実際に届くようになる）</td></tr>
         <tr><td class="b">5</td><td class="b">インバーター（MWXNE 24V 2000W）の制御・状態取得</td><td>有線リモコン（RCU）の通信の解析と、無線リモコン信号の受信機。無線リモコンを開封して確認: 型番HFY528B-1 Ver2.0、発振子刻印「R433」で<strong>433MHz確定</strong>（2026-09-23）。エンコーダIC刻印「…1527」（EV1527/PT2262系の固定コード方式とみられる）。<strong>433/315MHz RFリンクキット（XRY、到着済み・配線待ち）は433MHz版であることを要確認</strong>のうえ配線。ON/OFF・出力Wの取得が狙い</td></tr>
         <tr><td class="b">6</td><td class="b">信頼性の底上げ</td><td>Pi 5のRTC電池、USB電源ケーブルの抜け止め。Bluetooth単体の固着への段階的な復旧（サービス再起動 → 電源入れ直し → Pi再起動）は、実際に不調が出てから対応</td></tr>
@@ -136,7 +136,7 @@
 <div></div>
 <div><span class="k">RPi 5 の接続</span></div>
 <div>  <span class="c">├─ BLE    :</span> <span class="v">JK BMS（セル電圧・SOC・温度）</span></div>
-<div>  <span class="c">├─ I2C    :</span> <span class="v">SCD40（CO₂・温湿度）</span> <span class="w">← SDA=GPIO2(Pin3) / SCL=GPIO3(Pin5) / VCC=3.3V(Pin17・専用) / GND(Pin9)。案・配線前</span></div>
+<div>  <span class="c">├─ I2C    :</span> <span class="v">SCD40（CO₂・温湿度）</span> <span class="w">← SDA=GPIO2(Pin3) / SCL=GPIO3(Pin5) / VCC=3.3V(Pin17) / GND(Pin20)。配線済み・稼働中（2026-09-25）</span></div>
 <div>  <span class="c">├─ UART   :</span> <span class="v">Winsen ZP16（TVOC複合指標、CO単体不可）</span> <span class="w">← CO専用ではない。リスク承知で採用 / 5V=Pin4 / GND=Pin14 / A(TX)→ロジックレベル変換モジュール(VKLSVAN、Amazon B086WWCJGQ)→GPIO15(Pin10) / B(RX)は未接続（初期設定で1秒ごとに自動送信するため）。IRモジュールと同じレベル変換基板を共用（1枚4ch）。案・配線前</span></div>
 <div>  <span class="c">├─ GPIO12 PWM :</span> <span class="v">メインLED（MOSトリガースイッチ基板（Amazon B0C2H7X13F））← タッチサイクル 切→弱→強→弱→切</span> <span class="w">← Pin32</span></div>
 <div>  <span class="c">├─ GPIO5/6/16 :</span> <span class="v">TTP223タッチセンサー入力×3（スライドドア/ベッド横①/ベッド横②）← メインライト共通操作</span> <span class="w">← Pin29/Pin31/Pin36</span></div>
@@ -197,9 +197,9 @@
         <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">未記載</td><td>RPi GNDとの接続は新基板で要確認</td></tr>
         <tr class="g"><td class="b" rowspan="1">Walfront DC24V ブロワー</td><td rowspan="1">室内換気扇（天井）<br>赤・黒は24V本線、ラズパイ非接続</td><td>PWM（青）</td><td class="p">GPIO13</td><td class="b" style="white-space:nowrap">33</td><td>PWM信号（風量。「切」もPWM=0%）</td></tr>
         <tr class="g"><td class="b" rowspan="1">Walfront DC24V ブロワー</td><td rowspan="1">バッテリ庫ファン<br>赤・黒は24V本線、ラズパイ非接続</td><td>PWM（青）</td><td class="p">GPIO18</td><td class="b" style="white-space:nowrap">12</td><td>PWM信号（バッテリ温度で制御）</td></tr>
-        <tr class="g"><td class="b" rowspan="3">Sensirion SCD40</td><td rowspan="3">CO₂・温湿度センサー（I2C）<br>購入済み・未配線</td><td>SDA</td><td class="p">GPIO2</td><td class="b" style="white-space:nowrap">3</td><td>I2Cデータ</td></tr>
+        <tr class="g"><td class="b" rowspan="3">Sensirion SCD40</td><td rowspan="3">CO₂・温湿度センサー（I2C）<br>配線済み・稼働中（2026-09-25）</td><td>SDA</td><td class="p">GPIO2</td><td class="b" style="white-space:nowrap">3</td><td>I2Cデータ</td></tr>
         <tr><td>SCL</td><td class="p">GPIO3</td><td class="b" style="white-space:nowrap">5</td><td>I2Cクロック</td></tr>
-        <tr><td>VCC / GND</td><td class="p">3.3V / GND</td><td class="b" style="white-space:nowrap">17 / 9</td><td>電源（案・配線前）。<b>3.3V専用</b>: 基板にレギュレーターがなく、5Vを入れるとI2C線にも5Vがかかりピンを壊す。ピーク電流が大きく電圧の揺れに弱いため、他の機器と分けて専用の3.3Vピン(17番)から給電</td></tr>
+        <tr><td>VCC / GND</td><td class="p">3.3V / GND</td><td class="b" style="white-space:nowrap">17 / 20</td><td>電源（配線済み）。<b>3.3V専用</b>: 基板にレギュレーターがなく、5Vを入れるとI2C線にも5Vがかかりピンを壊す。ピーク電流が大きく電圧の揺れに弱いため、他の機器と分けて専用の3.3Vピン(17番)から給電</td></tr>
         <tr class="g"><td class="b" rowspan="3">Winsen ZP16</td><td rowspan="3">TVOC複合指標センサー（UART）</td><td>A（TX）</td><td class="p">GPIO15（RXD）</td><td class="b" style="white-space:nowrap">10</td><td>UART受信（9600bps）。出力は0〜5Vのため、<b>1kΩ+2kΩの分圧（約3.3V）を挟む</b>。接続前にテスターで確認</td></tr>
         <tr><td>B（RX）</td><td class="p">未接続</td><td class="b" style="white-space:nowrap">—</td><td>使わない。センサーは初期設定で濃度を1秒ごとに自動送信するため、こちらから送る必要がない（GPIO14/8番は空く）</td></tr>
         <tr><td>5V / GND</td><td class="p">5V / GND</td><td class="b" style="white-space:nowrap">4 / 14</td><td>電源（案・配線前）。5.0±0.2V・60mA以下（メーカーのマニュアル）。<b>逆接続保護なし: 極性を必ず確認</b>。ウォームアップ約3分</td></tr>
