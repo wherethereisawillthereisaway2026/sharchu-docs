@@ -231,6 +231,10 @@
         <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">9</td><td>GND マイナス電源（案）</td></tr>
         <tr><td>REC</td><td class="p">GPIO4</td><td class="b" style="white-space:nowrap">7</td><td>受信信号（案）。<b>5V給電では出力が5Vになるため、1kΩ+2kΩの分圧（約3.3V）を挟む。</b>接続前にテスターで確認</td></tr>
         <tr><td>SND</td><td class="p">GPIO27</td><td class="b" style="white-space:nowrap">13</td><td>送信信号（案。Pin13の空き要確認）</td></tr>
+        <tr class="g"><td class="b" rowspan="4">XRY 433MHz RFリンクキット</td><td rowspan="4">無線送受信モジュール（インバーター用）<br>配線済み・稼働確認済み（2026-09-26）</td><td>受信機 VCC</td><td class="p">5V</td><td class="b" style="white-space:nowrap">4</td><td>電源（送信機と共通）</td></tr>
+        <tr><td>受信機 GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">9</td><td>GND（共通）</td></tr>
+        <tr><td>受信機 DATA</td><td class="p">GPIO22</td><td class="b" style="white-space:nowrap">15</td><td>受信信号。ロジックレベル変換モジュール(3ch目、HV3→LV3)経由。実機でノイズ変化を確認済み</td></tr>
+        <tr><td>送信機 DATA</td><td class="p">GPIO23</td><td class="b" style="white-space:nowrap">16</td><td>送信信号。3.3V出力のため変換不要（直結）。送信機VCC/GNDは受信機と共通の4番/9番</td></tr>
         <tr class="g"><td class="b" rowspan="1">AM312</td><td rowspan="1">人感センサー（スライドドア）</td><td>OUT</td><td class="p">未定</td><td class="b" style="white-space:nowrap">未定</td><td>GPIO入力（足元LEDと連動）</td></tr>
         <tr class="g"><td class="b" rowspan="1">MOSトリガースイッチ基板（Amazon B0C2H7X13F）</td><td rowspan="1">LEDドライバー（1ch）<br>足元LED（同型を想定）</td><td>PWM入力</td><td class="p">未定</td><td class="b" style="white-space:nowrap">未定</td><td>GPIO出力</td></tr>
         <tr class="g"><td class="b" rowspan="1">PC817 フォトカプラ</td><td rowspan="1">ACC ON検知</td><td>出力</td><td class="p">未定</td><td class="b" style="white-space:nowrap">未定</td><td>GPIO入力（絶縁必須）</td></tr>
