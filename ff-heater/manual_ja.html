@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%232c6a88%22/%3E%3Cpath fill=%22%23fff%22 d=%22M7 8h18l3 13H4z%22/%3E%3Cpath d=%22M10.7 8 9.6 21M16 8v13M21.3 8l1.1 13M5.6 14.5h20.8%22 stroke=%22%232c6a88%22 stroke-width=%221.5%22/%3E%3Cpath d=%22M14 21h4l1 4h-6z%22 fill=%22%23fff%22/%3E%3Cpath d=%22M10 27h12%22 stroke=%22%23fff%22 stroke-width=%222%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
+<title>パーキングヒーター（FFヒーター）取扱説明書 日本語訳</title>
+<style>
+@media print { a[href] { display:none; } }
+@page { size: A4; margin: 14mm 14mm 16mm; }
+body { font-family: "IPAPGothic", "IPAGothic", sans-serif; font-size: 10pt; line-height: 1.5; color: #222; }
+h1 { font-size: 22pt; text-align: center; margin: 30mm 0 4mm; }
+h2 { font-size: 14pt; border-left: 6px solid #b22; padding: 2px 8px; background: #f4f4f4; margin: 0 0 4mm; }
+h2, h3 { break-after: avoid; }
+h3 { font-size: 11.5pt; margin: 5mm 0 2mm; }
+section { page-break-before: always; }
+.cover { text-align: center; }
+.cover img { width: 70mm; margin: 12mm 0; }
+.sub { text-align: center; color: #555; }
+.icons { display: flex; justify-content: center; gap: 8mm; margin-top: 8mm; }
+.icons span { border: 1px solid #888; border-radius: 4px; padding: 2px 8px; }
+figure { margin: 3mm 0; text-align: center; }
+figure img { max-width: 100%; max-height: 120mm; border: 1px solid #ddd; }
+figcaption { font-size: 9pt; color: #555; }
+table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; font-size: 9.8pt; }
+th, td { border: 1px solid #999; padding: 3px 6px; vertical-align: top; }
+th { background: #eee; }
+ul, ol { margin: 1mm 0 3mm; padding-left: 6mm; }
+li { margin-bottom: 0.8mm; }
+.note { font-size: 9pt; color: #145; background: #eef6fb; border-left: 3px solid #48a; padding: 2px 6px; margin: 2mm 0; }
+.warn { font-weight: bold; color: #a00; }
+.two { display: flex; gap: 5mm; align-items: flex-start; }
+.two > * { flex: 1; }
+.code { font-weight: bold; white-space: nowrap; }
+.disclaimer { font-size: 9pt; color: #555; border: 1px dashed #999; padding: 3mm; margin-top: 10mm; text-align: left; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>パーキングヒーター<br>取扱説明書（日本語訳）</h1>
+  <p class="sub">Parking heater Instruction manual</p>
+  <img src="img/cover.jpg" alt="表紙イラスト">
+  <div class="icons"><span>急速暖房</span><span>独立暖房</span><span>低燃費</span><span>静音</span><span>低温運転</span></div>
+  <p style="text-align:center"><a href="../solar_circuit_diagram.html">← 車中泊システム回路図に戻る</a>　/　<a href="FFヒーター取扱説明書_日本語.pdf">PDF版</a></p>
+  <div class="disclaimer">
+    中国製FF（燃焼式エア）ヒーター付属の英文説明書を日本語に訳したものです（2026-10-09作成）。<br>
+    原文は機械翻訳調の英語で意味が取りにくい箇所があり、そこは文脈から推定して訳し、<b>【訳注】</b>で補足しています。<br>
+    数値・図は原文どおりです。原文同士で食い違う数値もそのまま載せ、訳注で指摘しています。
+  </div>
+</div>
+
+<!-- p1 -->
+<section>
+<h2>クイック取付ガイド</h2>
+<h3>動作の流れ</h3>
+<ul>
+  <li><b>起動：</b>スイッチON → 負荷（接続機器）検出 → グロープラグ予熱、燃焼ファンと冷却ファンが低速回転 → 燃料ポンプ（パルス式）作動開始、燃焼ファン・冷却ファンが高速回転 → 回転・温度検知で着火成功を判定 → グロープラグの通電停止 → 出力調節または温度調節で運転</li>
+  <li><b>停止：</b>スイッチOFF → 燃料ポンプを順次停止 → 消炎を検知 → 燃焼補助（残り燃料の燃焼）→ ファンと冷却ファンが高速回転して冷却 → ファン停止</li>
+</ul>
+<figure><img src="img/install.jpg" style="max-height:80mm"><figcaption>取付全体図（原文図）</figcaption></figure>
+<table>
+<tr><th style="width:38%">図中の表記</th><th>訳</th></tr>
+<tr><td>Insurance lifted the lid / Plug type fuse</td><td>ヒューズカバー ／ 差し込み式ヒューズ【訳注：Insuranceは中国語「保険（=ヒューズ）」の誤訳】</td></tr>
+<tr><td>Power positive electrode (red)</td><td>電源プラス（赤）</td></tr>
+<tr><td>Negative electrode of power supply (black and green)</td><td>電源マイナス（黒・緑）</td></tr>
+<tr><td>Control switch / Control switch A1</td><td>操作スイッチ（コントローラー）／ 操作スイッチ A1</td></tr>
+<tr><td>The host / Air inlet / outlet</td><td>本体 ／ 温風用 吸気口 ／ 吹出口</td></tr>
+<tr><td>Sealing ring / The gasket / M6 nut</td><td>シールリング ／ ガスケット ／ M6ナット</td></tr>
+<tr><td>Intake air filter</td><td>燃焼用吸気フィルター</td></tr>
+<tr><td>filter / pipeline</td><td>燃料フィルター ／ 燃料配管</td></tr>
+<tr><td>The fuel tank / -35 diesel</td><td>燃料タンク ／ -35号軽油【訳注：中国の寒冷地用軽油規格。日本では地域・季節に応じて3号・特3号軽油に相当】</td></tr>
+<tr><td>This screw holds the tank in place…</td><td>このネジでタンクを固定する。固定用の板金に取り付ける</td></tr>
+<tr><td>G. A fixed throat hoop</td><td>G. ホースクランプ（固定バンド）</td></tr>
+<tr><td>Fixation of exhaust pipe / Pay attention to high temperature</td><td>排気管の固定金具 ／ 高温注意</td></tr>
+<tr><td>Inlet exhaust pipe (combustion exhaust)</td><td>燃焼用吸気管・排気管</td></tr>
+</table>
+<ul>
+  <li>本体の表面は運転中に物で覆わないこと。吸気口・吹出口を物でふさがないこと。</li>
+  <li><b>パルス燃料ポンプ：水厳禁。</b>ポンプは精密部品で、軽油で潤滑されている。水が入ると内部部品が摩耗して隙間が大きくなり、精度が落ちて故障する。<b>使用前に燃料を満たしておくこと（呼び水）。</b></li>
+  <li>吸気管と排気管の口は同じ方向に向けないこと。</li>
+  <li>配管は気密を確保すること（漏れ・エア噛み不可）。配管が長すぎたり曲がりが多いと脈動が起き、ポンプからの送油が困難になって燃料供給不足になる。</li>
+</ul>
+</section>
+
+<!-- p2 -->
+<section>
+<h2>エアヒーター構造図</h2>
+<figure><img src="img/cutaway.jpg" style="max-height:120mm"></figure>
+<table>
+<tr><td>1. 温風用 吸気口</td><td>9. 燃料気化室</td></tr>
+<tr><td>2. 温風 吹出口</td><td>10. グロープラグ（点火プラグ）</td></tr>
+<tr><td>3. 燃焼用 吸気口</td><td>11. 燃焼室</td></tr>
+<tr><td>4. 排気口</td><td>12. 熱交換器</td></tr>
+<tr><td>5. 燃料ポンプ</td><td>13. 燃焼用ファン</td></tr>
+<tr><td>6. モーター</td><td>14. ヒーター外装</td></tr>
+<tr><td>7. ファン（温風用）</td><td>15. 燃料パイプ</td></tr>
+<tr><td>8. 制御基板</td><td>16. 外装温度センサー</td></tr>
+</table>
+</section>
+
+<!-- safety -->
+<section>
+<h2>取付・運転時の安全上の注意</h2>
+<ul>
+  <li><b>ヒーターの設置場所：</b>ヒーター周囲の物は高温や損傷から保護すること。</li>
+  <li><b>排気系統：</b>排気口を取り付ける際は、排気ガスが換気装置・温風の吸気口・窓から暖房空間（車内）に入らないようにすること。排気管はふさがないこと。排気管の出口は可燃物を避け、地面の可燃物や積荷を加熱・発火させないこと。<span class="warn">規定どおりに取り付けなかった場合、メーカーはいかなる結果にも責任を負わない。</span></li>
+  <li><b>燃焼用空気の吸気：</b>燃焼用の空気を室内（車内）から吸ってはならない。吸気口は物でふさがれない位置に置き、今後の使用でも吸気が妨げられないようにすること。</li>
+  <li>吸気フィルターを付けた場合は定期的に清掃・保守すること。<b>温風用の吸気：</b>ヒーターに送る空気は、清浄な場所から取り入れた外気または循環空気であること。吸気ラインは柵などで保護し、将来にわたり吸気を確保し配管を通しておくこと。</li>
+  <li><b>温風吹出口：</b>室内に温風ダクトを設ける場合は、人がけがをしたり物が損傷しないよう、手が触れない配置にすること。</li>
+  <li><b>禁止事項：</b>ヒーターの主要部品を改造すること ／ メーカーの許可なく他社の部品を使うこと ／ この説明書の仕様に反して取付・運転すること。取付・保守には純正の付属品・部品のみを使うこと。</li>
+  <li><b>可燃性の蒸気や粉じんが発生しやすい場所では使用しないこと。</b>例：燃料倉庫、石炭置き場、木材倉庫、穀物倉庫などの類似施設、ガソリンスタンド。</li>
+  <li class="warn">給油中はヒーターを停止すること。</li>
+  <li>燃料系統から燃料漏れがあった場合は、直ちに販売・修理業者に修理を依頼すること。</li>
+  <li class="warn">運転中に電源を直接切ってヒーターを止めてはならない（必ずスイッチで停止し、冷却運転を終わらせること）。</li>
+  <li>停車中に長時間使う場合は、車内に十分な新鮮な空気が入るようにすること。</li>
+</ul>
+
+<h2 style="margin-top:6mm">車外配管の配置</h2>
+<div class="two">
+  <figure><img src="img/fig3.jpg"><figcaption>図3（図中：高温。炎が噴き出すことがある。可燃物厳禁）</figcaption></figure>
+  <div>
+    <ol>
+      <li>配管の出口が泥・雨・雪などで詰まらないように配置すること（図3）。</li>
+      <li>運転中の排気管は非常に高温になる。取り付け時は樹脂部品から離し、耐熱物に確実に固定すること。排気口は<b>真下向き（90°）から±10°以内</b>とし、排気管の固定クリップから管端までの距離は<b>150mm以下</b>とすること。</li>
+      <li>排気管のうち人が触れるおそれのある部分には、やけど防止の保護カバーを付けること。</li>
+    </ol>
+    <p class="warn">警告：以上を守らないと火災の原因になります。</p>
+  </div>
+</div>
+</section>
+
+<!-- air heating system -->
+<section>
+<h2>温風暖房系統の取付</h2>
+<ul>
+  <li>ヒーターの温風系統を他の空気ダクト（車両の空調ダクト等）に接続してはならない。運転方式は「外気導入（独立外循環）」または「内気循環」とする。</li>
+  <li>温風ホースを接続する場合、ホースの内径は規格に合ったものとし、材質は<b>130℃以上</b>に耐えること。</li>
+  <li>温風系統の吸気側と吹出側の最大圧力差は<b>0.15kPa以下</b>とすること。</li>
+  <li>温風を耐熱性のない物に直接当てないこと。吹出口が異物でふさがれないよう、必要に応じて保護ネットを設けること。</li>
+  <li><b>外気導入方式：</b>吸気口は正常に運転できる位置に置き、水しぶきや異物が入らないようにすること。</li>
+  <li><b>内気循環方式：</b>吹き出した温風が再び吸気口に入らないようにすること（図4参照）。温風ホースを使わない場合は、主吸気口にグリル付きの吸気フードを付けること。吸い込む空気は周囲の温度の低い場所から取ること。</li>
+</ul>
+<figure><img src="img/fig4.jpg" style="max-height:62mm"><figcaption>図4　A) 正しい　B) 誤り（温風を吸気口に戻している）</figcaption></figure>
+
+</section>
+<section>
+<h2>燃焼用 吸気・排気系統</h2>
+<div class="two">
+  <figure><img src="img/fig56.jpg" style="max-height:72mm"><figcaption>図5・図6：吸気管の取付方向（A 正しい / B 誤り）</figcaption></figure>
+  <figure><img src="img/fig78.jpg" style="max-height:72mm"><figcaption>図7・図8：排気管の取付方向（A 正しい / B 誤り）</figcaption></figure>
+</div>
+<ol>
+  <li>吸気管・排気管はヒーターから<b>下り勾配</b>で配管すること（図5・図7）。そうできない場合は、管の最も低い位置に<b>直径5mmの水抜き穴</b>を開けること。曲げる場合、<b>曲げ半径は50mm以上</b>とし、1本の管の曲げ角度の合計は<b>270°を超えない</b>こと。</li>
+  <li>管の開口部を走行風（車の進行方向からの風）に向けないこと（図6・図8）。<br><span class="note">【訳注】図中の「← Direction of movement of an object」は車の進行方向、「Airflow direction」は気流（排気・吸気）の向き。「three」は中国語「三（=図中の番号）」の誤訳と思われる。</span></li>
+</ol>
+</section>
+
+<!-- characteristics -->
+<section>
+<h2>ヒーターの特長</h2>
+<ol>
+  <li>グロープラグの過電圧・過電流・短絡を総合的に保護。</li>
+  <li>高精度のグロープラグ計測システムでプラグの特性を自動識別し、プラグ電圧を高精度に制御。</li>
+  <li>3kWの一次サージに耐え、二次サージ抑制回路も搭載。</li>
+  <li>燃料ポンプのサージ保護。</li>
+  <li>高度な熱モデルのアルゴリズムで、燃焼状態を素早く正確に判定。</li>
+  <li>安定性：<b>-40℃</b>でも安定着火、自動カーボン除去、動的パラメータ検出。<span class="note">【訳注】原文「low temperature 40°」はマイナスの脱落と思われる。</span></li>
+  <li>互換性：12V/24V、PT1000/NTC50センサー、各種グロープラグに対応。在庫削減、高い適応性。</li>
+  <li>保護：システム全体の付属品の短絡・過電流保護、高速消炎保護、サージ保護。</li>
+  <li>簡単：スイッチで簡単操作。設計・生産効率が高くコストを削減。</li>
+  <li>経済的：無段階の温度・出力調節、高い燃焼効率で省燃費。高互換で在庫削減、電圧安定化技術で配線を簡略化。</li>
+</ol>
+
+<h2 style="margin-top:3mm">利点（一体型・ポータブルタイプ）</h2>
+<div class="two">
+<ol>
+  <li>取付工事不要</li>
+  <li>三輪車・四輪車に対応</li>
+  <li>コンバーター内蔵</li>
+  <li>手軽に持ち運べる</li>
+  <li>4穴の吹出口で分割暖房</li>
+</ol>
+<ol start="6">
+  <li>省燃費・省電力</li>
+  <li>家庭でも使用可</li>
+  <li>鉄製ケース</li>
+  <li>静電塗装で美しい仕上げ</li>
+  <li>8000Wの大熱量</li>
+</ol>
+</div>
+
+<h2 style="margin-top:2mm">性能諸元</h2>
+<table>
+<tr><th>型式</th><th colspan="2">8000W</th><th colspan="2">5000W</th><th colspan="2">2000W</th></tr>
+<tr><th>加熱媒体</th><td colspan="6" style="text-align:center">空気</td></tr>
+<tr><th></th><th>強</th><th>弱</th><th>強</th><th>弱</th><th>強</th><th>弱</th></tr>
+<tr><th>発熱量（kW）</th><td>8.2</td><td>5.0</td><td>5.2</td><td>3.2</td><td>2.2</td><td>1.6</td></tr>
+<tr><th>燃料消費量（L/h）</th><td>0.66</td><td>0.4</td><td>0.46</td><td>0.2</td><td>0.26</td><td>0.1</td></tr>
+<tr><th>消費電力・運転時（W）<br>12V/24V</th><td>60</td><td>28</td><td>36</td><td>22</td><td>26</td><td>8</td></tr>
+<tr><th>消費電力・起動時（W）</th><td colspan="6" style="text-align:center">≦100</td></tr>
+<tr><th>定格電圧</th><td colspan="6" style="text-align:center">12V / 24V</td></tr>
+<tr><th>低電圧保護</th><td colspan="6">約10.5V（12V機）/ 約21V（24V機）、保護作動までの時間 20秒</td></tr>
+<tr><th>過電圧保護</th><td colspan="6">約16V（12V機）/ 約32V（24V機）、保護作動までの時間 21秒</td></tr>
+<tr><th>過熱保護（±10%）</th><td colspan="6" style="text-align:center">180℃</td></tr>
+<tr><th>使用周囲温度</th><td colspan="6" style="text-align:center">-40℃ ～ +50℃</td></tr>
+</table>
+<p class="note">【訳注】原文の「high-grade」は強（高出力）、「resist」は弱（低出力）の誤訳と判断。同じページの中国語の小さな表では5000W・強の消費電力が「48W」となっており、英語表の「36W」と食い違う。過熱保護は180℃だが、故障コードE09の説明では「本体温度260℃超」とあり、こちらも原文どおり併記する。</p>
+</section>
+
+<!-- six key -->
+<section>
+<h2>6キー液晶スイッチ（コントローラー）の使い方</h2>
+<figure><img src="img/panel6.jpg" style="max-height:42mm"><figcaption>左上：設定キー　左中：燃料ポンプキー　左下：確認（OK）キー　右上：増加キー（▲）　右中：電源スイッチ　右下：減少キー（▼）</figcaption></figure>
+<table>
+<tr><th style="width:20%">項目</th><th style="width:16%">状態</th><th>操作・内容</th></tr>
+<tr><td>待機中の表示</td><td>待機</td><td>待機状態で確認キーを長押しするとパラメータを表示。L1：通電時間、L2：周囲温度、L3：外装温度、L4：電源電圧、L5：タンク容量。増加／減少キーで表示を切り替え。</td></tr>
+<tr><td rowspan="2">キー操作</td><td>待機モード</td><td>電源ボタン：押すと電源ON<br>増加キー：温度／ギア ＋<br>減少キー：温度／ギア －<br>確認キー：表示の循環切替<br>設定キー：パラメータ設定</td></tr>
+<tr><td>運転中</td><td>電源ボタン：<b>長押しで電源OFF</b><br>増加キー：温度／ギア ＋<br>減少キー：温度／ギア －<br>確認キー：表示の循環切替<br>設定キー：パラメータ設定</td></tr>
+<tr><td>リモコンの登録</td><td>待機／運転中</td><td>設定キーと増加キーを同時に3秒長押し → 画面に「--」表示 → この間にリモコンのいずれかのボタンを押すと登録完了。</td></tr>
+<tr><td>モード切替</td><td>運転中</td><td>ギアモード中に増加キーと減少キーを同時長押しで恒温（温度設定）モードへ。恒温モード中に同じ操作でギアモードへ。</td></tr>
+<tr><td>手動給油（呼び水）</td><td>待機中・初回通電時</td><td>初回、運転を開始していない状態で燃料ポンプキーを押すと手動ポンプモード開始。もう一度押すとポンプ停止。</td></tr>
+<tr><td>パラメータ表示</td><td>運転中</td><td>画面右下には通常、通電時間を表示。確認ボタンを押すごとに、ファン回転数 → ポンプ周波数 → グロープラグ電力 → タイマー残り時間 → 電源電圧 の順に切替。3秒操作しないと通電時間表示に戻る。</td></tr>
+<tr><td rowspan="3">パラメータ設定<br><small>（待機中に設定キーを長押しで設定モードへ。増加／減少キーで項目を選ぶ）</small></td><td>P1：タイマー起動</td><td>設定キーを押して起動タイマーを変更。初期表示は0:00で、タイマーアイコンが点滅。増加／減少キーで30分単位に変更。OKキーで保存し、閲覧状態に戻る。</td></tr>
+<tr><td>P2：タイマー停止</td><td>設定キーを押して停止タイマーを変更。初期表示は0:00で、タイマーアイコンが点滅。増加／減少キーで30分単位に変更。OKキーで保存し、閲覧状態に戻る。</td></tr>
+<tr><td>P3：タンク容量</td><td>設定キーを短く押してタンク容量を変更。初期表示は5Lで、タンク表示が点滅。増加／減少キーで容量を変え、目標値になったらOKキーで保存し、閲覧状態に戻る。</td></tr>
+</table>
+
+<h3>故障コードと対処</h3>
+<table>
+<tr><th style="width:9%">コード</th><th style="width:18%">内容</th><th>確認する点</th></tr>
+<tr><td class="code">E01</td><td>起動失敗</td><td>①タンクに燃料があるか ②燃料ポンプが固着して送油できていないか ③燃料経路が詰まっていないか、気泡で送油が途切れていないか</td></tr>
+<tr><td class="code">E02</td><td>異常消炎</td><td>①燃焼に入った後、燃料切れで消火した ②燃料タンクが空 ③燃料経路にエアが入り、送油が途切れる ④吸気管または排気管が詰まっている</td></tr>
+<tr><td class="code">E03</td><td>電圧異常</td><td>①許容範囲：12V機 9～16V、24V機 18～32V ②電源電圧を確認する</td></tr>
+<tr><td class="code">E05</td><td>温度センサー故障</td><td>①基板上の温度センサーの短絡または断線</td></tr>
+<tr><td class="code">E06</td><td>燃料ポンプ故障</td><td>①ポンプ配線の短絡・断線 ②ポンプ未接続、またはポンプ接続線の短絡・断線 ③ポンプの基板側プラグの緩み ④ポンプ配線の不良、またはポンプ本体の故障</td></tr>
+<tr><td class="code">E07</td><td>ファン故障</td><td>①ファン回路の断線・短絡 ②ファン停止（ホールセンサーが回転を検出しない） ③羽根の引っかかり・固着 ④モーター内部故障 ⑤ファンのプラグがきちんと挿さっていない</td></tr>
+<tr><td class="code">E08</td><td>グロープラグ故障</td><td>①プラグ根元の絶縁損傷による短絡 ②プラグの漏電 ③プラグソケットの接触不良</td></tr>
+<tr><td class="code">E09</td><td>高温保護</td><td>①本体温度が260℃を超えた。吸気口がふさがれていないか ②設置スペースが狭すぎる ③大流量のポンプを誤って接続している ④燃料ポンプの逆止弁からの漏れ</td></tr>
+<tr><td class="code">E10</td><td>高温センサー故障</td><td>①高温センサーの短絡または断線</td></tr>
+<tr><td class="code">E18</td><td>通信故障</td><td>①スイッチとメイン基板の接続ケーブルのプラグが半挿し（接触不良）、または通信線の断線</td></tr>
+</table>
+</section>
+
+<!-- A4 -->
+<section>
+<h2>ヒータースイッチ（コントローラー）A4 の使い方</h2>
+<figure><img src="img/panelA4.jpg" style="max-height:95mm"></figure>
+<h3>アイコンの説明</h3>
+<div class="two">
+<ol>
+  <li>オートモード</li>
+  <li>高地モード（Plateau）</li>
+  <li>ポンプ</li>
+  <li>グロープラグ</li>
+  <li>センサー</li>
+  <li>タイマー</li>
+  <li>電圧の単位（V）</li>
+  <li>温度の単位（℃）</li>
+  <li>グロープラグ電力の単位（W）</li>
+  <li>燃料ポンプ周波数の単位</li>
+  <li>（HZ）周波数の単位</li>
+  <li>ファン回転数の単位（RPM）</li>
+</ol>
+<ol start="13">
+  <li>ギア（出力段）表示</li>
+  <li>ファン</li>
+  <li>（ヒーター／加熱表示）</li>
+  <li>燃料残量表示</li>
+  <li>（バッテリー表示）</li>
+  <li>LEDデジタル表示部</li>
+  <li>（下部コネクター）</li>
+  <li>電源スイッチ／決定ボタン</li>
+  <li>▲（上）キー</li>
+  <li>▼（下）キー</li>
+  <li>燃料量キー（給油ボタン）</li>
+</ol>
+</div>
+<p class="note">【訳注】原文の説明文は番号と内容がずれている（10番と11番の対応など、15・17・19番は説明が欠落）。括弧書きは図から推定した内容。</p>
+
+<h3>操作方法</h3>
+<table>
+<tr><th style="width:22%">項目</th><th>操作・内容</th></tr>
+<tr><td>起動</td><td>ONボタン（電源）を2秒長押し → 画面に「ON」表示。</td></tr>
+<tr><td>停止</td><td>電源ボタンを2秒長押し → 画面に「OFF」表示で停止。</td></tr>
+<tr><td>出力アップ</td><td>▲ボタンを押すとギアが上がる。</td></tr>
+<tr><td>出力ダウン</td><td>▼ボタンを押すとギアが下がる。</td></tr>
+<tr><td>リモコンの登録</td><td>停止状態で▲と▼を同時に3秒長押し → 画面に「--」表示 → リモコンのボタンを押す。</td></tr>
+<tr><td>給油モード（呼び水）</td><td>初回通電時、運転していない状態で▲を3秒長押しするとポンプ給油モードに入り、「ポンプ給油の残り時間」を表示。▲を押すと給油停止。</td></tr>
+<tr><td>電圧表示</td><td>電源ボタンを短く押すと現在の電源電圧と燃料残量を表示。<span class="note">【訳注】原文「The open button shows the current supply voltage and the short oil quantity」から推定。</span></td></tr>
+<tr><td>恒温モード</td><td>運転中に中央のスイッチキーを押すと、ギアモードと恒温（温度設定）モードを切り替え。</td></tr>
+<tr><td>音声のON/OFF</td><td>操作ボタンを長押しし、画面下部に（1）が出たら音声のON/OFFを切り替え。<span class="note">【訳注】原文が不明瞭。実機で要確認。</span></td></tr>
+<tr><td>恒温の温度調整</td><td>恒温モード中、▲で設定温度を上げ、▼で下げる。</td></tr>
+<tr><td>故障コード</td><td>運転中に故障が起きると、故障コードを表示して自動的に保護停止する。</td></tr>
+</table>
+<table>
+<tr><th style="width:9%">コード</th><th>内容</th></tr>
+<tr><td class="code">E01</td><td>起動失敗：着火工程の後、炎が検出されない。</td></tr>
+<tr><td class="code">E02</td><td>異常消炎：着火に成功した後、何らかの原因で消炎した。</td></tr>
+<tr><td class="code">E03</td><td>電圧異常：許容範囲は12V機 9～16V、24V機 18～32V。</td></tr>
+<tr><td class="code">E05</td><td>吸気温度センサー故障：基板上の温度センサーの短絡または断線。</td></tr>
+<tr><td class="code">E06</td><td>燃料ポンプ故障：ポンプのプラグの緩み・接触不良、回路の短絡・断線を確認。</td></tr>
+<tr><td class="code">E07</td><td>ファン故障：ファンの羽根の固着、羽根がセンサーから離れすぎている、ファンの断線。</td></tr>
+<tr><td class="code">E08</td><td>グロープラグ故障：プラグの短絡・断線、または漏電。</td></tr>
+<tr><td class="code">E09</td><td>高温保護：本体温度が260℃を超えた。</td></tr>
+<tr><td class="code">E10</td><td>高温センサー故障：高温センサーの短絡または断線。</td></tr>
+<tr><td class="code">E14</td><td>ハンドポンプ（燃料ポンプ）を検出できない：ポンプの配線が接触不良でないか確認、または配線・ポンプを交換。<span class="note">【訳注】原文は「water pump」だが燃料ポンプの誤記と思われる。</span></td></tr>
+<tr><td class="code">E18</td><td>通信故障：スイッチとメイン基板のコネクターの接触不良、または通信ケーブルの断線。</td></tr>
+</table>
+</section>
+
+<!-- maintenance -->
+<section>
+<h2>日常のメンテナンス</h2>
+<p>ヒーターは次のような原因で回路故障を起こすことがある：接続部の腐食、接触不良、差し込み不良、誤接続、配線・ヒューズの腐食、バッテリー端子の腐食など。使用中は点検・保守に注意し、これらが起きないよう予防すること。</p>
+<ul>
+  <li>使用前に試運転を行うこと。試運転中は、すべての接続部に漏れや緩みがないか入念に確認すること。</li>
+  <li class="warn">煙が出る、燃焼音が異常、燃料のにおいがする場合は、ヒーターを停止し、ヒューズを抜いて運転できない状態にすること。専門家による修理後に使用を再開すること。</li>
+  <li>毎シーズン（暖房期）の使用前に、有資格の専門家による点検で次の保守を行うこと：<br>
+    A) 吸気口・吹出口の汚れ・異物の確認　B) ヒーター外側の清掃　C) 電気コネクターの腐食・緩みの確認　D) 吸気管・排気管の詰まり・損傷の確認　E) 燃料配管の漏れの確認</li>
+  <li><b>長期間使わない場合でも、4週間ごとに10分以上運転すること。</b>機械部品の作動不良を防ぐため。</li>
+  <li>ヒーターの吸気口・吹出口は詰まりや汚れがないよう保ち、温風ダクトの流れを妨げないこと（過熱故障の防止）。</li>
+  <li>低温用燃料（寒冷地用軽油）に切り替えるときは、燃料配管・燃料ポンプに新しい燃料が行き渡るよう、15分以上運転を続けること。</li>
+  <li>ヒーターの熱交換器の使用期間は1年を超えてはならない。期限後はメーカーまたは正規代理店が純正品に交換すること。その際は過熱センサーも交換すること。人のいる場所に燃焼排気を出す配置で1年使用した場合も純正品に更新すること。<span class="note">【訳注】原文どおり訳したが、文意が不明瞭（一般的なFFヒーターでは熱交換器の毎年交換は求められない）。参考程度に。</span></li>
+  <li>車体で溶接作業をするときは、コントローラー保護のため、ヒーター電源のプラス線をバッテリーから外すこと。</li>
+  <li>輸送・保管時の周囲温度は<b>-40℃～85℃</b>の範囲を超えないこと（電子部品の損傷防止）。</li>
+  <li>取付・修理は認定サービス店のみが行うこと。非純正部品の使用は危険なため禁止。開梱・取付・運転が規定に従わず損傷した場合、メーカー保証の対象外。</li>
+</ul>
+
+<h2 style="margin-top:6mm">ご注意（Friendly reminder）</h2>
+<ol>
+  <li>燃料ポンプ取付時、<b>燃料タンクとポンプの距離は1.5m以下</b>とすること。</li>
+  <li>粉じんの多い環境で使う場合は、できるだけメーカー提供の吸気フィルターを使い、1日1回程度は清掃すること。</li>
+  <li><b>燃焼用吸気口と排気口は、車室外の自然換気される場所に接続すること</b>（走行風を受ける向きへの設置は禁止）。</li>
+  <li>標準の軽油を使うこと。</li>
+  <li>（運転中の）電源の直接遮断は禁止。起動時などに一時的に煙が出るのは正常な現象。<span class="note">【訳注】原文「the use of power is prohibited, sudden power smoke is a normal phenomenon」から推定。</span></li>
+  <li>使用中に燃料漏れを見つけたら、速やかにアフターサービスまたは取付店に連絡すること。</li>
+  <li>35Vを超える高電圧で使う場合は、必ずコンバーター（降圧器）を使うこと。</li>
+  <li>規定どおりに取付・保守を行わなかった場合、メーカーはいかなる結果にも責任を負わない。</li>
+</ol>
+</section>
+
+</body>
+</html>
