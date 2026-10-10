@@ -75,7 +75,7 @@
       <tbody>
         <tr><td class="b">Sensirion SCD41</td><td>I2C(購入済み・未接続)</td><td><strong>室内温度</strong>・湿度・CO2濃度</td><td class="ng">室内ファン制御に必須。現状これが唯一の室内温度ソース候補だが未実装</td></tr>
         <tr><td class="b">Winsen ZE07-CO</td><td>UART(購入済み・未接続)</td><td>CO濃度(ppm)</td><td>温度制御とは別軸（換気トリガーの候補）</td></tr>
-        <tr><td class="b">Androidタブレット(Termux構想)</td><td>HTTP POST</td><td>GPS位置・傾き(rotation_vector)・音声コマンド</td><td>温度系データなし。位置ベース制御の候補</td></tr>
+        <tr><td class="b">Androidタブレット(T90)</td><td>HTTP POST(Termux)</td><td>位置（Wi-Fi推定・<strong>2026-10-10実装済み</strong>、GPS非搭載）・加速度</td><td>温度系データなし。位置ベース制御の候補（下記参照）</td></tr>
       </tbody>
     </table>
 
@@ -147,49 +147,68 @@
     </div>
   </div>
 
-  <!-- 車内タブレット連携構想 -->
+  <!-- 車内タブレット連携 -->
   <div class="card">
-    <h2>車内Androidタブレット連携構想 <span class="status status-plan">検討中・未実装</span></h2>
+    <h2>車内Androidタブレット連携 <span class="status status-done">現在地・天気・観光 実装済み</span> <span class="status status-plan">音声操作 設計中</span></h2>
     <p style="font-size:.85rem;color:#334155;margin-bottom:.75rem;">
-      車内に常設予定のAndroidタブレットを、ラズパイと連携させる構想。
+      車内に常設するAndroidタブレット（<span class="b">T90</span>・Android 16・Wi-Fi専用・root化なし）をラズパイと連携。2026-10-10 に現在地連携を実装・実機確認。
     </p>
 
-    <h3 style="margin-bottom:.5rem;">① タブレット操作</h3>
+    <h3 style="margin-bottom:.5rem;">① 現在地 → 天気・観光情報 <span class="status status-done">実装済み 2026-10-10</span></h3>
     <table>
-      <thead><tr><th>方式</th><th>できること</th><th>トレードオフ</th></tr></thead>
+      <thead><tr><th>要素</th><th>内容</th></tr></thead>
       <tbody>
-        <tr><td class="b">ADB (Wi-Fi)</td><td>アプリ起動・画面タップ・画面ミラーリング・通知送信</td><td>開発者オプション+USBデバッグの事前有効化が必要。再起動でペアリング切れの可能性</td></tr>
-        <tr><td class="b">Kioskブラウザ表示</td><td>ダッシュボード（既存<code>static/index.html</code>）をタブレットのブラウザで固定表示するだけ</td><td>能動的な「操作」はできないが単純で壊れにくい。表示専用ならこちらで十分</td></tr>
-      </tbody>
-    </table>
-
-    <h3 style="margin:1rem 0 .5rem;">② センサーデータ統合（GPS・傾き等）</h3>
-    <div class="note note-blue">
-      <strong>方式:</strong> タブレットで<strong>Termux + Termux:API</strong>を動かし、センサー値を定期的にラズパイのFlaskサーバーへPOST（例: <code>/api/gps</code>）。<code>server.py</code>で受け取り、既存の<code>status.json</code>（BMS/Rover/Orionと同様の構成）に統合する。
-    </div>
-    <table style="margin-top:.75rem;">
-      <thead><tr><th>データ</th><th>取得コマンド</th><th>備考</th></tr></thead>
-      <tbody>
-        <tr><td class="b">GPS位置</td><td><code>termux-location</code></td><td></td></tr>
-        <tr><td class="b">傾き（車体レベル出し）</td><td><code>termux-sensor -s "rotation_vector"</code></td><td>加速度センサー単体より安定。<strong>用途: 車中泊時の駐車位置の水平確認</strong></td></tr>
+        <tr><td class="b">タブレット側</td><td>Termux（F-Droid版）+ Termux:API + Termux:Boot。<code>~/haiace-gps.sh</code> が5分おきに <code>termux-location</code> の結果を <code>POST /api/location</code> へ送信。送信先はルーターLAN（192.168.0.198）→ Tailscale（100.99.198.121）の順</td></tr>
+        <tr><td class="b">ラズパイ側</td><td><code>travel_info.py</code>（新規）。<code>location_state.json</code> に保存・<code>location_log.jsonl</code> に追記。天気=Open-Meteo（現在＋12時間予報）、地名=Nominatim、観光地=Overpass（半径10km・最大30件：温泉・道の駅・展望・博物館・城・Wikipedia記事のある寺社/山/滝）。すべて無料・キー不要</td></tr>
+        <tr><td class="b">通信量対策</td><td>結果を <code>travel_cache.json</code> に保存し、天気=5km移動/30分、地名=1km/1日、観光地=3km/1日 でのみ再取得。失敗後は10分空ける</td></tr>
+        <tr><td class="b">表示</td><td>ダッシュボードに「現在地」カード（<code>GET /api/travel-info</code>）。観光地はGoogleマップ／Wikipediaへリンク</td></tr>
       </tbody>
     </table>
     <div class="note note-red" style="margin-top:.75rem;">
-      <strong>傾き検知の成立条件:</strong><br>
-      ・タブレットを車体に<strong>固定式マウント</strong>で常に同じ向きに設置すること（着脱で角度がズレると基準値が無効になる）<br>
-      ・水平な場所に停車・<strong>エンジン停止・静止中</strong>に基準値（ピッチ/ロール）を記録<br>
-      ・別の場所で再度測定 → 基準値との差分が実際の車体の傾き（安価なセンサーの個体差・取付誤差を基準値でキャンセルできる）<br>
-      ・走行中や振動中は重力以外の加速度が混ざるため測定不可
+      <strong>タブレットにGPSが無い:</strong> GPSTestで衛星0個（窓際）。Wi-Fi専用機のため非搭載と判断。現在はWi-Fi電波による位置推定（誤差100m程度）で、<strong>山間部では取れない見込み</strong>。対策候補：① Pi5にUSB GPS（2,000円前後・最も確実） ② モバイルルーターの基地局情報から推定（取得可否は未調査）。
+    </div>
+    <div class="note" style="margin-top:.5rem;">
+      <strong>導入でつまずいた点:</strong><br>
+      ・Play Store版TermuxはTermux:API非対応 → F-Droid版で入れ直し<br>
+      ・入れ直し直後は <code>apt update &amp;&amp; apt full-upgrade</code> が必要（curlがopensslと不整合で起動しない）<br>
+      ・Termux:APIの位置権限が「使用時のみ」だと<strong>画面オフで取得失敗</strong> → 「常に許可」で解決<br>
+      ・再起動後にTailscaleが繋がらない → Androidの設定でTailscaleを「常時接続VPN」に<br>
+      ・公開Overpassサーバーは不安定（around: は30秒タイムアウト、公式は504）→ bbox指定＋3サーバー切替
     </div>
 
-    <h3 style="margin:1rem 0 .5rem;">③ 音声認識操作</h3>
+    <h3 style="margin:1rem 0 .5rem;">② タブレットの保守（Macから操作）</h3>
     <div class="note note-blue">
-      <code>termux-speech-to-text</code>（Android標準の音声認識エンジンを利用）で音声コマンドを取得し、認識結果を解析して<code>/api/voice-command</code>的なエンドポイントへPOST、サーバー側で対応処理を実行する。<br>
-      <strong>制約:</strong> 基本は都度手動トリガー（ウィジェットタップや通知から起動）。「OK Google」的な常時待機のウェイクワード認識にするには、Google Assistant連携やオフラインウェイクワードエンジン（Porcupine等）が別途必要で構成が複雑になる。
+      当初案のADBではなく、Termuxの<strong>sshd（ポート8022・Macの鍵のみ）をTailscale越しに</strong>使う方式にした。<code>ssh -p 8022 100.86.179.4</code>（Tailscale名 <code>t90</code>）。Termux:Bootで起動時にsshdと送信スクリプトを自動起動（再起動テスト済み）。端末の再起動はroot権限が無いためMacからは不可。
+    </div>
+
+    <h3 style="margin:1rem 0 .5rem;">③ タブレットのセンサー（実機調査）</h3>
+    <table>
+      <thead><tr><th>あり</th><th>なし</th></tr></thead>
+      <tbody>
+        <tr><td>加速度センサー（傾き・揺れ・動き検知）・前後カメラ・マイク・スピーカー・Wi-Fi</td><td class="ng">GPS・照度・気圧・磁気（方位）・温度・ジャイロ（rotation_vectorも無し）</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.82rem;color:#334155;margin-top:.5rem;">活用候補：水平器（加速度で車体の傾き、固定マウント前提）・車内カメラの定期撮影・停車中の揺れ検知（防犯）・騒音レベル記録。</p>
+
+    <h3 style="margin:1rem 0 .5rem;">④ 音声操作（ウェイクワード「ハイエース」）<span class="status status-plan">設計合意・未着手</span></h3>
+    <div class="note note-blue">
+      <strong>例:</strong>「ハイエース！」→「現在のSOCの%を教えて」→「現在、85%です」<br>
+      <strong>決定事項（2026-10-10）:</strong><br>
+      ・<strong>Pi5で聞いてPi5が答える</strong>（USBスピーカーフォンを1台追加。タブレットが寝ていても動く）<br>
+      ・<strong>聞く＋安全な操作</strong>（SOC・電圧・車内温度・CO2・天気・通信量／照明・ファン・エアコンIR・プロジェクター）。充電停止・BMSスイッチ等の電源系は声では操作しない<br>
+      ・<strong>認識は普段オフライン、分からなければAI</strong>：ウェイクワードと決まった言い回しはVosk（無料・オフライン）、読み上げはOpen JTalk、それ以外の質問はClaude APIへ（オンライン時のみ、要APIキー）
+    </div>
+    <div class="note" style="margin-top:.5rem;">
+      <strong>タブレット単体を採用しなかった理由:</strong> Termuxからはマイクを連続で受け取れず（数秒ずつ録音→送信になり聞き逃し・遅延）、ブラウザの音声認識は画面オン・前面表示が必要、Android標準のウェイクワードは変更不可。<br>
+      <strong>Pi5の現状:</strong> マイク・スピーカーなし（HDMI音声のみ）、メモリ空き6.9GB/8GBで余裕あり。<br>
+      <strong>スピーカーフォンの条件:</strong> USB接続だけで使える（UAC対応・ドライバー不要）、エコーキャンセル付き、全方向マイク。
+    </div>
+    <div class="note" style="margin-top:.5rem;">
+      <strong>次の手順（一時停止中）:</strong> 1. Pi5にVosk・Open JTalkを導入し、読み上げ音声で作った録音で認識テスト → 2. 質問・操作の対応づけ（文字入力でテスト）→ 3. AIへの回送（APIキー準備）→ 4. スピーカーフォン到着後に車内で誤反応・自声の拾い込みを調整
     </div>
   </div>
 
-  <footer>ラズパイ ソフトウェア設計 メモ — 2026-09-13</footer>
+  <footer>ラズパイ ソフトウェア設計 メモ — 2026-09-13 / 更新 2026-10-10</footer>
 </div>
 </body>
 </html>
