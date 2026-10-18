@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スイベル・テーブル4 カット案</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%232c6a88%22/%3E%3Crect x=%226%22 y=%228%22 width=%2220%22 height=%2216%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%222%22/%3E%3Cpath d=%22M16 8v16M6 16h10%22 stroke=%22%23fff%22 stroke-width=%222%22/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#f8fafc; --card:#fff; --line:#e2e8f0; --tx:#0f172a; --sub:#334155; --mut:#64748b; --th:#f1f5f9; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans JP',sans-serif; background:var(--bg); color:var(--tx); padding:2rem 1rem; font-size:14px; line-height:1.7; }
+.page { max-width:860px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; }
+h1 { font-size:1.5rem; font-weight:900; }
+h2 { font-size:1rem; font-weight:900; margin-bottom:.75rem; padding-bottom:.4rem; border-bottom:2px solid var(--line); }
+h3 { font-size:.9rem; font-weight:900; margin:1.1rem 0 .4rem; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1.25rem 1.5rem; }
+.meta { font-size:.8rem; color:var(--mut); margin-top:.3rem; }
+a { color:#2563eb; }
+ul { padding-left:1.2rem; display:flex; flex-direction:column; gap:.25rem; }
+.tw { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:.85rem; }
+th { background:var(--th); font-weight:700; padding:.5rem .75rem; text-align:left; white-space:nowrap; }
+td { padding:.45rem .75rem; border-top:1px solid var(--line); vertical-align:top; color:var(--sub); }
+td.bl { font-size:.72rem; color:var(--mut); }
+.num { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.note { background:#fff7ed; border-left:3px solid #f97316; padding:.6rem .9rem; border-radius:4px; font-size:.82rem; color:#7c2d12; margin-top:.75rem; }
+.note-blue { background:#eff6ff; border-left-color:#3b82f6; color:#1e3a8a; }
+.fig { margin-top:.4rem; }
+.fig svg { width:100%; height:auto; display:block; }
+.cap { font-size:.75rem; color:var(--mut); margin-top:.3rem; }
+.legend { display:flex; flex-wrap:wrap; gap:.4rem 1rem; font-size:.75rem; color:#475569; margin-top:.4rem; }
+.legend i { display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-2px; margin-right:.3rem; border:1px solid #94a3b8; }
+@media (max-width:600px) { body { padding:1rem; } .card { padding:1rem; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div>
+    <h1>スイベルテーブル・テーブル4ブロック カット案</h1>
+    <p class="meta">2026-10-18 ／ Blenderモデル（10-18、テーブル4五角形化・支柱40角・天板の開く部分Y185〜 を反映）から拾った12mm板。のこ刃の幅3mmで計算。 ／ <a href="hiace_custom.html#sofabed-cut">ソファベッドのカット案（余り板の出どころ）</a></p>
+  </div>
+
+  <div class="card">
+    <h2>まとめ</h2>
+    <div class="tw"><table>
+      <tr><th>材</th><th>使う所</th><th>部品</th><th>買う板（910×1820、12mm）</th></tr>
+      <tr><td><b>A材</b></td><td>天板・引き出しなどの前板（見える部分）</td><td class="num">11枚（2.09m²）</td><td class="num"><b>2枚</b>（2枚目は約1/3だけ使う）</td></tr>
+      <tr><td><b>B材</b></td><td>側板・棚板・間仕切り・引き出しの箱（見えない部分）</td><td class="num">27枚（3.68m²）</td><td class="num"><b>2枚</b>＋ソファベッドの余り3枚</td></tr>
+    </table></div>
+    <ul style="margin-top:.75rem">
+      <li>どの板も、端から端まで真っすぐ切る順番（パネルソーでの切り分け）で切れる並べ方にした</li>
+      <li>A材は部品の合計が板1枚（1.66m²）を超えるので2枚が最少。B材も余り3枚（約1.10m²）を使い切っても新しい板2枚が要る</li>
+      <li>A材2枚目の余り（約1.1m²）にB材を回しても、B材の新しい板は2枚のまま減らない（計算で確認）。A材の余りは次のブロック（シンク・冷蔵庫）の見える板に回せる</li>
+      <li>B材の余り板は、ソファベッドのカット案どおりに切った場合の寸法（約1820×474・669×215・414×215）で計算した。実物の寸法が違えば計算し直す</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>A材の部品（見える部分）</h2>
+    <div class="tw"><table><tr><th>No</th><th>ブロック</th><th>部品</th><th>寸法（mm）</th><th>形</th><th>Blender</th></tr><tr><td class="num"><b>A1</b></td><td>スイベル</td><td>棚天板（スイベルテーブルの下）</td><td class="num">1001×500</td><td>前縁に支柱の切欠き 54×77（左端から229〜283）</td><td class="bl">Shelf_B2_TopHigh</td></tr><tr><td class="num"><b>A2</b></td><td>スイベル</td><td>スイベルテーブルの天板</td><td class="num">850×500</td><td>長方形</td><td class="bl">Desk_R_Table3</td></tr><tr><td class="num"><b>A3</b></td><td>テーブル4</td><td>跳ね上げ天板（開く部分）</td><td class="num">423×314</td><td>長方形</td><td class="bl">Table4_Lid</td></tr><tr><td class="num"><b>A4</b></td><td>テーブル4</td><td>固定天板（壁側）</td><td class="num">423×185</td><td>角落とし（リアドア側・壁側の角を 154×184 で斜めに）</td><td class="bl">Table4_HingeRail</td></tr><tr><td class="num"><b>A5</b></td><td>テーブル4</td><td>リア端の板（リアドアから見える）</td><td class="num">617×337</td><td>長方形（10-18の角落としで幅500→337）</td><td class="bl">Desk_R_EndRear</td></tr><tr><td class="num"><b>A6</b></td><td>テーブル4</td><td>前板・下</td><td class="num">394×358</td><td>長方形</td><td class="bl">Front_Table4</td></tr><tr><td class="num"><b>A7</b></td><td>テーブル4</td><td>引き出し前板</td><td class="num">390×255</td><td>長方形</td><td class="bl">Front_Table4_上</td></tr><tr><td class="num"><b>A8</b></td><td>スイベル</td><td>支柱前の目隠し・下</td><td class="num">286×358</td><td>長方形</td><td class="bl">Swivel_Cover</td></tr><tr><td class="num"><b>A9</b></td><td>スイベル</td><td>支柱前の目隠し・上</td><td class="num">286×160</td><td>長方形</td><td class="bl">Swivel_Cover_上</td></tr><tr><td class="num"><b>A10</b></td><td>スイベル</td><td>B2下 引き出し前板</td><td class="num">687×358</td><td>長方形</td><td class="bl">Drawer_B2_下_前板</td></tr><tr><td class="num"><b>A11</b></td><td>スイベル</td><td>B2上 引き出し前板</td><td class="num">687×160</td><td>長方形</td><td class="bl">Drawer_B2_上_前板</td></tr></table></div>
+    <p class="cap">寸法は板の外形（長方形）。角落とし・切欠きは長方形に切ってから自分で加工する。リア端の板（A5）は側板だが、リアドアを開けると見えるのでA材にした。</p>
+  </div>
+
+  <div class="card">
+    <h2>B材の部品（見えない部分）</h2>
+    <div class="tw"><table><tr><th>No</th><th>ブロック</th><th>部品</th><th>寸法（mm）</th><th>形</th><th>Blender</th></tr><tr><td class="num"><b>B1</b></td><td>境目</td><td>テーブル4右／スイベル左の側板</td><td class="num">617×500</td><td>長方形</td><td class="bl">Shelf_A_SideR</td></tr><tr><td class="num"><b>B2</b></td><td>スイベル</td><td>B2左の側板（支柱の右）</td><td class="num">528×500</td><td>タイヤハウスの切欠き 215×215（壁側・床側の角）</td><td class="bl">Shelf_B2_SideL</td></tr><tr><td class="num"><b>B3</b></td><td>スイベル</td><td>間仕切り（シンクとの境目）</td><td class="num">528×500</td><td>長方形</td><td class="bl">Shelf_B2_SideR</td></tr><tr><td class="num"><b>B4</b></td><td>テーブル4</td><td>棚板</td><td class="num">482×394</td><td>角落とし（壁側・リアドア側の角を 137×164 で斜めに）</td><td class="bl">Shelf_T4_Shelf</td></tr><tr><td class="num"><b>B5</b></td><td>スイベル</td><td>B2の棚板</td><td class="num">691×482</td><td>長方形</td><td class="bl">Shelf_B2_Shelf</td></tr><tr><td class="num"><b>B6</b></td><td>スイベル</td><td>支柱まわりの棚板</td><td class="num">482×286</td><td>支柱の切欠き 53×46（前縁から4、右端まで）</td><td class="bl">Shelf_Swivel_Shelf</td></tr><tr><td class="num"><b>B7</b></td><td>テーブル4</td><td>引き出し箱 底</td><td class="num">456×368</td><td>角落とし 110×132</td><td class="bl">Drawer_T4_箱</td></tr><tr><td class="num"><b>B8</b></td><td>テーブル4</td><td>引き出し箱 右側</td><td class="num">456×228</td><td>長方形</td><td class="bl">Drawer_T4_箱</td></tr><tr><td class="num"><b>B9</b></td><td>テーブル4</td><td>引き出し箱 左側（リアドア側）</td><td class="num">339×228</td><td>長方形（奥端を斜めに）</td><td class="bl">Drawer_T4_箱</td></tr><tr><td class="num"><b>B10</b></td><td>テーブル4</td><td>引き出し箱 前</td><td class="num">344×228</td><td>長方形</td><td class="bl">Drawer_T4_箱</td></tr><tr><td class="num"><b>B11</b></td><td>テーブル4</td><td>引き出し箱 奥</td><td class="num">256×228</td><td>長方形（左端を斜めに）</td><td class="bl">Drawer_T4_箱</td></tr><tr><td class="num"><b>B12</b></td><td>テーブル4</td><td>引き出し箱 斜めの板</td><td class="num">196×228</td><td>長方形（両端を約50°に）</td><td class="bl">Drawer_T4_箱</td></tr><tr><td class="num"><b>B13</b></td><td>スイベル</td><td>B2上 箱 底</td><td class="num">665×456</td><td>長方形</td><td class="bl">Drawer_B2_上_箱</td></tr><tr><td class="num"><b>B14</b></td><td>スイベル</td><td>B2上 箱 側（左）</td><td class="num">456×142</td><td>長方形</td><td class="bl">Drawer_B2_上_箱</td></tr><tr><td class="num"><b>B15</b></td><td>スイベル</td><td>B2上 箱 側（右）</td><td class="num">456×142</td><td>長方形</td><td class="bl">Drawer_B2_上_箱</td></tr><tr><td class="num"><b>B16</b></td><td>スイベル</td><td>B2上 箱 前</td><td class="num">641×142</td><td>長方形</td><td class="bl">Drawer_B2_上_箱</td></tr><tr><td class="num"><b>B17</b></td><td>スイベル</td><td>B2上 箱 奥</td><td class="num">641×142</td><td>長方形</td><td class="bl">Drawer_B2_上_箱</td></tr><tr><td class="num"><b>B18</b></td><td>スイベル</td><td>B2下 箱 側（左）</td><td class="num">456×323</td><td>L形（奥下 200×228 を欠く＝タイヤハウスの段）</td><td class="bl">Drawer_B2_下_箱</td></tr><tr><td class="num"><b>B19</b></td><td>スイベル</td><td>B2下 箱 側（右）</td><td class="num">456×323</td><td>長方形</td><td class="bl">Drawer_B2_下_箱</td></tr><tr><td class="num"><b>B20</b></td><td>スイベル</td><td>B2下 箱 底（手前）</td><td class="num">651×256</td><td>長方形</td><td class="bl">Drawer_B2_下_箱</td></tr><tr><td class="num"><b>B21</b></td><td>スイベル</td><td>B2下 箱 底（奥・右端）</td><td class="num">200×118</td><td>長方形</td><td class="bl">Drawer_B2_下_箱</td></tr><tr><td class="num"><b>B22</b></td><td>スイベル</td><td>B2下 箱 前</td><td class="num">651×311</td><td>長方形</td><td class="bl">Drawer_B2_下_箱</td></tr><tr><td class="num"><b>B23</b></td><td>スイベル</td><td>B2下 箱 段の立ち上がり</td><td class="num">533×216</td><td>長方形</td><td class="bl">Drawer_B2_下_箱</td></tr><tr><td class="num"><b>B24</b></td><td>スイベル</td><td>B2下 箱 段の側</td><td class="num">200×216</td><td>長方形</td><td class="bl">Drawer_B2_下_箱</td></tr><tr><td class="num"><b>B25</b></td><td>スイベル</td><td>B2下 箱 段の上の板</td><td class="num">545×212</td><td>長方形</td><td class="bl">Drawer_B2_下_箱</td></tr><tr><td class="num"><b>B26</b></td><td>スイベル</td><td>B2下 箱 奥（段の上）</td><td class="num">545×83</td><td>長方形</td><td class="bl">Drawer_B2_下_箱</td></tr><tr><td class="num"><b>B27</b></td><td>スイベル</td><td>B2下 箱 奥（右端）</td><td class="num">311×106</td><td>長方形</td><td class="bl">Drawer_B2_下_箱</td></tr></table></div>
+    <p class="cap">テーブル4の引き出し箱（B7〜B12）は、壁の角（リアドアから155・壁から185の斜め線）から10mm離して角を落とし、斜めの板B12で閉じた形。B2下の箱（B18〜B27）はタイヤハウスの段に合わせた形で、Blenderのモデルどおり。</p>
+  </div>
+
+  <div class="card">
+    <h2>A材の板取り</h2>
+    <div class="legend"><span><i style="background:#fde68a"></i>A材</span><span>数字はNo、下は寸法（mm）</span></div>
+    <h3>A材 新しい板1（910×1820） — 使う割合 約91%</h3>
+<div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 404.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新規の板取り">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b" stroke-dasharray="none"/>
+<rect x="0.0" y="0.0" width="219.8" height="373.6" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="109.9" y="184.8" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A2</text>
+<text x="109.9" y="196.8" font-size="9" text-anchor="middle" fill="#334155">850×500</text>
+<rect x="221.1" y="0.0" width="440.0" height="219.8" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="441.1" y="107.9" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A1</text>
+<text x="441.1" y="119.9" font-size="9" text-anchor="middle" fill="#334155">1001×500</text>
+<rect x="221.1" y="221.1" width="302.0" height="157.4" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="372.1" y="297.8" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A10</text>
+<text x="372.1" y="309.8" font-size="9" text-anchor="middle" fill="#334155">687×358</text>
+<rect x="662.4" y="0.0" width="125.7" height="157.4" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="725.3" y="76.7" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A8</text>
+<text x="725.3" y="88.7" font-size="9" text-anchor="middle" fill="#334155">358×286</text>
+<rect x="524.4" y="221.1" width="112.1" height="171.4" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="580.4" y="304.8" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A7</text>
+<text x="580.4" y="316.8" font-size="9" text-anchor="middle" fill="#334155">390×255</text>
+<rect x="637.8" y="221.1" width="157.4" height="173.2" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="716.5" y="305.7" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A6</text>
+<text x="716.5" y="317.7" font-size="9" text-anchor="middle" fill="#334155">394×358</text>
+</svg></div>
+<p class="cap">6枚：A2・A1・A10・A8・A7・A6</p>
+<h3>A材 新しい板2（910×1820） — 使う割合 約35%</h3>
+<div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 404.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新規の板取り">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b" stroke-dasharray="none"/>
+<rect x="0.0" y="0.0" width="148.1" height="271.2" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="74.1" y="133.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A5</text>
+<text x="74.1" y="145.6" font-size="9" text-anchor="middle" fill="#334155">617×337</text>
+<rect x="149.5" y="0.0" width="70.3" height="302.0" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="184.6" y="149.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A11</text>
+<text x="184.6" y="161.0" font-size="9" text-anchor="middle" fill="#334155">687×160</text>
+<rect x="221.1" y="0.0" width="138.0" height="185.9" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="290.1" y="91.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A3</text>
+<text x="290.1" y="103.0" font-size="9" text-anchor="middle" fill="#334155">423×314</text>
+<rect x="221.1" y="187.3" width="81.3" height="185.9" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="261.8" y="278.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A4</text>
+<text x="261.8" y="290.2" font-size="9" text-anchor="middle" fill="#334155">423×185</text>
+<rect x="0.0" y="272.5" width="70.3" height="125.7" fill="#fde68a" stroke="#92400e" stroke-width=".8"/>
+<text x="35.2" y="333.4" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">A9</text>
+<text x="35.2" y="345.4" font-size="9" text-anchor="middle" fill="#334155">286×160</text>
+</svg></div>
+<p class="cap">5枚：A5・A11・A3・A4・A9</p>
+  </div>
+
+  <div class="card">
+    <h2>B材の板取り</h2>
+    <div class="legend"><span><i style="background:#e2e8f0"></i>B材</span><span>点線の枠＝ソファベッドの余り板</span></div>
+    <h3>B材 余り1（1820×474、ソファベッドの残り） — 使う割合 約94%</h3>
+<div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 212.4" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="余り1の板取り">
+<rect x="0" y="0" width="800.0" height="208.4" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
+<rect x="0.0" y="0.0" width="286.2" height="136.7" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="143.1" y="66.4" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B22</text>
+<text x="143.1" y="78.4" font-size="9" text-anchor="middle" fill="#334155">651×311</text>
+<rect x="287.5" y="0.0" width="142.0" height="200.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="358.5" y="98.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B19</text>
+<text x="358.5" y="110.2" font-size="9" text-anchor="middle" fill="#334155">456×323</text>
+<rect x="430.8" y="0.0" width="292.3" height="200.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="576.9" y="98.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B13</text>
+<text x="576.9" y="110.2" font-size="9" text-anchor="middle" fill="#334155">665×456</text>
+<rect x="0.0" y="138.0" width="281.8" height="62.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="140.9" y="167.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B17</text>
+<text x="140.9" y="179.2" font-size="9" text-anchor="middle" fill="#334155">641×142</text>
+<rect x="724.4" y="0.0" width="62.4" height="200.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="755.6" y="98.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B15</text>
+<text x="755.6" y="110.2" font-size="9" text-anchor="middle" fill="#334155">456×142</text>
+</svg></div>
+<p class="cap">5枚：B22・B19・B13・B17・B15</p>
+<h3>B材 余り2（669×215、ソファベッドの残り） — 使う割合 約97%</h3>
+<div class="fig"><svg style="max-width:298px" viewBox="-2 -2 298.1 98.5" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="余り2の板取り">
+<rect x="0" y="0" width="294.1" height="94.5" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
+<rect x="0.0" y="0.0" width="239.6" height="93.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="119.8" y="44.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B25</text>
+<text x="119.8" y="56.6" font-size="9" text-anchor="middle" fill="#334155">545×212</text>
+<rect x="240.9" y="0.0" width="51.9" height="87.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="266.8" y="42.0" font-size="9" font-weight="700" text-anchor="middle" fill="#0f172a">B21</text>
+<text x="266.8" y="54.0" font-size="9" text-anchor="middle" fill="#334155">200×118</text>
+</svg></div>
+<p class="cap">2枚：B25・B21</p>
+<h3>B材 余り3（414×215、ソファベッドの残り） — 使う割合 約49%</h3>
+<div class="fig"><svg style="max-width:186px" viewBox="-2 -2 186.0 98.5" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="余り3の板取り">
+<rect x="0" y="0" width="182.0" height="94.5" fill="#f8fafc" stroke="#64748b" stroke-dasharray="4 3"/>
+<rect x="0.0" y="0.0" width="94.9" height="87.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="47.5" y="42.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B24</text>
+<text x="47.5" y="54.0" font-size="9" text-anchor="middle" fill="#334155">216×200</text>
+</svg></div>
+<p class="cap">1枚：B24</p>
+<h3>B材 新しい板1（910×1820） — 使う割合 約94%</h3>
+<div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 404.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新規の板取り">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b" stroke-dasharray="none"/>
+<rect x="0.0" y="0.0" width="219.8" height="271.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="109.9" y="133.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B1</text>
+<text x="109.9" y="145.6" font-size="9" text-anchor="middle" fill="#334155">617×500</text>
+<rect x="221.1" y="0.0" width="211.9" height="303.7" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="327.0" y="149.9" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B5</text>
+<text x="327.0" y="161.9" font-size="9" text-anchor="middle" fill="#334155">691×482</text>
+<rect x="434.3" y="0.0" width="112.5" height="286.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="490.5" y="141.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B20</text>
+<text x="490.5" y="153.1" font-size="9" text-anchor="middle" fill="#334155">651×256</text>
+<rect x="548.1" y="0.0" width="142.0" height="200.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="619.1" y="98.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B18</text>
+<text x="619.1" y="110.2" font-size="9" text-anchor="middle" fill="#334155">456×323</text>
+<rect x="0.0" y="272.5" width="211.9" height="125.7" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="105.9" y="333.4" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B6</text>
+<text x="105.9" y="345.4" font-size="9" text-anchor="middle" fill="#334155">482×286</text>
+<rect x="548.1" y="201.8" width="234.3" height="94.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="665.3" y="247.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B23</text>
+<text x="665.3" y="259.2" font-size="9" text-anchor="middle" fill="#334155">533×216</text>
+<rect x="691.4" y="0.0" width="100.2" height="200.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="741.5" y="98.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B8</text>
+<text x="741.5" y="110.2" font-size="9" text-anchor="middle" fill="#334155">456×228</text>
+<rect x="548.1" y="298.0" width="151.2" height="100.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="623.7" y="346.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B10</text>
+<text x="623.7" y="358.1" font-size="9" text-anchor="middle" fill="#334155">344×228</text>
+<rect x="221.1" y="305.1" width="200.4" height="62.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="321.3" y="334.3" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B14</text>
+<text x="321.3" y="346.3" font-size="9" text-anchor="middle" fill="#334155">456×142</text>
+<rect x="434.3" y="287.5" width="100.2" height="112.5" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="484.4" y="341.7" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B11</text>
+<text x="484.4" y="353.7" font-size="9" text-anchor="middle" fill="#334155">256×228</text>
+<rect x="700.7" y="298.0" width="86.2" height="100.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="743.7" y="346.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B12</text>
+<text x="743.7" y="358.1" font-size="9" text-anchor="middle" fill="#334155">228×196</text>
+</svg></div>
+<p class="cap">11枚：B1・B5・B20・B18・B6・B23・B8・B10・B14・B11・B12</p>
+<h3>B材 新しい板2（910×1820） — 使う割合 約68%</h3>
+<div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 404.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新規の板取り">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b" stroke-dasharray="none"/>
+<rect x="0.0" y="0.0" width="219.8" height="232.1" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="109.9" y="114.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B2</text>
+<text x="109.9" y="126.0" font-size="9" text-anchor="middle" fill="#334155">528×500</text>
+<rect x="0.0" y="233.4" width="200.4" height="161.8" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="100.2" y="312.3" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B7</text>
+<text x="100.2" y="324.3" font-size="9" text-anchor="middle" fill="#334155">456×368</text>
+<rect x="221.1" y="0.0" width="173.2" height="211.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="307.7" y="103.9" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B4</text>
+<text x="307.7" y="115.9" font-size="9" text-anchor="middle" fill="#334155">482×394</text>
+<rect x="395.6" y="0.0" width="219.8" height="232.1" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="505.5" y="114.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B3</text>
+<text x="505.5" y="126.0" font-size="9" text-anchor="middle" fill="#334155">528×500</text>
+<rect x="616.7" y="0.0" width="62.4" height="281.8" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="647.9" y="138.9" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B16</text>
+<text x="647.9" y="150.9" font-size="9" text-anchor="middle" fill="#334155">641×142</text>
+<rect x="221.1" y="213.2" width="100.2" height="149.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="271.2" y="285.7" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B9</text>
+<text x="271.2" y="297.7" font-size="9" text-anchor="middle" fill="#334155">339×228</text>
+<rect x="680.4" y="0.0" width="36.5" height="239.6" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="698.7" y="117.8" font-size="9" font-weight="700" text-anchor="middle" fill="#0f172a">B26</text>
+<text x="698.7" y="129.8" font-size="9" text-anchor="middle" fill="#334155">545×83</text>
+<rect x="322.6" y="213.2" width="46.6" height="136.7" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="345.9" y="279.5" font-size="9" font-weight="700" text-anchor="middle" fill="#0f172a">B27</text>
+<text x="345.9" y="291.5" font-size="9" text-anchor="middle" fill="#334155">311×106</text>
+</svg></div>
+<p class="cap">8枚：B2・B7・B4・B3・B16・B9・B26・B27</p>
+    <div class="note note-blue">余り板から先に切る。余り3（414×215）は1枚だけで、残りは小さい端材。</div>
+  </div>
+
+  <div class="card">
+    <h2>注意・未決定</h2>
+    <ul>
+      <li>板取り図は部品を90°回して入れている所がある。A材は木目の向きが見た目に出るので、前板の木目をそろえたいときは配置を見直す（言ってもらえれば木目の向きを固定して計算し直す）</li>
+      <li>この表に含まないもの：受け木（30角）、支柱（40角アルミ）、アーム・トップ板（製品）、車体固定L字プレート（鉄5mm）、丁番、引き出しのレール・滑り板、シンク左の仕切り（前方ユニット）</li>
+      <li>テーブル4ブロックは五角形になったので、壁の斜めの面（リアドアから0〜155）には板が無い。リア端の板（A5）の壁側の端と壁の間は約0（現場合わせ）</li>
+      <li>棚天板（A1）の支柱の切欠きは、支柱（X660〜700）より左に6.7・右に7.0広い（モデルでは10-18の支柱変更前のまま）</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
