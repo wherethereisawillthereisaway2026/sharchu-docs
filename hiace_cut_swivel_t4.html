@@ -39,6 +39,17 @@ p.shop { font-size:.8rem; color:#991b1b; margin-top:.3rem; }
 .lb.a { border-color:#b45309; background:#fef3c7; }
 .lb.hw { border-color:#334155; background:#e2e8f0; font-weight:700; }
 @media (max-width:600px) { .lb { font-size:.6rem; padding:.15rem .28rem; } }
+.fig svg rect[data-pid], .asm .lb, tr[data-pid] { cursor:pointer; }
+.fig svg rect.done { fill:#bbf7d0 !important; stroke:#15803d !important; }
+.fig svg text.dn { fill:#15803d; font-weight:900; pointer-events:none; }
+.fig svg text { pointer-events:none; }
+.asm .lb.done { background:#bbf7d0 !important; border-color:#15803d !important; color:#14532d; }
+tr.done td { background:#f0fdf4; color:#15803d; }
+tr.done td b::after { content:" 済"; color:#15803d; }
+#cutbar { position:sticky; top:0; z-index:10; background:#0f172a; color:#fff; border-radius:10px; padding:.55rem 1rem; display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; font-size:.85rem; }
+#cutbar .pg { flex:1; min-width:120px; height:8px; background:#334155; border-radius:4px; overflow:hidden; }
+#cutbar .pg i { display:block; height:100%; background:#4ade80; width:0; }
+#cutbar button { font:inherit; font-size:.75rem; background:transparent; color:#cbd5e1; border:1px solid #475569; border-radius:6px; padding:.2rem .6rem; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -48,6 +59,8 @@ p.shop { font-size:.8rem; color:#991b1b; margin-top:.3rem; }
     <p class="meta">2026-10-18 ／ Blenderモデル（10-18、テーブル4五角形化・支柱40角・天板の開く部分Y185〜 を反映）から拾った12mm板。のこ刃の幅3mmで計算。10-18改訂：ホームセンターで切るのは大判の最初の分割（帯）だけ、残りは家で切る前提に変更。 ／ <a href="hiace_custom.html#sofabed-cut">ソファベッドのカット案（余り板の出どころ）</a></p>
   </div>
 
+  <div id="cutbar"><b>切り出し済み <span id="cutn">0</span> / <span id="cutt">0</span>枚</b><div class="pg"><i id="cutpg"></i></div><button type="button" id="cutreset">全部もどす</button></div>
+  <p class="cap" style="margin-top:-1rem">板取り図・組み立て図の部品か、部品表の行をタップすると「済」になる（もう一度タップで戻る）。記録はこの端末のブラウザだけに残る（ほかのスマホ・PCには出ない）。</p>
   <div class="card">
     <h2>まとめ</h2>
     <div class="tw"><table>
@@ -328,5 +341,45 @@ p.shop { font-size:.8rem; color:#991b1b; margin-top:.3rem; }
     </ul>
   </div>
 </div>
+<script>
+(function(){
+  var KEY='hiace_cut_swivel_t4_done', done={};
+  try{ done=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
+  var ns='http://www.w3.org/2000/svg', ids={};
+  document.querySelectorAll('.fig svg').forEach(function(svg){
+    var kids=[].slice.call(svg.children);
+    kids.forEach(function(r,i){
+      if(r.tagName!=='rect'||r.getAttribute('stroke-width')!=='.8') return;
+      var t=kids[i+1]; if(!t||t.tagName!=='text') return;
+      var pid=t.textContent.trim().split(/\s+/)[0]; r.setAttribute('data-pid',pid); ids[pid]=1;
+      var m=document.createElementNS(ns,'text');
+      m.setAttribute('x',(+r.getAttribute('x'))+(+r.getAttribute('width'))-4);
+      m.setAttribute('y',(+r.getAttribute('y'))+13); m.setAttribute('text-anchor','end'); m.setAttribute('font-size','11');
+      m.setAttribute('class','dn'); m.setAttribute('data-mark',pid); m.textContent='済 ✓'; svg.appendChild(m);
+    });
+  });
+  document.querySelectorAll('.asm .lb').forEach(function(l){ l.setAttribute('data-pid',l.textContent.trim()); });
+  document.querySelectorAll('tr').forEach(function(tr){
+    var b=tr.querySelector('td.num b'); if(b&&/^[AB]\d+$/.test(b.textContent.trim())) tr.setAttribute('data-pid',b.textContent.trim());
+  });
+  function render(){
+    document.querySelectorAll('[data-pid]').forEach(function(el){ el.classList.toggle('done',!!done[el.getAttribute('data-pid')]); });
+    document.querySelectorAll('[data-mark]').forEach(function(el){ el.style.display=done[el.getAttribute('data-mark')]?'':'none'; });
+    var all=Object.keys(ids), n=all.filter(function(k){return done[k];}).length;
+    document.getElementById('cutn').textContent=n; document.getElementById('cutt').textContent=all.length;
+    document.getElementById('cutpg').style.width=(all.length?n/all.length*100:0)+'%';
+  }
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('[data-pid]'); if(!el) return;
+    var pid=el.getAttribute('data-pid'); if(!ids[pid]) return;
+    if(done[pid]) delete done[pid]; else done[pid]=1; save(); render();
+  });
+  document.getElementById('cutreset').addEventListener('click',function(){
+    if(confirm('済マークを全部もどしますか？')){ done={}; save(); render(); }
+  });
+  render();
+})();
+</script>
 </body>
 </html>
