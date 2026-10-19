@@ -59,8 +59,8 @@ tr.done td b::after { content:" 済"; color:#15803d; }
     <p class="meta">2026-10-18 ／ Blenderモデル（10-18、テーブル4五角形化・支柱40角・天板の開く部分Y185〜 を反映）から拾った12mm板。のこ刃の幅3mmで計算。10-18改訂：ホームセンターで切るのは大判の最初の分割（帯）だけ、残りは家で切る前提に変更。 ／ <a href="hiace_custom.html#sofabed-cut">ソファベッドのカット案（余り板の出どころ）</a></p>
   </div>
 
-  <div id="cutbar"><b>切り出し済み <span id="cutn">0</span> / <span id="cutt">0</span>枚</b><div class="pg"><i id="cutpg"></i></div><button type="button" id="cutreset">全部もどす</button></div>
-  <p class="cap" style="margin-top:-1rem">板取り図・組み立て図の部品か、部品表の行をタップすると「済」になる（もう一度タップで戻る）。記録はこの端末のブラウザだけに残る（ほかのスマホ・PCには出ない）。</p>
+  <div id="cutbar"><b>切り出し済み <span id="cutn">0</span> / <span id="cutt">0</span>枚</b><div class="pg"><i id="cutpg"></i></div><span id="cutst" style="font-size:.75rem;color:#cbd5e1">読み込み中…</span><button type="button" id="cutreset">全部もどす</button></div>
+  <p class="cap" style="margin-top:-1rem">板取り図・組み立て図の部品か、部品表の行をタップすると「済」になる（もう一度タップで戻る）。記録は共有されるので、ほかのスマホ・PCで開いても同じ「済」が出る（15秒ごとに更新）。</p>
   <div class="card">
     <h2>まとめ</h2>
     <div class="tw"><table>
@@ -343,9 +343,12 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 </div>
 <script>
 (function(){
-  var KEY='hiace_cut_swivel_t4_done', done={};
-  try{ done=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){}
-  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
+  // 済マークは GAS(hiace-cut-status-gas)に置いて端末間で共有する。localStorage は表示用の控えと未送信分だけ
+  var API='https://script.google.com/macros/s/AKfycbwD6OzlDa8wIczUQ7KReiRj-jK4sgh1mtiupI1evdIcfhG2GuGDsWoSMK6SGq2-SgG3/exec';
+  var PAGE='swivel_t4', KEY='hiace_cut_swivel_t4_done', PEND='hiace_cut_swivel_t4_pending', MERGED='hiace_cut_swivel_t4_merged';
+  function load(k,d){ try{ return JSON.parse(localStorage.getItem(k)||'null')||d; }catch(e){ return d; } }
+  function store(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  var done=load(KEY,{}), pend=load(PEND,{}), busy=false;
   var ns='http://www.w3.org/2000/svg', ids={};
   document.querySelectorAll('.fig svg').forEach(function(svg){
     var kids=[].slice.call(svg.children);
@@ -363,22 +366,53 @@ tr.done td b::after { content:" 済"; color:#15803d; }
   document.querySelectorAll('tr').forEach(function(tr){
     var b=tr.querySelector('td.num b'); if(b&&/^[AB]\d+$/.test(b.textContent.trim())) tr.setAttribute('data-pid',b.textContent.trim());
   });
+  function status(t){ document.getElementById('cutst').textContent=t; }
   function render(){
-    document.querySelectorAll('[data-pid]').forEach(function(el){ el.classList.toggle('done',!!done[el.getAttribute('data-pid')]); });
-    document.querySelectorAll('[data-mark]').forEach(function(el){ el.style.display=done[el.getAttribute('data-mark')]?'':'none'; });
-    var all=Object.keys(ids), n=all.filter(function(k){return done[k];}).length;
+    var view={}; Object.keys(done).forEach(function(k){ view[k]=1; });
+    Object.keys(pend).forEach(function(k){ if(pend[k]) view[k]=1; else delete view[k]; });
+    document.querySelectorAll('[data-pid]').forEach(function(el){ el.classList.toggle('done',!!view[el.getAttribute('data-pid')]); });
+    document.querySelectorAll('[data-mark]').forEach(function(el){ el.style.display=view[el.getAttribute('data-mark')]?'':'none'; });
+    var all=Object.keys(ids), n=all.filter(function(k){return view[k];}).length;
     document.getElementById('cutn').textContent=n; document.getElementById('cutt').textContent=all.length;
     document.getElementById('cutpg').style.width=(all.length?n/all.length*100:0)+'%';
+    return view;
+  }
+  function call(q){
+    return fetch(API+'?k='+PAGE+(q?'&'+q:''),{cache:'no-store'}).then(function(r){ return r.json(); }).then(function(j){
+      if(!j||!j.done) throw new Error(j&&j.error||'bad'); return j.done;
+    });
+  }
+  function sync(){
+    if(busy) return; busy=true;
+    var chain=Promise.resolve(), first=null;
+    if(!load(MERGED,false)){  // この端末で初めて共有版を開いたとき、端末に残っていた済を足し合わせる
+      var mine=Object.keys(done).filter(function(k){ return ids[k]; });
+      chain=chain.then(function(){ return mine.length?call('op=merge&ids='+mine.join(',')):null; }).then(function(){ store(MERGED,true); });
+    }
+    Object.keys(pend).forEach(function(p){
+      var v=pend[p];
+      chain=chain.then(function(){ return call('op=set&p='+p+'&v='+(v?1:0)); }).then(function(){ if(pend[p]===v){ delete pend[p]; store(PEND,pend); } });
+    });
+    chain.then(function(){ return call(''); }).then(function(d){
+      done=d; store(KEY,done); render();
+      var n=Object.keys(pend).length; status(n?'未送信 '+n+'件':'共有中 ✓');
+    }).catch(function(){
+      var n=Object.keys(pend).length; status('通信できません'+(n?'（未送信 '+n+'件）':''));
+    }).then(function(){ busy=false; });
   }
   document.addEventListener('click',function(e){
     var el=e.target.closest('[data-pid]'); if(!el) return;
     var pid=el.getAttribute('data-pid'); if(!ids[pid]) return;
-    if(done[pid]) delete done[pid]; else done[pid]=1; save(); render();
+    var view=render(); pend[pid]=view[pid]?0:1; store(PEND,pend); render(); status('保存中…'); sync();
   });
   document.getElementById('cutreset').addEventListener('click',function(){
-    if(confirm('済マークを全部もどしますか？')){ done={}; save(); render(); }
+    if(!confirm('済マークを全部もどしますか？（ほかの端末からも消えます）')) return;
+    status('保存中…'); pend={}; store(PEND,pend);
+    call('op=reset').then(function(d){ done=d; store(KEY,done); render(); status('共有中 ✓'); }).catch(function(){ status('通信できません'); });
   });
-  render();
+  render(); status('読み込み中…'); sync();
+  setInterval(function(){ if(!document.hidden) sync(); },15000);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) sync(); });
 })();
 </script>
 </body>
