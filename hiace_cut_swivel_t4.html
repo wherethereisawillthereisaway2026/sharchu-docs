@@ -33,6 +33,12 @@ p.shop { font-size:.8rem; color:#991b1b; margin-top:.3rem; }
 .legend { display:flex; flex-wrap:wrap; gap:.4rem 1rem; font-size:.75rem; color:#475569; margin-top:.4rem; }
 .legend i { display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-2px; margin-right:.3rem; border:1px solid #94a3b8; }
 @media (max-width:600px) { body { padding:1rem; } .card { padding:1rem; } }
+.asm { position:relative; margin-top:.4rem; }
+.asm img { width:100%; height:auto; display:block; }
+.lb { position:absolute; transform:translate(-50%,-50%); font-size:.72rem; font-weight:900; line-height:1; padding:.22rem .38rem; border-radius:999px; background:#fff; border:1.5px solid #475569; color:#0f172a; white-space:nowrap; box-shadow:0 1px 2px rgba(0,0,0,.25); }
+.lb.a { border-color:#b45309; background:#fef3c7; }
+.lb.hw { border-color:#334155; background:#e2e8f0; font-weight:700; }
+@media (max-width:600px) { .lb { font-size:.6rem; padding:.15rem .28rem; } }
 </style>
 </head>
 <body>
@@ -55,6 +61,57 @@ p.shop { font-size:.8rem; color:#991b1b; margin-top:.3rem; }
       <li>A材2枚目の余り（約1.1m²）にB材を回しても、B材の新しい板は2枚のまま減らない（計算で確認）。A材の余りは次のブロック（シンク・冷蔵庫）の見える板に回せる</li>
       <li>B材の余り板は、ソファベッドのカット案どおりに切った場合の寸法（約1820×474・669×215・414×215）で計算した。実物の寸法が違えば計算し直す</li>
     </ul>
+  </div>
+
+  <div class="card" id="assembly">
+    <h2>組み立て図（板番号）</h2>
+    <p class="cap" style="margin-top:0">通路から壁の方を見た図。左が車の前（シンク側）、右がリアドア側。左の長いブロックがスイベルテーブル、右の五角形のブロックがテーブル4。番号は下の部品表・板取り図の番号と同じ。</p>
+<h3>1. 外観（前板・天板＝A材）</h3><div class="asm"><img src="images/hiace_cut_swivel_t4_outer.jpg" alt="1. 外観（前板・天板＝A材）" loading="lazy">
+<span class="lb a" style="left:42.9%;top:38.5%">A1</span>
+<span class="lb a" style="left:46.2%;top:20.1%">A2</span>
+<span class="lb a" style="left:72.1%;top:49.0%">A3</span>
+<span class="lb a" style="left:78.2%;top:40.7%">A4</span>
+<span class="lb a" style="left:81.3%;top:71.7%">A5</span>
+<span class="lb a" style="left:68.3%;top:81.3%">A6</span>
+<span class="lb a" style="left:68.3%;top:62.3%">A7</span>
+<span class="lb a" style="left:52.8%;top:74.9%">A8</span>
+<span class="lb a" style="left:52.8%;top:58.8%">A9</span>
+<span class="lb a" style="left:30.6%;top:65.8%">A10</span>
+<span class="lb a" style="left:30.6%;top:49.7%">A11</span>
+</div><p class="cap">組み上がった状態。スイベルテーブルの天板（A2）は、下の棚天板（A1）が見えるように少し浮かせて描いた。</p>
+<h3>2. 中の板（側板・棚板＝B材）</h3><div class="asm"><img src="images/hiace_cut_swivel_t4_inner.jpg" alt="2. 中の板（側板・棚板＝B材）" loading="lazy">
+<span class="lb a" style="left:88.8%;top:65.8%">A5</span>
+<span class="lb b" style="left:69.0%;top:53.3%">B1</span>
+<span class="lb b" style="left:52.6%;top:50.0%">B2</span>
+<span class="lb b" style="left:14.1%;top:34.2%">B3</span>
+<span class="lb b" style="left:80.4%;top:53.7%">B4</span>
+<span class="lb b" style="left:33.7%;top:34.9%">B5</span>
+<span class="lb b" style="left:61.1%;top:45.7%">B6</span>
+<span class="lb hw" style="left:48.4%;top:58.3%">支柱</span>
+</div><p class="cap">前板・天板・引き出しを外した状態。濃い灰色は支柱と床の金具（板ではない）。</p>
+<h3>3. 引き出しの箱（B材）</h3><div class="asm"><img src="images/hiace_cut_swivel_t4_boxes.jpg" alt="3. 引き出しの箱（B材）" loading="lazy">
+<span class="lb b" style="left:85.7%;top:61.0%">B12</span>
+<span class="lb b" style="left:73.5%;top:74.7%">B7</span>
+<span class="lb b" style="left:82.1%;top:71.8%">B9</span>
+<span class="lb b" style="left:62.8%;top:60.4%">B8</span>
+<span class="lb b" style="left:66.2%;top:74.7%">B10</span>
+<span class="lb b" style="left:78.1%;top:53.8%">B11</span>
+<span class="lb b" style="left:38.4%;top:29.6%">B13</span>
+<span class="lb b" style="left:57.9%;top:31.2%">B14</span>
+<span class="lb b" style="left:18.9%;top:15.2%">B15</span>
+<span class="lb b" style="left:45.7%;top:13.4%">B17</span>
+<span class="lb b" style="left:31.1%;top:33.1%">B16</span>
+<span class="lb b" style="left:58.0%;top:77.3%">B18</span>
+<span class="lb b" style="left:18.4%;top:61.1%">B19</span>
+<span class="lb b" style="left:34.9%;top:86.5%">B20</span>
+<span class="lb b" style="left:26.5%;top:69.8%">B21</span>
+<span class="lb b" style="left:30.9%;top:78.6%">B22</span>
+<span class="lb b" style="left:42.4%;top:73.1%">B23</span>
+<span class="lb b" style="left:29.6%;top:61.7%">B24</span>
+<span class="lb b" style="left:45.3%;top:59.0%">B25</span>
+<span class="lb b" style="left:48.6%;top:50.6%">B26</span>
+<span class="lb b" style="left:29.2%;top:52.1%">B27</span>
+</div><p class="cap">箱ごとに板を離して描いた。左上＝B2上段の箱、左下＝B2下段の箱（タイヤハウスの段に合わせた形）、右＝テーブル4の箱。</p>
   </div>
 
   <div class="card">
