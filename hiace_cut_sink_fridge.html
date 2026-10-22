@@ -55,6 +55,7 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 
 <body>
 <div class="page">
+<div id="cutbar"><b>切り出し済み <span id="cutn">0</span> / <span id="cutt">0</span>枚</b><div class="pg"><i id="cutpg"></i></div><span id="cutst" style="font-size:.75rem;color:#cbd5e1">読み込み中…</span><button type="button" id="cutreset">全部もどす</button></div>
 <div>
   <h1>シンク・冷蔵庫ブロック 部品と組み立て図</h1>
   <p class="meta">2026-10-23 ／ Blenderモデル（10-23、間仕切り板追加。シンクの上段前板・上段の箱・下段の箱は「いったん不要」で除外）から拾った寸法。板はすべて同じ12mm合板（A材・B材の区別なし）。部品番号は C-1 から。 ／ <a href="hiace_custom.html">相談記録</a> ／ <a href="hiace_cut_swivel_t4.html">スイベル・テーブル4 カット案</a></p>
@@ -202,36 +203,36 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 </table></div>
 </div>
 <div class="card" id="cut"><h2>板取り（910×1820、12mm合板。スイベルブロックと同じ材）</h2>
-<p class="cap">各部品の<b style="color:#2563eb">青い線を引いた辺の長さ</b>を、その辺の横に数字で書いてある（上の辺と右の辺）。「前後」はリアドア↔運転席の方向、「奥行」は壁↔通路の方向、「高さ」は床からの上下。のこ刃の幅3mmで計算。ホームセンターで切るのは大判を分ける直線カット（赤い点線、番号の順）だけで、部品の切り出しは家で（スイベルブロックと同じやり方）。部品番号は上の表と同じ。</p>
+<p class="cap"><b>切った板は、図の板か部品表の行を押すと「済」になる</b>（もう一度押すと戻る。どの端末でも同じ表示）。各部品の<b style="color:#2563eb">青い線を引いた辺の長さ</b>を、その辺の横に数字で書いてある（上の辺と右の辺）。「前後」はリアドア↔運転席の方向、「奥行」は壁↔通路の方向、「高さ」は床からの上下。のこ刃の幅3mmで計算。ホームセンターで切るのは大判を分ける直線カット（赤い点線、番号の順）だけで、部品の切り出しは家で（スイベルブロックと同じやり方）。部品番号は上の表と同じ。</p>
 <h3>新しい板1（910×1820） — 使う割合 約72%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 404.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新しい板1（910×1820）">
 <rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
 <rect x="0.0" y="0.0" width="318.2" height="182.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="159.1" y="89.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-9</text>
-<path d="M1.3,1.3 H316.9 V180.7" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M1.3,1.3 H316.9 V180.7" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="159.1" y="103.0" font-size="9" text-anchor="middle" fill="#334155">ふた（跳ね上げ天板）</text>
 <text x="159.1" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">724</text>
 <text x="312.2" y="95.0" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">414</text>
 <rect x="0.0" y="183.3" width="310.3" height="175.8" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="155.2" y="269.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-7</text>
-<path d="M1.3,184.6 H309.0 V357.8" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M1.3,184.6 H309.0 V357.8" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="155.2" y="283.2" font-size="9" text-anchor="middle" fill="#334155">後板（壁側）</text>
 <text x="155.2" y="198.3" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">706</text>
 <text x="304.3" y="275.2" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">400</text>
 <rect x="319.6" y="0.0" width="309.5" height="261.5" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="474.3" y="128.8" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-10</text>
-<path d="M320.9,1.3 H627.7 V260.2" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M320.9,1.3 H627.7 V260.2" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="474.3" y="142.8" font-size="9" text-anchor="middle" fill="#334155">冷蔵庫の前板</text>
 <text x="474.3" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">704</text>
 <text x="623.0" y="134.8" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">595</text>
 <rect x="631.2" y="0.0" width="113.4" height="274.3" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="687.9" y="135.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-5</text>
-<path d="M632.5,1.3 H743.3 V273.0" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M632.5,1.3 H743.3 V273.0" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="687.9" y="149.1" font-size="9" text-anchor="middle" fill="#334155">下段 前板</text>
 <text x="687.9" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">258</text>
 <text x="738.6" y="141.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">624</text>
 <rect x="745.9" y="0.0" width="17.6" height="318.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="754.7" y="12.0" font-size="9" font-weight="700" text-anchor="middle" fill="#0f172a">C-8</text>
-<path d="M747.2,1.3 H762.2 V316.9" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M747.2,1.3 H762.2 V316.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="754.7" y="24.0" font-size="10" font-weight="900" text-anchor="middle" fill="#2563eb">40</text>
 <text x="772.5" y="159.1" font-size="10" font-weight="900" text-anchor="middle" fill="#2563eb" transform="rotate(-90 772.5 159.1)">724</text>
 <line x1="318.9" y1="0" x2="318.9" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
@@ -245,25 +246,25 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
 <rect x="0.0" y="0.0" width="298.9" height="171.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="149.5" y="83.7" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-11</text>
-<path d="M1.3,1.3 H297.6 V170.1" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M1.3,1.3 H297.6 V170.1" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="149.5" y="97.7" font-size="9" text-anchor="middle" fill="#334155">冷蔵庫の底板</text>
 <text x="149.5" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">680</text>
 <text x="292.9" y="89.7" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">390</text>
 <rect x="0.0" y="172.7" width="271.2" height="219.8" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="135.6" y="280.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-1</text>
-<path d="M1.3,174.0 H269.9 V391.2" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M1.3,174.0 H269.9 V391.2" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="135.6" y="294.6" font-size="9" text-anchor="middle" fill="#334155">仕切り板（リアドア側）</text>
 <text x="135.6" y="187.7" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">617</text>
 <text x="265.2" y="286.6" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">500</text>
 <rect x="300.2" y="0.0" width="219.8" height="271.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="410.1" y="133.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-2</text>
-<path d="M301.5,1.3 H518.7 V269.9" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M301.5,1.3 H518.7 V269.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="410.1" y="147.6" font-size="9" text-anchor="middle" fill="#334155">仕切り板（冷蔵庫側）</text>
 <text x="410.1" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">500</text>
 <text x="514.0" y="139.6" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">617</text>
 <rect x="521.3" y="0.0" width="214.5" height="276.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="628.6" y="136.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-4</text>
-<path d="M522.6,1.3 H734.5 V274.7" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M522.6,1.3 H734.5 V274.7" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="628.6" y="150.0" font-size="9" text-anchor="middle" fill="#334155">間仕切り板（上下段の間）</text>
 <text x="628.6" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">488</text>
 <text x="729.8" y="142.0" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">628</text>
@@ -274,26 +275,28 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 </svg></div>
 <p class="shop"><b>店で切る：2回</b>（赤い点線、番号の順に）<br>① 板を910の短い辺と平行に、端から680mmで切る<br>② 残りを同じ向きに、①の切り口から500mmで切る</p>
 <p class="cap">家で切る：680×910 の帯から C-11（奥行390）・C-1（奥行500、高さは617に詰める） ／ 500×910 の帯から C-2（高さ617） ／ 残り637×910 から C-4（奥行488×前後628）</p>
-<h3>スイベルの「A材 新しい板2」の余り（967×910） — 使う割合 約69%</h3><div class="fig"><svg style="max-width:429px" viewBox="-2 -2 429.1 404.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="スイベルの「A材 新しい板2」の余り（967×910）">
-<rect x="0" y="0" width="425.1" height="400.0" fill="#f8fafc" stroke="#64748b"/>
+<h3>新しい板3（910×1820） — 使う割合 約36%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 404.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新しい板3（910×1820）">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
 <rect x="0.0" y="0.0" width="219.8" height="286.6" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="109.9" y="141.3" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-3</text>
-<path d="M1.3,1.3 H218.5 V285.3" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M1.3,1.3 H218.5 V285.3" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="109.9" y="155.3" font-size="9" text-anchor="middle" fill="#334155">天板</text>
 <text x="109.9" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">500</text>
 <text x="213.8" y="147.3" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">652</text>
 <rect x="221.1" y="0.0" width="197.8" height="271.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="320.0" y="133.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-6</text>
-<path d="M222.4,1.3 H417.6 V269.9" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<path d="M222.4,1.3 H417.6 V269.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
 <text x="320.0" y="147.6" font-size="9" text-anchor="middle" fill="#334155">前端の板（運転席側）</text>
 <text x="320.0" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">450</text>
 <text x="412.9" y="139.6" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">617</text>
 <line x1="220.4" y1="0" x2="220.4" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
 <text x="223.4" y="12" font-size="11" font-weight="900" fill="#dc2626">店①</text>
+<line x1="419.6" y1="0" x2="419.6" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<text x="422.6" y="12" font-size="11" font-weight="900" fill="#dc2626">店②</text>
 </svg></div>
-<p class="shop"><b>店で切る：1回</b>（赤い点線、番号の順に）<br>① 余りを910の辺と平行に、端から500mmで切る</p>
-<p class="cap">家で切る：500×910 の帯から C-3（奥行500×前後652、シンク槽の穴も家で） ／ 464×910 の帯から C-6（奥行450×高さ617）。<b>余りが残っていないときは新しい板をもう1枚</b>（使う割合 約34%）</p>
-<div class="note note-blue">新しい板2枚＋スイベルの「A材 新しい板2」の余り（967×910）で11枚すべて取れる。余りが使えない場合は新しい板3枚。</div></div>
+<p class="shop"><b>店で切る：2回</b>（赤い点線、番号の順に）<br>① 板を910の短い辺と平行に、端から500mmで切る<br>② 残りを同じ向きに、①の切り口から450mmで切る</p>
+<p class="cap">家で切る：500×910 の帯から C-3（奥行500×前後652、シンク槽の穴も家で） ／ 450×910 の帯から C-6（奥行450×高さ617）。残りの864×910は余り（ほかに使える）</p>
+<div class="note note-blue">新しい板3枚（910×1820）で11枚すべて取れる（余り板は使わない前提）。3枚目は864×910が残る。</div></div>
 <div class="card" id="other"><h2>合板以外の材料・金物</h2><div class="tw"><table><tr><th>材料</th><th>用途</th><th>数</th><th>長さ（mm）</th><th>取り付け</th><th>Blender</th></tr>
 <tr><td>角材 20×30</td><td>シンク天板の裏の補強（通路側・壁側）</td><td class="num">2</td><td class="num">628</td><td>仕切り板2枚の間に通し、天板裏にボンド＋ビス</td><td class="bl">Table1_Fixed_補強_前／奥</td></tr>
 <tr><td>角材 20×30</td><td>シンク天板の裏の補強（穴の両端）</td><td class="num">2</td><td class="num">220</td><td>前後の角材の間</td><td class="bl">Table1_Fixed_補強_左／右</td></tr>
@@ -306,5 +309,82 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <tr><td>丁番</td><td>ふたの固定部とふた</td><td class="num">2</td><td class="num">—</td><td>2185〜2225・2669〜2709 付近</td><td class="bl">Table1_丁番0／1</td></tr>
 </table></div></div>
 </div>
+<script>
+(function(){
+  // 済マークは GAS(hiace-cut-status-gas)に置いて端末間で共有する。localStorage は表示用の控えと未送信分だけ
+  var API='https://script.google.com/macros/s/AKfycbwD6OzlDa8wIczUQ7KReiRj-jK4sgh1mtiupI1evdIcfhG2GuGDsWoSMK6SGq2-SgG3/exec';
+  var PAGE='sink_fridge', KEY='hiace_cut_sink_fridge_done', PEND='hiace_cut_sink_fridge_pending', MERGED='hiace_cut_sink_fridge_merged';
+  // 部品番号 C-1 は共有先(GAS)では C1 として保存する（GASの番号の形が英字＋数字のため）
+  function pidOf(s){ var m=/^C-(\d+)$/.exec(String(s).trim().split(/\s+/)[0]); return m?'C'+m[1]:null; }
+  function load(k,d){ try{ return JSON.parse(localStorage.getItem(k)||'null')||d; }catch(e){ return d; } }
+  function store(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  var done=load(KEY,{}), pend=load(PEND,{}), busy=false;
+  var ns='http://www.w3.org/2000/svg', ids={};
+  document.querySelectorAll('.fig svg').forEach(function(svg){
+    var kids=[].slice.call(svg.children);
+    kids.forEach(function(r,i){
+      if((r.tagName!=='rect'&&r.tagName!=='path')||r.getAttribute('stroke-width')!=='.8') return;
+      var t=kids[i+1]; if(!t||t.tagName!=='text') return;
+      var pid=pidOf(t.textContent); if(!pid) return; r.setAttribute('data-pid',pid); ids[pid]=1;
+      var m=document.createElementNS(ns,'text');
+      var bx=r.tagName==='rect'?{x:+r.getAttribute('x'),y:+r.getAttribute('y'),width:+r.getAttribute('width')}:r.getBBox();
+      m.setAttribute('x',(r.getAttribute('data-markx')?+r.getAttribute('data-markx'):bx.x+bx.width)-4);
+      m.setAttribute('y',bx.y+13); m.setAttribute('text-anchor','end'); m.setAttribute('font-size','11');
+      m.setAttribute('class','dn'); m.setAttribute('data-mark',pid); m.textContent='済 ✓'; svg.appendChild(m);
+    });
+  });
+  document.querySelectorAll('tr').forEach(function(tr){
+    var b=tr.querySelector('td.num b'); var p=b&&pidOf(b.textContent); if(p) tr.setAttribute('data-pid',p);
+  });
+  function status(t){ document.getElementById('cutst').textContent=t; }
+  function render(){
+    var view={}; Object.keys(done).forEach(function(k){ view[k]=1; });
+    Object.keys(pend).forEach(function(k){ if(pend[k]) view[k]=1; else delete view[k]; });
+    document.querySelectorAll('[data-pid]').forEach(function(el){ el.classList.toggle('done',!!view[el.getAttribute('data-pid')]); });
+    document.querySelectorAll('[data-mark]').forEach(function(el){ el.style.display=view[el.getAttribute('data-mark')]?'':'none'; });
+    var all=Object.keys(ids), n=all.filter(function(k){return view[k];}).length;
+    document.getElementById('cutn').textContent=n; document.getElementById('cutt').textContent=all.length;
+    document.getElementById('cutpg').style.width=(all.length?n/all.length*100:0)+'%';
+    return view;
+  }
+  function call(q){
+    return fetch(API+'?k='+PAGE+(q?'&'+q:''),{cache:'no-store'}).then(function(r){ return r.json(); }).then(function(j){
+      if(!j||!j.done) throw new Error(j&&j.error||'bad'); return j.done;
+    });
+  }
+  function sync(){
+    if(busy) return; busy=true;
+    var chain=Promise.resolve(), first=null;
+    if(!load(MERGED,false)){  // この端末で初めて共有版を開いたとき、端末に残っていた済を足し合わせる
+      var mine=Object.keys(done).filter(function(k){ return ids[k]; });
+      chain=chain.then(function(){ return mine.length?call('op=merge&ids='+mine.join(',')):null; }).then(function(){ store(MERGED,true); });
+    }
+    Object.keys(pend).forEach(function(p){
+      var v=pend[p];
+      chain=chain.then(function(){ return call('op=set&p='+p+'&v='+(v?1:0)); }).then(function(){ if(pend[p]===v){ delete pend[p]; store(PEND,pend); } });
+    });
+    chain.then(function(){ return call(''); }).then(function(d){
+      done=d; store(KEY,done); render();
+      var n=Object.keys(pend).length; status(n?'未送信 '+n+'件':'共有中 ✓');
+    }).catch(function(){
+      var n=Object.keys(pend).length; status('通信できません'+(n?'（未送信 '+n+'件）':''));
+    }).then(function(){ busy=false; });
+  }
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('[data-pid]'); if(!el) return;
+    var pid=el.getAttribute('data-pid'); if(!ids[pid]) return;
+    var view=render(); pend[pid]=view[pid]?0:1; store(PEND,pend); render(); status('保存中…'); sync();
+  });
+  document.getElementById('cutreset').addEventListener('click',function(){
+    if(!confirm('済マークを全部もどしますか？（ほかの端末からも消えます）')) return;
+    status('保存中…'); pend={}; store(PEND,pend);
+    call('op=reset').then(function(d){ done=d; store(KEY,done); render(); status('共有中 ✓'); }).catch(function(){ status('通信できません'); });
+  });
+  render(); status('読み込み中…'); sync();
+  setInterval(function(){ if(!document.hidden) sync(); },15000);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) sync(); });
+})();
+</script>
+
 </body>
 </html>
