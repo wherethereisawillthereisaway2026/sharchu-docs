@@ -820,12 +820,13 @@ tr.done td b::after { content:" 済"; color:#15803d; }
   document.querySelectorAll('.fig svg').forEach(function(svg){
     var kids=[].slice.call(svg.children);
     kids.forEach(function(r,i){
-      if(r.tagName!=='rect'||r.getAttribute('stroke-width')!=='.8') return;
-      var t=kids[i+1]; if(!t||t.tagName!=='text') return;
+      if((r.tagName!=='rect'&&r.tagName!=='path')||r.getAttribute('stroke-width')!=='.8') return;
+      var t=kids.slice(i+1).find(function(k){return k.tagName==='text';}); if(!t) return;
       var pid=t.textContent.trim().split(/\s+/)[0]; r.setAttribute('data-pid',pid); ids[pid]=1;
       var m=document.createElementNS(ns,'text');
-      m.setAttribute('x',(+r.getAttribute('x'))+(+r.getAttribute('width'))-4);
-      m.setAttribute('y',(+r.getAttribute('y'))+13); m.setAttribute('text-anchor','end'); m.setAttribute('font-size','11');
+      var bx=r.tagName==='rect'?{x:+r.getAttribute('x'),y:+r.getAttribute('y'),width:+r.getAttribute('width')}:r.getBBox();
+      m.setAttribute('x',bx.x+bx.width-4);
+      m.setAttribute('y',bx.y+13); m.setAttribute('text-anchor','end'); m.setAttribute('font-size','11');
       m.setAttribute('class','dn'); m.setAttribute('data-mark',pid); m.textContent='済 ✓'; svg.appendChild(m);
     });
   });
