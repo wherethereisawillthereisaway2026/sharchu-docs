@@ -821,7 +821,7 @@ tr.done td b::after { content:" 済"; color:#15803d; }
     var kids=[].slice.call(svg.children);
     kids.forEach(function(r,i){
       if((r.tagName!=='rect'&&r.tagName!=='path')||r.getAttribute('stroke-width')!=='.8') return;
-      var t=kids.slice(i+1).find(function(k){return k.tagName==='text';}); if(!t) return;
+      var t=r.tagName==='rect'?kids[i+1]:kids.slice(i+1).find(function(k){return k.tagName==='text'&&/^[AB]\d/.test(k.textContent.trim());}); if(!t||t.tagName!=='text') return;
       var pid=t.textContent.trim().split(/\s+/)[0]; r.setAttribute('data-pid',pid); ids[pid]=1;
       var m=document.createElementNS(ns,'text');
       var bx=r.tagName==='rect'?{x:+r.getAttribute('x'),y:+r.getAttribute('y'),width:+r.getAttribute('width')}:r.getBBox();
