@@ -40,7 +40,7 @@ p.shop { font-size:.8rem; color:#991b1b; margin-top:.3rem; }
 .lb.hw { border-color:#334155; background:#e2e8f0; font-weight:700; }
 @media (max-width:600px) { .lb { font-size:.6rem; padding:.15rem .28rem; } }
 .fig svg rect[data-pid], .asm .lb, tr[data-pid] { cursor:pointer; }
-.fig svg rect.done { fill:#bbf7d0 !important; stroke:#15803d !important; }
+.fig svg rect.done, .fig svg path.done { fill:#bbf7d0 !important; stroke:#15803d !important; }
 .fig svg text.dn { fill:#15803d; font-weight:900; pointer-events:none; }
 .fig svg text { pointer-events:none; }
 .asm .lb.done { background:#bbf7d0 !important; border-color:#15803d !important; color:#14532d; }
@@ -456,10 +456,11 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <rect x="101.5" y="314.7" width="200.4" height="62.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="201.8" y="343.9" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B15</text>
 <text x="201.8" y="355.9" font-size="9" text-anchor="middle" fill="#334155">456×142</text>
-<path d="M305.1,0.0 H417.6 V100.2 H505.5 V142.0 H305.1 Z" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<path d="M305.1,0.0 H417.6 V100.2 H505.5 V142.0 H305.1 Z" data-markx="417.6" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <rect x="417.6" y="0.0" width="87.9" height="100.2" fill="none" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
-<text x="461.5" y="48.1" font-size="9" font-weight="700" text-anchor="middle" fill="#dc2626">切り欠き</text>
-<text x="461.5" y="59.1" font-size="9" text-anchor="middle" fill="#dc2626">200×228</text>
+<text x="461.5" y="96.2" font-size="10" font-weight="700" text-anchor="middle" fill="#dc2626">200</text>
+<text x="421.6" y="50.1" font-size="10" font-weight="700" text-anchor="start" fill="#dc2626">228</text>
+<text x="461.5" y="40" font-size="9" text-anchor="middle" fill="#dc2626">切り欠き</text>
 <text x="361.3" y="69.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">B18</text>
 <text x="361.3" y="81.0" font-size="9" text-anchor="middle" fill="#334155">456×323</text>
 <rect x="305.1" y="143.3" width="151.2" height="100.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
@@ -489,6 +490,26 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 </svg></div>
 <p class="shop"><b>店で切る：3回</b>（赤い点線、番号の順に）<br>① 板を910の短い辺と平行に、端から691mmで切る<br>② 910×691の板をB5の下で1820の長い辺と平行に切る（端から482mm）<br>③ 1126×910の板を910の短い辺と平行に、端から456mmで切る</p>
 <p class="cap">家で切る：691×482：B5 ／ 910×456：B18（角を200×228切り欠く。456の辺で200、323の辺で228）・B10・B24・B27 ／ 910×667：B17・B26・B23 ／ 691×425：B9・B8・B15</p>
+<div class="fig" id="b18-notch" style="margin-top:.6rem"><svg viewBox="0 0 449 316" style="max-width:449px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="B18の切り欠き寸法">
+<defs><marker id="b18a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<path d="M60.0,40.0 H239.2 V199.6 H379.2 V266.1 H60.0 Z" fill="#e2e8f0" stroke="#475569" stroke-width="1.2"/>
+<rect x="239.2" y="40.0" width="140.0" height="159.6" fill="#fff" stroke="#dc2626" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="309.2" y="123.8" font-size="12" font-weight="700" text-anchor="middle" fill="#dc2626">切り取る</text>
+<text x="149.6" y="157.1" font-size="14" font-weight="700" text-anchor="middle" fill="#0f172a">B18</text>
+<g style="color:#475569"><line x1="60.0" y1="284.1" x2="379.2" y2="284.1" stroke="#475569" stroke-width="1" marker-start="url(#b18a)" marker-end="url(#b18a)"/></g>
+<text x="219.6" y="300.1" font-size="11" font-weight="400" text-anchor="middle" fill="#475569">456（全体）</text>
+<g style="color:#475569"><line x1="42.0" y1="40.0" x2="42.0" y2="266.1" stroke="#475569" stroke-width="1" marker-start="url(#b18a)" marker-end="url(#b18a)"/></g>
+<text x="36.0" y="153.1" font-size="11" font-weight="400" text-anchor="middle" fill="#475569" transform="rotate(-90 36.0 153.1)">323（全体）</text>
+<g style="color:#dc2626"><line x1="239.2" y1="26.0" x2="379.2" y2="26.0" stroke="#dc2626" stroke-width="1" marker-start="url(#b18a)" marker-end="url(#b18a)"/></g>
+<text x="309.2" y="20.0" font-size="13" font-weight="700" text-anchor="middle" fill="#dc2626">200</text>
+<g style="color:#dc2626"><line x1="395.2" y1="40.0" x2="395.2" y2="199.6" stroke="#dc2626" stroke-width="1" marker-start="url(#b18a)" marker-end="url(#b18a)"/></g>
+<text x="411.2" y="119.8" font-size="13" font-weight="700" text-anchor="middle" fill="#dc2626" transform="rotate(-90 411.2 119.8)">228</text>
+<g style="color:#64748b"><line x1="395.2" y1="199.6" x2="395.2" y2="266.1" stroke="#64748b" stroke-width="1" marker-start="url(#b18a)" marker-end="url(#b18a)"/></g>
+<text x="411.2" y="232.8" font-size="11" font-weight="400" text-anchor="middle" fill="#64748b" transform="rotate(-90 411.2 232.8)">95</text>
+<g style="color:#64748b"><line x1="60.0" y1="26.0" x2="239.2" y2="26.0" stroke="#64748b" stroke-width="1" marker-start="url(#b18a)" marker-end="url(#b18a)"/></g>
+<text x="149.6" y="20.0" font-size="11" font-weight="400" text-anchor="middle" fill="#64748b">256</text>
+</svg></div>
+<p class="cap"><b>B18の切り欠き</b>：456の辺から<b>200</b>、323の辺から<b>228</b>を切り取る（残りは256と95）。取り付けると、切り欠きは<b>奥（壁側）の下</b>＝タイヤハウスの段に来る。</p>
     <div class="note note-blue">余り板から先に切る。余り3（414×215）は1枚だけで、残りは小さい端材。</div>
   </div>
 
@@ -825,7 +846,7 @@ tr.done td b::after { content:" 済"; color:#15803d; }
       var pid=t.textContent.trim().split(/\s+/)[0]; r.setAttribute('data-pid',pid); ids[pid]=1;
       var m=document.createElementNS(ns,'text');
       var bx=r.tagName==='rect'?{x:+r.getAttribute('x'),y:+r.getAttribute('y'),width:+r.getAttribute('width')}:r.getBBox();
-      m.setAttribute('x',bx.x+bx.width-4);
+      m.setAttribute('x',(r.getAttribute('data-markx')?+r.getAttribute('data-markx'):bx.x+bx.width)-4);
       m.setAttribute('y',bx.y+13); m.setAttribute('text-anchor','end'); m.setAttribute('font-size','11');
       m.setAttribute('class','dn'); m.setAttribute('data-mark',pid); m.textContent='済 ✓'; svg.appendChild(m);
     });
