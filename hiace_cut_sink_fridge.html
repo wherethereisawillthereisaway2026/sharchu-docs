@@ -58,7 +58,17 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <div id="cutbar"><b>切り出し済み <span id="cutn">0</span> / <span id="cutt">0</span>枚</b><div class="pg"><i id="cutpg"></i></div><span id="cutst" style="font-size:.75rem;color:#cbd5e1">読み込み中…</span><button type="button" id="cutreset">全部もどす</button></div>
 <div>
   <h1>シンク・冷蔵庫ブロック 部品と組み立て図</h1>
-  <p class="meta">2026-10-23 ／ Blenderモデル（10-23、冷蔵庫をキャスター台車＋サイドのスライドレール450に変更・ブロックの奥行500・間仕切り板追加。シンクの上段前板・上段の箱・下段の箱は「いったん不要」で除外）から拾った寸法。板はすべて同じ12mm合板（A材・B材の区別なし）。部品番号は C-1 から。 ／ <a href="hiace_custom.html">相談記録</a> ／ <a href="hiace_cut_swivel_t4.html">スイベル・テーブル4 カット案</a></p>
+  <p class="meta">2026-10-25 ／ Blenderモデル（10-25、シンク設備を撤去・上段にレールWS3845-450の引き出しを追加・下段前板を床まで。10-23の冷蔵庫台車・ブロックの奥行500はそのまま）から拾った寸法。板はすべて同じ12mm合板（A材・B材の区別なし）。部品番号は C-1 から。 ／ <a href="hiace_custom.html">相談記録</a> ／ <a href="hiace_cut_swivel_t4.html">スイベル・テーブル4 カット案</a></p>
+</div>
+<div class="card" id="change1025">
+  <h2>10-25の変更</h2>
+  <ul>
+    <li><b>シンク設備をなくした</b>：シンク槽・ウォーターポンプ・水タンク2個を撤去。天板（C-3）は穴のない長方形になり、天板裏の補強の角材4本も不要。</li>
+    <li><b>上段に引き出し</b>：スライドレール WS3845-450（ローラー、底付け）を左右に。前板（C-14）が箱の前面を兼ね、箱は前板の裏から奥へ488（ブロックの奥行500＝前板12＋488、後ろのすき間は0。実際の壁を測ってから側板の長さを決める）。箱の高さ300、床から285〜585。引き出せるのは369。部品は C-14〜C-18 を追加（これまでの番号はそのまま）。</li>
+    <li><b>間仕切り板（C-4）を3上げた</b>：床から256〜268。上の面が下段前板（C-5）の上端と同じ高さ。L字ブラケット4個も一緒に3上げる。板の寸法は同じ。</li>
+    <li><b>下段前板（C-5）を床まで下ろした</b>：床から0〜268（以前は10〜268で床から浮いていた）。ベッドの受け木を付けるので、重さを床で受ける。固定の板になったので幅も左右の仕切り板の間いっぱいの628にした（以前は624）。<b>C-5は628×268</b>。</li>
+    <li>点検：閉じた状態と引き出しを369出した状態で、ほかの部品とのめり込みなし。</li>
+  </ul>
 </div>
 <div class="card" id="review">
   <h2>切る前の見直し（10-23）</h2>
@@ -66,7 +76,7 @@ tr.done td b::after { content:" 済"; color:#15803d; }
   <h3>点検で直したこと（モデル反映済み）</h3>
   <ul>
     <li><b>間仕切り板（C-4）を追加</b>：上段の引き出し（水タンク2個・満水で約20kg）を下から支えるものがなく、宙に浮いていた。上下段の間に12mmの板を入れ、上段はその上を滑らせる。L字ブラケット30×30で留めるため、<b>間仕切り板の下を35あけた</b>（下段の箱の上端240→218、ブラケット下端223）。</li>
-    <li>シンクの上段前板・上段の箱・下段の箱は「いったん不要」（10-23）としてこの表から外した（Blenderでは非表示）。上段は間仕切り板の上に物を置く形。</li>
+    <li>シンクの上段前板・上段の箱・下段の箱は「いったん不要」（10-23）としてこの表から外した。上段は10-25に引き出し（C-14〜C-18）として作り直した。下段の箱はいまも不要。</li>
   </ul>
   <h3>点検の結果</h3>
   <ul>
@@ -80,50 +90,68 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 </div>
 <div class="card" id="figs"><h2>組み立て図（部品番号）</h2>
 <div class="legend"><span><i style="background:#e2e8f0"></i>12mm合板（C番号）</span><span><i style="background:#fde68a"></i>角材</span><span><i style="background:#fcd34d"></i>すのこ材</span><span><i style="background:#94a3b8"></i>金物・キャスター</span><span><i style="background:#fff;border-style:dashed"></i>製品（参考）</span></div>
-<h3>シンクブロック 正面（下段の前板を外した状態、通路から壁を見る）</h3><div class="fig"><svg viewBox="0 0 496 492" style="max-width:496px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シンク正面">
+<h3>シンクブロック 正面（前板2枚を外した状態、通路から壁を見る）</h3><div class="fig"><svg viewBox="0 0 496 492" style="max-width:496px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シンク正面">
 <line x1="0" y1="436.0" x2="496" y2="436.0" stroke="#64748b" stroke-width="1"/>
-<rect x="91.9" y="46.0" width="148.8" height="40.3" fill="none" fill-opacity="1" stroke="#64748b" stroke-width="1" stroke-dasharray="5 3"><title>シンク槽（参考）</title></rect>
 <rect x="442.8" y="53.4" width="7.4" height="382.5" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-1 仕切り板（リアドア側） 高さ 617 × 奥行 500</title></rect>
 <rect x="46.0" y="53.4" width="7.4" height="382.5" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-2 仕切り板（冷蔵庫側） 高さ 617 × 奥行 500</title></rect>
 <rect x="46.0" y="46.0" width="404.2" height="7.4" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-3 天板 前後 652 × 奥行 500</title></rect>
-<rect x="53.4" y="271.7" width="389.4" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-4 間仕切り板（上下段の間） 前後 628 × 奥行 488</title></rect>
-<rect x="53.4" y="53.4" width="389.4" height="18.6" fill="#fde68a" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>補強 角材20×30（通路側）</title></rect>
-<rect x="441.6" y="279.1" width="1.2" height="18.6" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>L字ブラケット</title></rect>
-<rect x="53.4" y="279.1" width="18.6" height="1.2" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>L字ブラケット</title></rect>
-<text x="166.3" y="69.2" font-size="10" text-anchor="middle" fill="#475569">シンク槽</text>
+<rect x="68.6" y="73.3" width="359.0" height="186.0" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-17 上段 引き出しの後ろの板 前後 579 × 高さ 300</title></rect>
+<rect x="427.6" y="73.3" width="7.4" height="186.0" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-15 上段 引き出しの側板（リアドア側） 奥行 488 × 高さ 300</title></rect>
+<rect x="61.2" y="73.3" width="7.4" height="186.0" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-16 上段 引き出しの側板（冷蔵庫側） 奥行 488 × 高さ 300</title></rect>
+<rect x="53.4" y="269.8" width="389.4" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-4 間仕切り板（上下段の間） 前後 628 × 奥行 488</title></rect>
+<rect x="68.6" y="251.8" width="359.0" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-18 上段 引き出しの底板 前後 579 × 奥行 476</title></rect>
+<rect x="435.1" y="255.6" width="7.8" height="12.4" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>レール（キャビネット側）</title></rect>
+<rect x="53.4" y="255.6" width="7.8" height="12.4" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>レール（キャビネット側）</title></rect>
+<rect x="441.6" y="277.3" width="1.2" height="18.6" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>L字ブラケット</title></rect>
+<rect x="53.4" y="277.3" width="1.2" height="18.6" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>L字ブラケット</title></rect>
 <rect x="433.7" y="237.2" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
 <text x="446.5" y="248.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-1</text>
 <rect x="36.9" y="237.2" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
 <text x="49.7" y="248.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-2</text>
 <rect x="235.3" y="42.2" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
 <text x="248.1" y="53.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-3</text>
-<rect x="235.3" y="267.9" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
-<text x="248.1" y="278.9" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-4</text>
+<rect x="232.2" y="118.8" width="31.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="248.1" y="129.8" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-17</text>
+<rect x="415.4" y="158.8" width="31.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="431.3" y="169.8" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-15</text>
+<rect x="49.0" y="158.8" width="31.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="64.9" y="169.8" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-16</text>
+<rect x="235.3" y="266.0" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="248.1" y="277.0" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-4</text>
+<rect x="112.2" y="248.1" width="31.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="128.1" y="259.1" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-18</text>
 <text x="6" y="16" font-size="11" fill="#475569">← 運転席側</text><text x="490" y="16" font-size="11" text-anchor="end" fill="#475569">リアドア側 →</text>
 <text x="6" y="433" font-size="10" fill="#64748b">床</text>
 </svg></div>
-<h3>シンクブロック 断面（リアドア側から見る、X=1900 で切った所）</h3><div class="fig"><svg viewBox="0 0 412 486" style="max-width:412px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シンク断面">
+<h3>シンクブロック 断面（リアドア側から見る、X=1900 で切った所）</h3><div class="fig"><svg viewBox="0 0 412 492" style="max-width:412px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="シンク断面">
 <line x1="0" y1="436.0" x2="412" y2="436.0" stroke="#64748b" stroke-width="1"/>
-<rect x="145.8" y="46.0" width="130.2" height="40.3" fill="none" fill-opacity="1" stroke="#64748b" stroke-width="1" stroke-dasharray="5 3"><title>シンク槽（参考）</title></rect>
 <rect x="55.9" y="46.0" width="310.0" height="7.4" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-3 天板 前後 652 × 奥行 500</title></rect>
-<rect x="63.4" y="271.7" width="302.6" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-4 間仕切り板（上下段の間） 前後 628 × 奥行 488</title></rect>
-<rect x="55.9" y="269.8" width="7.4" height="160.0" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-5 下段 前板 前後 624 × 高さ 258</title></rect>
-<rect x="130.3" y="53.4" width="12.4" height="18.6" fill="#fde68a" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>補強 角材20×30</title></rect>
-<rect x="279.1" y="53.4" width="12.4" height="18.6" fill="#fde68a" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>補強 角材20×30</title></rect>
+<rect x="63.4" y="269.8" width="302.6" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-4 間仕切り板（上下段の間） 前後 628 × 奥行 488</title></rect>
+<rect x="358.5" y="73.3" width="7.4" height="186.0" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-17 上段 引き出しの後ろの板 前後 579 × 高さ 300</title></rect>
+<rect x="55.9" y="269.8" width="7.4" height="166.2" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-5 下段 前板 前後 628 × 高さ 268</title></rect>
+<rect x="55.9" y="54.7" width="7.4" height="212.7" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-14 上段 引き出しの前板 前後 624 × 高さ 343</title></rect>
+<rect x="63.4" y="251.8" width="295.1" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-18 上段 引き出しの底板 前後 579 × 奥行 476</title></rect>
 <rect x="46.0" y="312.6" width="9.9" height="24.8" fill="#fde68a" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>ベッドの受け木 すのこ材16×40</title></rect>
-<text x="210.9" y="69.2" font-size="10" text-anchor="middle" fill="#475569">シンク槽</text>
 <rect x="198.1" y="42.2" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
 <text x="210.9" y="53.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-3</text>
-<rect x="201.8" y="267.9" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
-<text x="214.6" y="278.9" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-4</text>
-<rect x="46.8" y="317.3" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
-<text x="59.6" y="328.3" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-5</text>
+<rect x="201.8" y="266.0" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="214.6" y="277.0" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-4</text>
+<rect x="346.3" y="158.8" width="31.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="362.2" y="169.8" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-17</text>
+<rect x="46.8" y="320.4" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="59.6" y="331.4" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-5</text>
+<rect x="43.7" y="153.5" width="31.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="59.6" y="164.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-14</text>
+<rect x="135.0" y="248.1" width="31.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="150.9" y="259.1" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-18</text>
 <text x="6" y="16" font-size="11" fill="#475569">← 通路側</text><text x="406" y="16" font-size="11" text-anchor="end" fill="#475569">壁側 →</text>
 <text x="6" y="433" font-size="10" fill="#64748b">床</text>
 </svg></div>
 <h3>冷蔵庫ブロック 正面（台車の前板を外した状態、通路から壁を見る）</h3><div class="fig"><svg viewBox="0 0 563 492" style="max-width:563px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="冷蔵庫正面">
 <line x1="0" y1="436.0" x2="563" y2="436.0" stroke="#64748b" stroke-width="1"/>
 <rect x="72.7" y="112.7" width="421.6" height="299.1" fill="none" fill-opacity="1" stroke="#64748b" stroke-width="1" stroke-dasharray="5 3"><title>冷蔵庫 LITAKE（参考）</title></rect>
+<rect x="284.0" y="80.1" width="210.2" height="32.6" fill="none" fill-opacity="1" stroke="#64748b" stroke-width="1" stroke-dasharray="5 3"><title>冷蔵庫のふた（参考）</title></rect>
+<rect x="72.7" y="80.1" width="210.2" height="32.6" fill="none" fill-opacity="1" stroke="#64748b" stroke-width="1" stroke-dasharray="5 3"><title>冷蔵庫のふた（参考）</title></rect>
 <rect x="57.2" y="53.4" width="452.6" height="251.1" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-7 後板（壁側） 前後 730 × 高さ 405</title></rect>
 <rect x="509.8" y="53.4" width="7.4" height="382.5" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-2 仕切り板（冷蔵庫側） 高さ 617 × 奥行 500</title></rect>
 <rect x="49.7" y="53.4" width="7.4" height="382.5" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-6 前端の板（運転席側） 高さ 617 × 奥行 500</title></rect>
@@ -134,8 +162,8 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <rect x="65.2" y="308.3" width="7.4" height="103.5" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-13 台車のサイド板（運転席側） 奥行 450 × 高さ 167</title></rect>
 <rect x="507.2" y="382.4" width="2.6" height="27.9" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>レール固定側</title></rect>
 <rect x="57.2" y="382.4" width="2.6" height="27.9" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>レール固定側</title></rect>
-<rect x="469.5" y="419.2" width="9.3" height="15.4" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>キャスター</title></rect>
-<rect x="97.5" y="419.2" width="9.3" height="15.4" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>キャスター</title></rect>
+<rect x="460.2" y="419.2" width="9.3" height="15.4" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>キャスター</title></rect>
+<rect x="88.2" y="419.2" width="9.3" height="15.4" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>キャスター</title></rect>
 <rect x="499.8" y="53.4" width="9.9" height="24.8" fill="#fcd34d" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>ふたの受け すのこ材</title></rect>
 <rect x="59.0" y="53.4" width="449.5" height="9.9" fill="#fcd34d" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>ふた裏の補強 すのこ材</title></rect>
 <text x="283.5" y="265.2" font-size="10" text-anchor="middle" fill="#475569">冷蔵庫</text>
@@ -167,8 +195,8 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <rect x="49.1" y="54.7" width="7.4" height="378.2" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-10 冷蔵庫の前板 前後 728 × 高さ 610</title></rect>
 <rect x="56.5" y="411.8" width="279.0" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-11 台車の底板 前後 704 × 奥行 450</title></rect>
 <rect x="57.8" y="53.4" width="24.8" height="9.9" fill="#fcd34d" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>ふた裏の補強 すのこ材</title></rect>
-<rect x="57.8" y="410.6" width="4.3" height="1.2" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>前板の補強 小型L字金具</title></rect>
 <rect x="56.5" y="396.3" width="1.2" height="15.5" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>前板の補強 小型L字金具</title></rect>
+<rect x="57.8" y="410.6" width="4.3" height="1.2" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>前板の補強 小型L字金具</title></rect>
 <text x="183.6" y="265.2" font-size="10" text-anchor="middle" fill="#475569">冷蔵庫</text>
 <rect x="339.5" y="171.5" width="25.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
 <text x="352.3" y="182.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-7</text>
@@ -183,26 +211,13 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <text x="6" y="16" font-size="11" fill="#475569">← 通路側</text><text x="396" y="16" font-size="11" text-anchor="end" fill="#475569">壁側 →</text>
 <text x="6" y="433" font-size="10" fill="#64748b">床</text>
 </svg></div>
-<h3>C-3 シンク天板の穴（上から見た図）</h3><div class="fig"><svg viewBox="0 0 484 390" style="max-width:484px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="C-3 シンク天板の穴">
-<rect x="40.0" y="40.0" width="404.2" height="310.0" fill="#e2e8f0" stroke="#475569"/>
-<rect x="84.6" y="128.7" width="151.3" height="132.7" fill="#fff" stroke="#dc2626" stroke-dasharray="4 3"/>
-<text x="160.3" y="199.0" font-size="11" font-weight="700" text-anchor="middle" fill="#dc2626">穴 244×214</text>
-<text x="242.1" y="32.0" font-size="10" text-anchor="middle" fill="#334155">652（運転席側 ← → リアドア側）</text>
-<text x="34.0" y="195.0" font-size="10" text-anchor="end" fill="#334155">500</text>
-<text x="239.9" y="275.3" font-size="10" text-anchor="start" fill="#334155">→ リアドア側の端まで 336</text>
-<text x="80.6" y="275.3" font-size="10" text-anchor="end" fill="#334155">運転席側の端まで 72 ←</text>
-<text x="239.9" y="122.7" font-size="10" text-anchor="start" fill="#334155">壁側の端から 143</text>
-<text x="239.9" y="289.3" font-size="10" text-anchor="start" fill="#334155">通路側の端まで 143</text>
-<text x="44.0" y="52.0" font-size="10" text-anchor="start" fill="#64748b">壁側</text>
-<text x="44.0" y="346.0" font-size="10" text-anchor="start" fill="#64748b">通路側</text>
-</svg></div>
-<p class="cap">穴の位置はシンク槽（軽量ユニット 給水＋キッチンシンク）のモデルどおり。実物の槽を当てて確認してから開ける。</p></div>
-<div class="card" id="parts"><h2>12mm合板の部品（13枚）</h2><div class="tw"><table><tr><th>No</th><th>ブロック</th><th>部品</th><th>寸法（mm、取り付けたときの向き）</th><th>形・加工</th><th>取り付け</th><th>Blender</th></tr>
+</div>
+<div class="card" id="parts"><h2>12mm合板の部品（18枚）</h2><div class="tw"><table><tr><th>No</th><th>ブロック</th><th>部品</th><th>寸法（mm、取り付けたときの向き）</th><th>形・加工</th><th>取り付け</th><th>Blender</th></tr>
 <tr><td class="num"><b>C-1</b></td><td>シンク</td><td>仕切り板（リアドア側）</td><td class="num">高さ 617<br>× 奥行 500</td><td>長方形</td><td>スイベルブロック側との境。床に立てる</td><td class="bl">Shelf_Divider_Sink (C-1)</td></tr>
 <tr><td class="num"><b>C-2</b></td><td>シンク</td><td>仕切り板（冷蔵庫側）</td><td class="num">高さ 617<br>× 奥行 500</td><td>長方形</td><td>シンクと冷蔵庫の境。冷蔵庫側にスライドレールの固定側をねじ留め（床から41.5〜86.5）</td><td class="bl">Table1_Partition (C-2)</td></tr>
-<tr><td class="num"><b>C-3</b></td><td>シンク</td><td>天板</td><td class="num">前後 652<br>× 奥行 500</td><td>シンク槽の穴 244×214（下の図）</td><td>両側の仕切り板（C-1・C-2）の上に載せ、上からビス。仕切り板の上端を全部覆う</td><td class="bl">Table1_Fixed (C-3)</td></tr>
-<tr><td class="num"><b>C-4</b></td><td>シンク</td><td>間仕切り板（上下段の間）</td><td class="num">前後 628<br>× 奥行 488</td><td>長方形</td><td>両側の仕切り板にL字ブラケット30×30で下から留める（左右2個ずつ）。下に35あけてある</td><td class="bl">Shelf_Sink_間仕切り (C-4)</td></tr>
-<tr><td class="num"><b>C-5</b></td><td>シンク</td><td>下段 前板</td><td class="num">前後 624<br>× 高さ 258</td><td>長方形</td><td>ベッドの受け木を付ける。下段の箱は「いったん不要」のため、付け方は箱を決めるときに</td><td class="bl">Drawer_Sink_下_前板 (C-5)</td></tr>
+<tr><td class="num"><b>C-3</b></td><td>シンク</td><td>天板</td><td class="num">前後 652<br>× 奥行 500</td><td>長方形</td><td>両側の仕切り板（C-1・C-2）の上に載せ、上からビス。仕切り板の上端を全部覆う</td><td class="bl">Table1_Fixed (C-3)</td></tr>
+<tr><td class="num"><b>C-4</b></td><td>シンク</td><td>間仕切り板（上下段の間）</td><td class="num">前後 628<br>× 奥行 488</td><td>長方形</td><td>両側の仕切り板にL字ブラケット30×30で下から留める（左右2個ずつ）。上の面を下段前板（C-5）の上端（床から268）にそろえる</td><td class="bl">Shelf_Sink_間仕切り (C-4)</td></tr>
+<tr><td class="num"><b>C-5</b></td><td>シンク</td><td>下段 前板</td><td class="num">前後 628<br>× 高さ 268</td><td>長方形</td><td>床に立てる（床から0〜268）。左右の仕切り板（C-1・C-2）の間にぴったり入れ、仕切り板の外からと、前から間仕切り板（C-4）の小口へビス。通路側にベッドの受け木を付けるので、ベッドの重さを床で受ける。下段の箱は「いったん不要」</td><td class="bl">Drawer_Sink_下_前板 (C-5)</td></tr>
 <tr><td class="num"><b>C-6</b></td><td>冷蔵庫</td><td>前端の板（運転席側）</td><td class="num">高さ 617<br>× 奥行 500</td><td>長方形</td><td>床に立てる。内側にスライドレールの固定側をねじ留め（床から41.5〜86.5）。位置は台車＋レールで決まる（下の注意）</td><td class="bl">Table1_FrontPanel (C-6)</td></tr>
 <tr><td class="num"><b>C-7</b></td><td>冷蔵庫</td><td>後板（壁側）</td><td class="num">前後 730<br>× 高さ 405</td><td>長方形</td><td>仕切り板（C-2）と前端の板（C-6）の間。上端を両方にそろえる（ツライチ）、高さ405（板1の帯でC-9・C-8を取った残り）で下は約210あき</td><td class="bl">Table1_Back (C-7)</td></tr>
 <tr><td class="num"><b>C-8</b></td><td>冷蔵庫</td><td>ふたの固定部（桟）</td><td class="num">前後 748<br>× 奥行 40</td><td>長方形</td><td>後板・前端の板・ふたの受けの上に載せて固定。丁番2個でふた（C-9）とつなぐ</td><td class="bl">Table1_HingeRail (C-8)</td></tr>
@@ -211,10 +226,15 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <tr><td class="num"><b>C-11</b></td><td>冷蔵庫</td><td>台車の底板</td><td class="num">前後 704<br>× 奥行 450</td><td>長方形</td><td>冷蔵庫を載せる板。裏にボールベアリングのキャスター4個（高さ27）。冷蔵庫は通路側に寄せ、前板との間を10あける（奥は50あく）</td><td class="bl">Fridge_BottomBoard (C-11)</td></tr>
 <tr><td class="num"><b>C-12</b></td><td>冷蔵庫</td><td>台車のサイド板（仕切り板側）</td><td class="num">奥行 450<br>× 高さ 167</td><td>長方形</td><td>底板（C-11）の上に立て、冷蔵庫を左右から挟む。外側にスライドレールの動く側</td><td class="bl">Fridge_SideBoard_後 (C-12)</td></tr>
 <tr><td class="num"><b>C-13</b></td><td>冷蔵庫</td><td>台車のサイド板（運転席側）</td><td class="num">奥行 450<br>× 高さ 167</td><td>長方形</td><td>同上（C-12と対）</td><td class="bl">Fridge_SideBoard_前 (C-13)</td></tr>
+<tr><td class="num"><b>C-14</b></td><td>シンク</td><td>上段 引き出しの前板</td><td class="num">前後 624<br>× 高さ 343</td><td>長方形</td><td>箱の前面を兼ねる。裏に側板（C-15・C-16）と底板（C-18）をビス留め。左右の仕切り板とは2ずつ、下段前板（C-5）とは4あく</td><td class="bl">Drawer_Sink_上_前板 (C-14)</td></tr>
+<tr><td class="num"><b>C-15</b></td><td>シンク</td><td>上段 引き出しの側板（リアドア側）</td><td class="num">奥行 488<br>× 高さ 300</td><td>長方形</td><td>前板（C-14）の裏に突き付けてビス。下の縁にスライドレール（WS3845-450）の引き出し側。仕切り板（C-1）との間は12.5</td><td class="bl">Drawer_Sink_上_側板L (C-15)</td></tr>
+<tr><td class="num"><b>C-16</b></td><td>シンク</td><td>上段 引き出しの側板（冷蔵庫側）</td><td class="num">奥行 488<br>× 高さ 300</td><td>長方形</td><td>同上（C-15と対、仕切り板C-2側）</td><td class="bl">Drawer_Sink_上_側板R (C-16)</td></tr>
+<tr><td class="num"><b>C-17</b></td><td>シンク</td><td>上段 引き出しの後ろの板</td><td class="num">前後 579<br>× 高さ 300</td><td>長方形</td><td>側板2枚の間に入れ、側板の外からビス。後ろの面は棚の奥の端（壁側）にそろう</td><td class="bl">Drawer_Sink_上_箱後 (C-17)</td></tr>
+<tr><td class="num"><b>C-18</b></td><td>シンク</td><td>上段 引き出しの底板</td><td class="num">前後 579<br>× 奥行 476</td><td>長方形</td><td>前板・側板2枚・後ろの板の内側にはめ、周りからビス</td><td class="bl">Drawer_Sink_上_底板 (C-18)</td></tr>
 </table></div>
 </div>
 <div class="card" id="cut"><h2>板取り（910×1820、12mm合板。スイベルブロックと同じ材）</h2>
-<p class="cap"><b>切った板は、図の板か部品表の行を押すと「済」になる</b>（もう一度押すと戻る。どの端末でも同じ表示）。各部品の<b style="color:#2563eb">青い線を引いた辺の長さ</b>を、その辺の横に数字で書いてある（上の辺と右の辺）。「前後」はリアドア↔運転席の方向、「奥行」は壁↔通路の方向、「高さ」は床からの上下。のこ刃の幅3mmで計算。<b>切るのは全部お店で</b>：どれも直線で、板の端から端まで切る（途中で止める切り方はしない）。赤い点線の番号の順に切ると、前の切り口で分かれた板を順に切っていける。<b>お店では3枚まで重ねて切れる</b>ので、同じ寸法で切る所は重ねて1回にしてある。シンク天板（C-3）の穴だけは家で開ける。部品番号は上の表と同じ。</p>
+<p class="cap"><b>切った板は、図の板か部品表の行を押すと「済」になる</b>（もう一度押すと戻る。どの端末でも同じ表示）。各部品の<b style="color:#2563eb">青い線を引いた辺の長さ</b>を、その辺の横に数字で書いてある（上の辺と右の辺）。「前後」はリアドア↔運転席の方向、「奥行」は壁↔通路の方向、「高さ」は床からの上下。のこ刃の幅3mmで計算。<b>切るのは全部お店で</b>：どれも直線で、板の端から端まで切る（途中で止める切り方はしない）。赤い点線の番号の順に切ると、前の切り口で分かれた板を順に切っていける。<b>お店では3枚まで重ねて切れる</b>ので、同じ寸法で切る所は重ねて1回にしてある。部品番号は上の表と同じ。</p>
 <h3>新しい板1（910×1820） — 使う割合 約86%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 426.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新しい板1（910×1820）">
 <rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
 <rect x="0.0" y="0.0" width="328.8" height="201.8" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
@@ -238,12 +258,12 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <text x="490.1" y="146.1" font-size="9" text-anchor="middle" fill="#334155">冷蔵庫の前板</text>
 <text x="490.1" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">728</text>
 <text x="644.1" y="138.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">610</text>
-<rect x="330.1" y="269.5" width="274.3" height="113.4" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
-<text x="467.3" y="324.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-5</text>
-<path d="M331.4,270.8 H603.1 V381.6" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
-<text x="467.3" y="338.2" font-size="9" text-anchor="middle" fill="#334155">下段 前板</text>
-<text x="467.3" y="284.5" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">624</text>
-<text x="598.4" y="330.2" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">258</text>
+<rect x="330.1" y="269.5" width="276.0" height="117.8" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="468.1" y="326.4" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-5</text>
+<path d="M331.4,270.8 H604.9 V386.0" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="468.1" y="340.4" font-size="9" text-anchor="middle" fill="#334155">下段 前板</text>
+<text x="468.1" y="284.5" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">628</text>
+<text x="600.2" y="332.4" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">268</text>
 <rect x="651.4" y="0.0" width="73.4" height="197.8" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
 <text x="688.1" y="78.9" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-12</text>
 <path d="M652.7,1.3 H723.5 V196.5" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
@@ -262,8 +282,8 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <line x1="0.0" y1="221.3" x2="328.8" y2="221.3" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
 <line x1="321.5" y1="222.0" x2="321.5" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
 <line x1="330.1" y1="268.8" x2="650.1" y2="268.8" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
-<line x1="605.1" y1="269.5" x2="605.1" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
-<line x1="330.1" y1="383.5" x2="604.4" y2="383.5" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="606.8" y1="269.5" x2="606.8" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="330.1" y1="387.9" x2="606.2" y2="387.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
 <line x1="651.4" y1="198.5" x2="800.0" y2="198.5" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
 <line x1="725.5" y1="0.0" x2="725.5" y2="197.8" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
 <circle cx="329.5" cy="414.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="329.5" y="417.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">1</text>
@@ -272,13 +292,13 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <circle cx="12.0" cy="221.3" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="12.0" y="224.9" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">4</text>
 <circle cx="321.5" cy="234.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="321.5" y="237.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">5</text>
 <circle cx="342.1" cy="268.8" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="342.1" y="272.4" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">6</text>
-<circle cx="605.1" cy="281.5" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="605.1" y="285.1" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">7</text>
-<circle cx="342.1" cy="383.5" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="342.1" y="387.1" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">8</text>
+<circle cx="606.8" cy="281.5" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="606.8" y="285.1" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">7</text>
+<circle cx="342.1" cy="387.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="342.1" y="391.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">8</text>
 <circle cx="663.4" cy="198.5" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="663.4" y="202.1" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">9</text>
 <circle cx="725.5" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="725.5" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">10</text>
 </svg></div>
-<p class="shop"><b>店で切る：10回</b>（赤い点線、番号の順に。どれも端から端までの直線。同じ番号が2本ある所は重ねて1回で切る）<br>① 大判を、左端から748で切る<br>② 残りを、①の切り口から728で切る（右に338が残る）<br>③ 左の748×910を、上端から459で切る → <b>C-9</b>（748×459）<br>④ 残りの748×448を、③の切り口から40で切る → <b>C-8</b>（748×40）<br>⑤ 残りの748×405を、左端から730で切る → <b>C-7</b>（730×405）<br>⑥ 中の728×910を、上端から610で切る → <b>C-10</b>（728×610）<br>⑦ 残りの728×297を、左端から624で切る<br>⑧ 624×297を、上端から258で切る → <b>C-5</b>（624×258）<br>⑨ 右の338×910を、上端から450で切る（下に338×457の余りがまとまって残る）<br>⑩ 338×450を、左端から167で切る → <b>C-12</b>（167×450）・<b>C-13</b>（約168×450。1mm高いのはそのまま使ってよい）</p>
-<p class="cap">余り：338×457、101×297、15×405、624×36</p>
+<p class="shop"><b>店で切る：10回</b>（赤い点線、番号の順に。どれも端から端までの直線。同じ番号が2本ある所は重ねて1回で切る）<br>① 大判を、左端から748で切る<br>② 残りを、①の切り口から728で切る（右に338が残る）<br>③ 左の748×910を、上端から459で切る → <b>C-9</b>（748×459）<br>④ 残りの748×448を、③の切り口から40で切る → <b>C-8</b>（748×40）<br>⑤ 残りの748×405を、左端から730で切る → <b>C-7</b>（730×405）<br>⑥ 中の728×910を、上端から610で切る → <b>C-10</b>（728×610）<br>⑦ 残りの728×297を、左端から628で切る<br>⑧ 628×297を、上端から268で切る → <b>C-5</b>（628×268）<br>⑨ 右の338×910を、上端から450で切る（下に338×457の余りがまとまって残る）<br>⑩ 338×450を、左端から167で切る → <b>C-12</b>（167×450）・<b>C-13</b>（約168×450。1mm高いのはそのまま使ってよい）</p>
+<p class="cap">余り：338×457、97×297、15×405、628×26</p>
 <h3>新しい板2（910×1820） — 使う割合 約56%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 426.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新しい板2（910×1820）">
 <rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
 <rect x="0.0" y="0.0" width="219.8" height="271.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
@@ -350,17 +370,69 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <circle cx="454.2" cy="198.5" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="454.2" y="202.1" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">5</text>
 <circle cx="752.3" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="752.3" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">6</text>
 </svg></div>
-<p class="shop"><b>店で切る：6回</b>（赤い点線、番号の順に。どれも端から端までの直線。同じ番号が2本ある所は重ねて1回で切る）<br>① 大判を、左端から500で切る<br>② 残りを、①の切り口から500で切る（右に814が残る）<br>③ 1本目の500×910を、上端から652で切る → <b>C-3</b>（500×652。シンク槽の穴は家で開ける）<br>④ 2本目の500×910を、上端から617で切る → <b>C-6</b>（500×617）<br>⑤ 右の814×910を、上端から450で切る<br>⑥ 814×450を、左端から704で切る → <b>C-11</b>（704×450）</p>
+<p class="shop"><b>店で切る：6回</b>（赤い点線、番号の順に。どれも端から端までの直線。同じ番号が2本ある所は重ねて1回で切る）<br>① 大判を、左端から500で切る<br>② 残りを、①の切り口から500で切る（右に814が残る）<br>③ 1本目の500×910を、上端から652で切る → <b>C-3</b>（500×652）<br>④ 2本目の500×910を、上端から617で切る → <b>C-6</b>（500×617）<br>⑤ 右の814×910を、上端から450で切る<br>⑥ 814×450を、左端から704で切る → <b>C-11</b>（704×450）</p>
 <p class="cap">余り：500×255、500×290、107×450、814×457</p>
-<div class="note note-blue">新しい板3枚（910×1820）で13枚すべて取れる（スイベルの余り板は無いので使わない）。<b>2枚に収まらないかは全部の組み合わせで確かめたが入らない</b>（面積だけでも2枚分の約98%で、幅450〜600の板どうしは910の幅に2枚並ばないため余裕がない）。3枚目に814×457の余りが残る。</div><div class="note"><b>板をまたいで重ねられる所（お店と相談）</b><br>・板2の⑤（C-1・C-2）と板3の④（C-6）は、どれも幅500の板を上端から617で切るので、3枚重ねて一度に切れる（1回減る）。</div></div>
+<h3>新しい板4（910×1820） — 使う割合 約58%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 426.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新しい板4（910×1820）">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
+<rect x="0.0" y="0.0" width="254.5" height="209.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="127.3" y="102.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-18</text>
+<path d="M1.3,1.3 H253.2 V207.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="127.3" y="116.6" font-size="9" text-anchor="middle" fill="#334155">上段 引き出しの底板</text>
+<text x="127.3" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">579</text>
+<text x="248.5" y="108.6" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">476</text>
+<rect x="0.0" y="210.5" width="254.5" height="131.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="127.3" y="274.5" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-17</text>
+<path d="M1.3,211.8 H253.2 V341.1" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="127.3" y="288.5" font-size="9" text-anchor="middle" fill="#334155">上段 引き出しの後ろの板</text>
+<text x="127.3" y="225.5" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">579</text>
+<text x="248.5" y="280.5" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">300</text>
+<rect x="255.8" y="0.0" width="274.3" height="150.8" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="393.0" y="73.4" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-14</text>
+<path d="M257.1,1.3 H528.8 V149.5" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="393.0" y="87.4" font-size="9" text-anchor="middle" fill="#334155">上段 引き出しの前板</text>
+<text x="393.0" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">624</text>
+<text x="524.1" y="79.4" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">343</text>
+<rect x="531.4" y="0.0" width="214.5" height="131.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="638.7" y="63.9" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-15</text>
+<path d="M532.7,1.3 H744.6 V130.6" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="638.7" y="77.9" font-size="9" text-anchor="middle" fill="#334155">上段 引き出しの側板（リアドア側）</text>
+<text x="638.7" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">488</text>
+<text x="739.9" y="69.9" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">300</text>
+<rect x="531.4" y="133.2" width="214.5" height="131.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="638.7" y="197.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">C-16</text>
+<path d="M532.7,134.5 H744.6 V263.8" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="638.7" y="211.1" font-size="9" text-anchor="middle" fill="#334155">上段 引き出しの側板（冷蔵庫側）</text>
+<text x="638.7" y="148.2" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">488</text>
+<text x="739.9" y="203.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">300</text>
+<line x1="255.2" y1="0.0" x2="255.2" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="255.2" y1="400.0" x2="255.2" y2="406.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="530.8" y1="0.0" x2="530.8" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="530.8" y1="400.0" x2="530.8" y2="406.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="0.0" y1="209.9" x2="254.5" y2="209.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="0.0" y1="343.1" x2="254.5" y2="343.1" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="255.8" y1="151.4" x2="530.1" y2="151.4" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="531.4" y1="132.5" x2="800.0" y2="132.5" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="531.4" y1="265.7" x2="800.0" y2="265.7" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="746.6" y1="0.0" x2="746.6" y2="265.1" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="255.2" cy="414.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="255.2" y="417.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">1</text>
+<circle cx="530.8" cy="414.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="530.8" y="417.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">2</text>
+<circle cx="12.0" cy="209.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="12.0" y="213.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">3</text>
+<circle cx="12.0" cy="343.1" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="12.0" y="346.7" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">4</text>
+<circle cx="267.8" cy="151.4" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="267.8" y="155.0" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">5</text>
+<circle cx="543.4" cy="132.5" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="543.4" y="136.1" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">6</text>
+<circle cx="543.4" cy="265.7" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="543.4" y="269.3" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">7</text>
+<circle cx="746.6" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="746.6" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">8</text>
+</svg></div>
+<p class="shop"><b>店で切る：8回</b>（赤い点線、番号の順に。どれも端から端までの直線。同じ番号が2本ある所は重ねて1回で切る）<br>① 大判を、左端から579で切る<br>② 残りを、①の切り口から624で切る（右に611が残る）<br>③ 左の579×910を、上端から476で切る → <b>C-18</b>（579×476）<br>④ 残りの579×431を、③の切り口から300で切る → <b>C-17</b>（579×300）<br>⑤ 中の624×910を、上端から343で切る → <b>C-14</b>（624×343）<br>⑥ 右の611×910を、上端から300で切る<br>⑦ 残りを、⑥の切り口から300で切る<br>⑧ ⑥⑦でできた611×300の2枚を重ねて、左端から488で切る → <b>C-15</b>・<b>C-16</b>（488×300）</p>
+<p class="cap">余り：579×128、624×564、120×300 が2枚、611×304</p>
+<div class="note note-blue">新しい板4枚（910×1820）で18枚すべて取れる（スイベルの余り板は無いので使わない）。板1〜3は10-23の案のまま（C-5だけ628×268に変えた）。<b>板4は上段の引き出し（C-14〜C-18、10-25追加）だけ</b>：板1〜3の余りには底板（C-18、579×476）が入る大きさの余りが無いため。板4の624×564の余りは、次の家具に回せる。</div><div class="note"><b>板をまたいで重ねられる所（お店と相談）</b><br>・板2の⑤（C-1・C-2）と板3の④（C-6）は、どれも幅500の板を上端から617で切るので、3枚重ねて一度に切れる（1回減る）。</div></div>
 <div class="card" id="other"><h2>合板以外の材料・金物</h2><div class="tw"><table><tr><th>材料</th><th>用途</th><th>数</th><th>長さ（mm）</th><th>取り付け</th><th>Blender</th></tr>
-<tr><td>角材 20×30</td><td>シンク天板の裏の補強（通路側・壁側）</td><td class="num">2</td><td class="num">628</td><td>仕切り板2枚の間に通し、天板裏にボンド＋ビス</td><td class="bl">Table1_Fixed_補強_前／奥</td></tr>
-<tr><td>角材 20×30</td><td>シンク天板の裏の補強（穴の両端）</td><td class="num">2</td><td class="num">220</td><td>前後の角材の間</td><td class="bl">Table1_Fixed_補強_左／右</td></tr>
 <tr><td>すのこ材 16×40（赤松KD胴縁）</td><td>ベッドの受け木（下段前板）</td><td class="num">1</td><td class="num">505</td><td>下段前板（C-5）の通路側に、40を高さ・16を出っ張りにしてビス留め（上端199、床から159〜199）。すのこの背骨が16かかる</td><td class="bl">Bed_受け木_シンク前板</td></tr>
 <tr><td>すのこ材 16×40（赤松KD胴縁）</td><td>冷蔵庫のふたの受け（立てて使う）</td><td class="num">1</td><td class="num">427</td><td>仕切り板（C-2）の冷蔵庫側、上端617にそろえてビス</td><td class="bl">Table1_LidRest_仕切り側</td></tr>
 <tr><td>すのこ材 16×40（赤松KD胴縁）</td><td>ふた裏の補強（寝かせて使う）</td><td class="num">1</td><td class="num">725</td><td>ふた（C-9）の裏、通路側の縁から19奥</td><td class="bl">Table1_Lid_補強アングル</td></tr>
-<tr><td>L字ブラケット 30×30</td><td>間仕切り板（C-4）の受け</td><td class="num">4</td><td class="num">—</td><td>仕切り板の内側、間仕切り板の下。下に35あけてある</td><td class="bl">Sink_Lブラケット_*</td></tr>
+<tr><td>L字ブラケット 30×30</td><td>間仕切り板（C-4）の受け</td><td class="num">4</td><td class="num">—</td><td>仕切り板の内側、間仕切り板（C-4）の下（床から226〜256）</td><td class="bl">Sink_Lブラケット_*</td></tr>
 <tr><td>スライドレール 450mm（幅45・厚12.7）</td><td>台車の引き出し（左右）</td><td class="num">2</td><td class="num">450</td><td>動く側を台車のサイド板（C-12・C-13）の外側、固定側を仕切り板（C-2）と前端の板（C-6）に。床から41.5〜86.5</td><td class="bl">Fridge_NRail_*</td></tr>
+<tr><td>スライドレール WS3845-450（ローラー、底付け）</td><td>シンク上段の引き出し（左右）</td><td class="num">2</td><td class="num">450</td><td>引き出し側を側板（C-15・C-16）の下の縁、キャビネット側を仕切り板（C-1・C-2）の内側（床から271〜291）に。引き出せるのは369（450−ロス81）。ビスは皿タッピングφ3.0、キャビネット側3本×2・引き出し側3本×2（別に買う）</td><td class="bl">Drawer_Sink_上_レール_*</td></tr>
 <tr><td>ボールベアリングのキャスター（3Dプリント）</td><td>台車の底板の裏</td><td class="num">4</td><td class="num">—</td><td>ballbearing_mount.3mf の A1＋B1、高さ27、ベアリング φ19（仮）</td><td class="bl">Fridge_BBCaster_*</td></tr>
 <tr><td>小型L字金具（冷蔵庫側の脚 9以内）</td><td>台車の前板（C-10）の補強</td><td class="num">5</td><td class="num">—</td><td>前板の裏と底板の上面に3個、前板の裏とサイド板の内側の一番上（床から186〜206）に左右1個ずつ。冷蔵庫の前の10のすき間に入る大きさ</td><td class="bl">Fridge_前板L金具_*</td></tr>
 <tr><td>丁番</td><td>ふたの固定部とふた</td><td class="num">2</td><td class="num">—</td><td>2197〜2237・2681〜2721 付近</td><td class="bl">Table1_丁番0／1</td></tr>
