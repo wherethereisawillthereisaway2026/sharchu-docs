@@ -58,7 +58,70 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <div id="cutbar"><b>切り出し済み <span id="cutn">0</span> / <span id="cutt">0</span>枚</b><div class="pg"><i id="cutpg"></i></div><span id="cutst" style="font-size:.75rem;color:#cbd5e1">読み込み中…</span><button type="button" id="cutreset">全部もどす</button></div>
 <div>
   <h1>シンク・冷蔵庫ブロック 部品と組み立て図</h1>
-  <p class="meta">2026-10-26（C-5・C-12・C-13は端材で作るので板取りから外した） ／ 2026-10-25 ／ Blenderモデル（10-25、シンク設備を撤去・上段にレールWS3845-450の引き出しを追加・下段前板を床まで。10-23の冷蔵庫台車・ブロックの奥行500はそのまま）から拾った寸法。板はすべて同じ12mm合板（A材・B材の区別なし）。部品番号は C-1 から。 ／ <a href="hiace_custom.html">相談記録</a> ／ <a href="hiace_cut_swivel_t4.html">スイベル・テーブル4 カット案</a></p>
+  <p class="meta">2026-10-28（下段に箱を追加：C-5を箱の前面にして C-19〜C-22。板取りは未） ／ 2026-10-26（C-5・C-12・C-13は端材で作るので板取りから外した） ／ 2026-10-25 ／ Blenderモデル（10-25、シンク設備を撤去・上段にレールWS3845-450の引き出しを追加・下段前板を床まで。10-23の冷蔵庫台車・ブロックの奥行500はそのまま）から拾った寸法。板はすべて同じ12mm合板（A材・B材の区別なし）。部品番号は C-1 から。下段の箱（10-28）は上の組み立て図には未記入、専用の図は「10-28 下段に箱」に。下段の箱（10-28）は上の組み立て図には未記入、専用の図は「10-28 下段に箱」に。 ／ <a href="hiace_custom.html">相談記録</a> ／ <a href="hiace_cut_swivel_t4.html">スイベル・テーブル4 カット案</a></p>
+</div>
+<div class="card" id="lowerbox">
+  <h2>10-28 下段に箱（ソファの収納箱_1と同じ作り）</h2>
+  <ul>
+    <li><b>下段前板（C-5）を箱の前面にした</b>：これまでは床に立てる固定の板で、裏に何も無かった。C-5の裏に底板・側板2枚・後ろの板を付けて箱にし、<b>箱ごと通路側へ滑らせて引き出す</b>。レールは使わず、底板の下に滑り板6個（3Dプリント厚さ2＋PTFEテープ）。ソファの収納箱_1・_2と同じ。</li>
+    <li><b>C-5の寸法が変わる：628×268 → 622×265</b>。左右の仕切り板との間に3ずつすき間（動くため）。床から約3浮かせ（滑り板の厚さ）、上端は約268で間仕切り板（C-4）の上の面とほぼ同じ。上段の前板（C-14）とのすき間は約4。</li>
+    <li><b>箱の高さ</b>：上端は床から約218。間仕切り板の下のL字ブラケット（床から226〜256）の下を通るので、箱の幅は仕切り板の間いっぱい（622）にできた。</li>
+    <li><b>ベッドの受け木</b>（16×40、長さ505）は前板（C-5）に付けたまま。ベッドの重さは 受け木 → 前板 → 補強材・底板 → 滑り板 → 床 で受ける。<b>ベッドにしている間は箱を開けられない</b>（すのこの背骨が受け木に載っているため。B2下段と同じ運用）。ソファの状態なら450引き出して、ソファの座面（の前の面）まで約64残る。</li>
+    <li>点検（Blender）：しまった状態でめり込みなし。ソファの状態で450引き出しても固定の部品に当たらない。辺だけで接する角なし。どの板も2か所以上で留まる（底板＋補強材）。</li>
+  </ul>
+  <div class="note"><b>確認してほしいこと</b><br>① 箱の奥は壁から10あけた（奥行478）。上段の箱は壁まで0。床に近い所で壁が出ていないか、側板を切る前に測ってください。<br>② 床下収納のふた（X1585〜2655）の上を、奥側の滑り板2個が通る。モデルではふたが床より0.5高いので滑り板が乗り上げる。実車でふたに段差があるか確認してください。<br>③ 板取りはまだ（新しい板3枚の並べ方には入っていない）。端材で取るか、新しい板を足すかを決めてから並べます。合計 約0.61m²。</div>
+  <h3>正面（前板C-5を外した状態、通路から壁を見る）</h3><div class="fig"><svg viewBox="0 0 516 342" style="max-width:516px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="下段の箱 正面">
+<line x1="0" y1="300" x2="516" y2="300" stroke="#64748b" stroke-width="1"/>
+<rect x="30.0" y="69.0" width="8.4" height="231.0" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-2 仕切り板（冷蔵庫側）</title></rect>
+<rect x="478.0" y="69.0" width="8.4" height="231.0" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-1 仕切り板（リアドア側）</title></rect>
+<rect x="38.4" y="112.4" width="439.6" height="8.4" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-4 間仕切り板</title></rect>
+<rect x="457.0" y="120.8" width="21.0" height="21.0" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>L字ブラケット 30×30（床から226〜256）</title></rect>
+<rect x="38.4" y="120.8" width="21.0" height="21.0" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>L字ブラケット 30×30（床から226〜256）</title></rect>
+<rect x="48.9" y="147.6" width="418.6" height="142.1" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-22 箱の後ろの板 前後 598 × 高さ 203</title></rect>
+<rect x="467.5" y="147.6" width="8.4" height="142.1" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-20 箱の側板（リアドア側） 奥行 478 × 高さ 203</title></rect>
+<rect x="40.5" y="147.6" width="8.4" height="142.1" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-21 箱の側板（冷蔵庫側） 奥行 478 × 高さ 203</title></rect>
+<rect x="40.5" y="289.7" width="435.4" height="8.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-19 箱の底板 前後 622 × 奥行 478</title></rect>
+<rect x="453.5" y="147.6" width="14.0" height="142.1" fill="#fde68a" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>角の補強材 20×20 長さ 203</title></rect>
+<rect x="48.9" y="147.6" width="14.0" height="142.1" fill="#fde68a" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>角の補強材 20×20 長さ 203</title></rect>
+<rect x="446.1" y="298.1" width="17.5" height="1.5" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>滑り板 25×50（厚さ2＋PTFEテープ）</title></rect>
+<rect x="249.4" y="298.1" width="17.5" height="1.5" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>滑り板 25×50（厚さ2＋PTFEテープ）</title></rect>
+<rect x="52.8" y="298.1" width="17.5" height="1.5" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>滑り板 25×50（厚さ2＋PTFEテープ）</title></rect>
+<rect x="241.0" y="208.5" width="34.4" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/><text x="258.2" y="219.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-22</text>
+<rect x="241.0" y="268.4" width="34.4" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/><text x="258.2" y="279.4" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-19</text>
+<rect x="476.5" y="250.5" width="34.4" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/><text x="493.7" y="261.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-20</text>
+<rect x="5.5" y="250.5" width="34.4" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/><text x="22.7" y="261.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-21</text>
+<line x1="40.5" y1="320.0" x2="475.9" y2="320.0" stroke="#2563eb" stroke-width="2"/><text x="258.2" y="315.0" font-size="11" font-weight="900" text-anchor="middle" fill="#1d4ed8">箱の幅 622</text>
+<text x="258.2" y="135.3" font-size="10" text-anchor="middle" fill="#475569">ブラケットの下まで 8 あく（箱の上端 床から約218）</text>
+<text x="34.2" y="90.0" font-size="10" text-anchor="middle" fill="#475569">C-2</text><text x="482.2" y="90.0" font-size="10" text-anchor="middle" fill="#475569">C-1</text>
+<text x="6" y="14" font-size="11" fill="#475569">← 運転席側</text><text x="510" y="14" font-size="11" text-anchor="end" fill="#475569">リアドア側 →</text>
+<text x="258.2" y="334" font-size="10" text-anchor="middle" fill="#64748b">仕切り板とのすき間 左右3ずつ</text></svg></div>
+  <h3>断面（リアドア側から見る）</h3><div class="fig"><svg viewBox="0 0 735 342" style="max-width:735px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="下段の箱 断面">
+<line x1="0" y1="300" x2="735" y2="300" stroke="#64748b" stroke-width="1"/>
+<line x1="30.0" y1="69.0" x2="30.0" y2="300" stroke="#64748b" stroke-width="2"/>
+<rect x="30.0" y="112.4" width="341.6" height="8.4" fill="#e2e8f0" fill-opacity="0.45" stroke="#475569" stroke-width=".9"><title>C-4 間仕切り板</title></rect>
+<rect x="37.0" y="289.7" width="334.6" height="8.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-19 箱の底板 前後 622 × 奥行 478</title></rect>
+<rect x="37.0" y="147.6" width="334.6" height="142.1" fill="#e2e8f0" fill-opacity="0.3" stroke="#475569" stroke-width=".9"><title>C-20／C-21 箱の側板 奥行 478 × 高さ 203</title></rect>
+<rect x="37.0" y="147.6" width="8.4" height="142.1" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-22 箱の後ろの板 前後 598 × 高さ 203</title></rect>
+<rect x="371.6" y="112.6" width="8.4" height="185.5" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>C-5 下段 前板（箱の前面） 前後 622 × 高さ 265</title></rect>
+<rect x="380.0" y="160.7" width="11.2" height="28.0" fill="#fcd34d" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>ベッドの受け木 16×40 長さ 505（前板に固定、箱と一緒に動く）</title></rect>
+<rect x="327.5" y="298.1" width="35.0" height="1.5" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>滑り板 25×50（厚さ2＋PTFEテープ）</title></rect>
+<rect x="54.5" y="298.1" width="35.0" height="1.5" fill="#94a3b8" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>滑り板 25×50（厚さ2＋PTFEテープ）</title></rect>
+<rect x="686.6" y="112.6" width="8.4" height="185.5" fill="#fff" fill-opacity="0.6" stroke="#475569" stroke-width=".9" stroke-dasharray="4 3"><title>引き出した位置（450）</title></rect>
+<rect x="361.9" y="93.0" width="27.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/><text x="375.8" y="104.0" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-5</text>
+<rect x="187.1" y="298.4" width="34.4" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/><text x="204.3" y="309.4" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-19</text>
+<rect x="177.2" y="215.5" width="54.2" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/><text x="204.3" y="226.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-20/21</text>
+<rect x="44.0" y="250.5" width="34.4" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/><text x="61.2" y="261.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">C-22</text>
+<line x1="37.0" y1="133.6" x2="371.6" y2="133.6" stroke="#2563eb" stroke-width="2"/><text x="204.3" y="128.6" font-size="11" font-weight="900" text-anchor="middle" fill="#1d4ed8">奥行 478</text>
+<line x1="400.0" y1="112.6" x2="400.0" y2="298.1" stroke="#2563eb" stroke-width="2"/><text x="405.0" y="209.4" font-size="11" font-weight="900" fill="#1d4ed8">265</text>
+<text x="34.0" y="76.0" font-size="10" fill="#475569">壁（奥のすき間 10）</text><text x="690.8" y="100.5" font-size="10" text-anchor="middle" fill="#475569">450引き出した前板</text>
+<text x="6" y="14" font-size="11" fill="#475569">← 壁側</text><text x="729" y="14" font-size="11" text-anchor="end" fill="#475569">通路側 →</text></svg></div>
+  <h3>組み方（収納箱_1と同じ）</h3>
+  <ul>
+    <li>底板（C-19）の上に、側板2枚（C-20・C-21）と後ろの板（C-22）を載せる。後ろの板は側板の間に入れる。</li>
+    <li>前板（C-5）は底板の前の小口と側板の前の端を覆う形で付ける（前板の下端と底板の下面は、どちらも床から約2.7）。</li>
+    <li>板の小口へのビスは使わず、内側の4つの縦の角に補強材（20×20、長さ203）を入れ、ボンド＋ビスで留める。前の2本は前板の重さ（ベッドの荷重）を底板へ渡すので、下端を底板の上に当てて付ける。</li>
+    <li>滑り板（25×50×厚さ2、PETGかASA）6個に床側にPTFEテープを貼り、底板の下の前後・左右・中央に付ける（付け方は収納箱_1と同じく未定）。</li>
+  </ul>
 </div>
 <div class="card" id="change1025">
   <h2>10-25の変更</h2>
@@ -212,12 +275,12 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <text x="6" y="433" font-size="10" fill="#64748b">床</text>
 </svg></div>
 </div>
-<div class="card" id="parts"><h2>12mm合板の部品（18枚。C-5・C-12・C-13は端材で作るので、新しい板から切るのは15枚）</h2><div class="tw"><table><tr><th>No</th><th>ブロック</th><th>部品</th><th>寸法（mm、取り付けたときの向き）</th><th>形・加工</th><th>取り付け</th><th>Blender</th></tr>
+<div class="card" id="parts"><h2>12mm合板の部品（22枚。C-5・C-12・C-13は端材で作るので、新しい板から切るのは15枚。10-28追加の下段の箱 C-19〜C-22 は板取り未定）</h2><div class="tw"><table><tr><th>No</th><th>ブロック</th><th>部品</th><th>寸法（mm、取り付けたときの向き）</th><th>形・加工</th><th>取り付け</th><th>Blender</th></tr>
 <tr><td class="num"><b>C-1</b></td><td>シンク</td><td>仕切り板（リアドア側）</td><td class="num">高さ 617<br>× 奥行 500</td><td>長方形</td><td>スイベルブロック側との境。床に立てる</td><td class="bl">Shelf_Divider_Sink (C-1)</td></tr>
 <tr><td class="num"><b>C-2</b></td><td>シンク</td><td>仕切り板（冷蔵庫側）</td><td class="num">高さ 617<br>× 奥行 500</td><td>長方形</td><td>シンクと冷蔵庫の境。冷蔵庫側にスライドレールの固定側をねじ留め（床から41.5〜86.5）</td><td class="bl">Table1_Partition (C-2)</td></tr>
 <tr><td class="num"><b>C-3</b></td><td>シンク</td><td>天板</td><td class="num">前後 652<br>× 奥行 500</td><td>長方形</td><td>両側の仕切り板（C-1・C-2）の上に載せ、上からビス。仕切り板の上端を全部覆う</td><td class="bl">Table1_Fixed (C-3)</td></tr>
 <tr><td class="num"><b>C-4</b></td><td>シンク</td><td>間仕切り板（上下段の間）</td><td class="num">前後 628<br>× 奥行 488</td><td>長方形</td><td>両側の仕切り板にL字ブラケット30×30で下から留める（左右2個ずつ）。上の面を下段前板（C-5）の上端（床から268）にそろえる</td><td class="bl">Shelf_Sink_間仕切り (C-4)</td></tr>
-<tr><td class="num"><b>C-5</b></td><td>シンク</td><td>下段 前板</td><td class="num">前後 628<br>× 高さ 268</td><td>長方形<br><b style="color:#b45309">端材で作る</b>（板取りには無い）</td><td>床に立てる（床から0〜268）。左右の仕切り板（C-1・C-2）の間にぴったり入れ、仕切り板の外からと、前から間仕切り板（C-4）の小口へビス。通路側にベッドの受け木を付けるので、ベッドの重さを床で受ける。下段の箱は「いったん不要」</td><td class="bl">Drawer_Sink_下_前板 (C-5)</td></tr>
+<tr><td class="num"><b>C-5</b></td><td>シンク</td><td>下段 前板（箱の前面）</td><td class="num">前後 622<br>× 高さ 265</td><td>長方形<br><b style="color:#b45309">端材で作る</b>（板取りには無い）</td><td><b>10-28：下段の箱の前面に変更</b>（以前は628×268で床に固定）。底板（C-19）の前の小口と側板の前の端を覆い、裏の補強材2本にボンド＋ビス。床から約2.7〜268、左右の仕切り板とは3ずつあく。通路側にベッドの受け木（箱と一緒に動く）</td><td class="bl">Drawer_Sink_下_前板 (C-5)</td></tr>
 <tr><td class="num"><b>C-6</b></td><td>冷蔵庫</td><td>前端の板（運転席側）</td><td class="num">高さ 617<br>× 奥行 500</td><td>長方形</td><td>床に立てる。内側にスライドレールの固定側をねじ留め（床から41.5〜86.5）。位置は台車＋レールで決まる（下の注意）</td><td class="bl">Table1_FrontPanel (C-6)</td></tr>
 <tr><td class="num"><b>C-7</b></td><td>冷蔵庫</td><td>後板（壁側）</td><td class="num">前後 730<br>× 高さ 328</td><td>長方形</td><td>仕切り板（C-2）と前端の板（C-6）の間。上端を両方にそろえる（ツライチ）、高さ328（床から289〜617。高さは300以上あればよいので、板3の帯の幅いっぱい）で下は約290あき</td><td class="bl">Table1_Back (C-7)</td></tr>
 <tr><td class="num"><b>C-8</b></td><td>冷蔵庫</td><td>ふたの固定部（桟）</td><td class="num">前後 748<br>× 奥行 40</td><td>長方形</td><td>後板・前端の板・ふたの受けの上に載せて固定。丁番2個でふた（C-9）とつなぐ</td><td class="bl">Table1_HingeRail (C-8)</td></tr>
@@ -231,6 +294,10 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <tr><td class="num"><b>C-16</b></td><td>シンク</td><td>上段 引き出しの側板（冷蔵庫側）</td><td class="num">奥行 488<br>× 高さ 300</td><td>長方形</td><td>同上（C-15と対、仕切り板C-2側）</td><td class="bl">Drawer_Sink_上_側板R (C-16)</td></tr>
 <tr><td class="num"><b>C-17</b></td><td>シンク</td><td>上段 引き出しの後ろの板</td><td class="num">前後 579<br>× 高さ 300</td><td>長方形</td><td>側板2枚の間に入れ、側板の外からビス。後ろの面は棚の奥の端（壁側）にそろう</td><td class="bl">Drawer_Sink_上_箱後 (C-17)</td></tr>
 <tr><td class="num"><b>C-18</b></td><td>シンク</td><td>上段 引き出しの底板</td><td class="num">前後 579<br>× 奥行 476</td><td>長方形</td><td>前板・側板2枚・後ろの板の内側にはめ、周りからビス</td><td class="bl">Drawer_Sink_上_底板 (C-18)</td></tr>
+<tr><td class="num"><b>C-19</b></td><td>シンク</td><td>下段 箱の底板</td><td class="num">前後 622<br>× 奥行 478</td><td>長方形<br><b style="color:#b45309">板取り未定</b>（10-28追加）</td><td>前板の裏から奥へ。下に滑り板6個</td><td class="bl">Drawer_Sink_下_底板 (C-19)</td></tr>
+<tr><td class="num"><b>C-20</b></td><td>シンク</td><td>下段 箱の側板（リアドア側）</td><td class="num">奥行 478<br>× 高さ 203</td><td>長方形<br><b style="color:#b45309">板取り未定</b>（10-28追加）</td><td>底板の上に立てる。前の端は前板（C-5）の裏に突き付け、角の補強材で留める。仕切り板（C-1）との間は3</td><td class="bl">Drawer_Sink_下_側板L (C-20)</td></tr>
+<tr><td class="num"><b>C-21</b></td><td>シンク</td><td>下段 箱の側板（冷蔵庫側）</td><td class="num">奥行 478<br>× 高さ 203</td><td>長方形<br><b style="color:#b45309">板取り未定</b>（10-28追加）</td><td>同上（C-20と対、仕切り板C-2側）</td><td class="bl">Drawer_Sink_下_側板R (C-21)</td></tr>
+<tr><td class="num"><b>C-22</b></td><td>シンク</td><td>下段 箱の後ろの板</td><td class="num">前後 598<br>× 高さ 203</td><td>長方形<br><b style="color:#b45309">板取り未定</b>（10-28追加）</td><td>底板の上、側板2枚の間。角の補強材で留める。壁とは10あく</td><td class="bl">Drawer_Sink_下_箱後 (C-22)</td></tr>
 </table></div>
 </div>
 <div class="card" id="cut"><h2>板取り（910×1820、12mm合板。スイベルブロックと同じ材）</h2>
@@ -425,6 +492,8 @@ tr.done td b::after { content:" 済"; color:#15803d; }
 <tr><td>スライドレール WS3845-450（ローラー、底付け）</td><td>シンク上段の引き出し（左右）</td><td class="num">2</td><td class="num">450</td><td>引き出し側を側板（C-15・C-16）の下の縁、キャビネット側を仕切り板（C-1・C-2）の内側（床から271〜291）に。引き出せるのは369（450−ロス81）。ビスは皿タッピングφ3.0、キャビネット側3本×2・引き出し側3本×2（別に買う）</td><td class="bl">Drawer_Sink_上_レール_*</td></tr>
 <tr><td>ボールベアリングのキャスター（3Dプリント）</td><td>台車の底板の裏</td><td class="num">4</td><td class="num">—</td><td>ballbearing_mount.3mf の A1＋B1、高さ27、ベアリング φ19（仮）</td><td class="bl">Fridge_BBCaster_*</td></tr>
 <tr><td>小型L字金具（冷蔵庫側の脚 9以内）</td><td>台車の前板（C-10）の補強</td><td class="num">5</td><td class="num">—</td><td>前板の裏と底板の上面に3個、前板の裏とサイド板の内側の一番上（C-12側は床から178〜198、C-13側は145〜165）に左右1個ずつ。冷蔵庫の前の10のすき間に入る大きさ</td><td class="bl">Fridge_前板L金具_*</td></tr>
+<tr><td>角材 20×20</td><td>下段の箱の角の補強材</td><td class="num">4</td><td class="num">203</td><td>箱の内側の縦の4つの角。板の小口にビスを打たず、ここへボンド＋ビス</td><td class="bl">Drawer_Sink_下_補強_*</td></tr>
+<tr><td>滑り板 25×50×厚さ2（3Dプリント PETG/ASA）＋PTFEテープ 幅25</td><td>下段の箱の底</td><td class="num">6</td><td class="num">テープ 50ずつ</td><td>底板（C-19）の下。左右の端と中央 × 前と奥（前板から25〜75・奥の端から25〜75）</td><td class="bl">Drawer_Sink_下_滑り板*</td></tr>
 <tr><td>丁番</td><td>ふたの固定部とふた</td><td class="num">2</td><td class="num">—</td><td>2197〜2237・2681〜2721 付近</td><td class="bl">Table1_丁番0／1</td></tr>
 </table></div></div>
 </div>
