@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>レンジブロック 部品表</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%23b45309%22/%3E%3Crect x=%226%22 y=%228%22 width=%2220%22 height=%2216%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%222%22/%3E%3Cpath d=%22M16 8v16M6 16h10%22 stroke=%22%23fff%22 stroke-width=%222%22/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#f8fafc; --card:#fff; --line:#e2e8f0; --tx:#0f172a; --sub:#334155; --mut:#64748b; --th:#f1f5f9; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans JP',sans-serif; background:var(--bg); color:var(--tx); padding:2rem 1rem; font-size:14px; line-height:1.7; }
+.page { max-width:860px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; }
+h1 { font-size:1.5rem; font-weight:900; }
+h2 { font-size:1rem; font-weight:900; margin-bottom:.75rem; padding-bottom:.4rem; border-bottom:2px solid var(--line); }
+h3 { font-size:.9rem; font-weight:900; margin:1.1rem 0 .4rem; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1.25rem 1.5rem; }
+.meta { font-size:.8rem; color:var(--mut); margin-top:.3rem; }
+a { color:#2563eb; }
+ul { padding-left:1.2rem; display:flex; flex-direction:column; gap:.25rem; }
+.tw { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:.85rem; }
+th { background:var(--th); font-weight:700; padding:.5rem .75rem; text-align:left; white-space:nowrap; }
+td { padding:.45rem .75rem; border-top:1px solid var(--line); vertical-align:top; color:var(--sub); }
+td.bl { font-size:.72rem; color:var(--mut); }
+.num { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.note { background:#fff7ed; border-left:3px solid #f97316; padding:.6rem .9rem; border-radius:4px; font-size:.82rem; color:#7c2d12; margin-top:.75rem; }
+.note-blue { background:#eff6ff; border-left-color:#3b82f6; color:#1e3a8a; }
+.fig { margin-top:.4rem; }
+.fig svg { width:100%; height:auto; display:block; }
+p.shop { font-size:.8rem; color:#991b1b; margin-top:.3rem; }
+.cap { font-size:.75rem; color:var(--mut); margin-top:.3rem; }
+.legend { display:flex; flex-wrap:wrap; gap:.4rem 1rem; font-size:.75rem; color:#475569; margin-top:.4rem; }
+.legend i { display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-2px; margin-right:.3rem; border:1px solid #94a3b8; }
+@media (max-width:600px) { body { padding:1rem; } .card { padding:1rem; } }
+.asm { position:relative; margin-top:.4rem; }
+.asm img { width:100%; height:auto; display:block; }
+.lb { position:absolute; transform:translate(-50%,-50%); font-size:.72rem; font-weight:900; line-height:1; padding:.22rem .38rem; border-radius:999px; background:#fff; border:1.5px solid #475569; color:#0f172a; white-space:nowrap; box-shadow:0 1px 2px rgba(0,0,0,.25); }
+.lb.a { border-color:#b45309; background:#fef3c7; }
+.lb.hw { border-color:#334155; background:#e2e8f0; font-weight:700; }
+@media (max-width:600px) { .lb { font-size:.6rem; padding:.15rem .28rem; } }
+.fig svg rect[data-pid], .asm .lb, tr[data-pid] { cursor:pointer; }
+.fig svg rect.done, .fig svg path.done { fill:#bbf7d0 !important; stroke:#15803d !important; }
+.fig svg text.dn { fill:#15803d; font-weight:900; pointer-events:none; }
+.fig svg text { pointer-events:none; }
+.asm .lb.done { background:#bbf7d0 !important; border-color:#15803d !important; color:#14532d; }
+tr.done td { background:#f0fdf4; color:#15803d; }
+tr.done td b::after { content:" 済"; color:#15803d; }
+#cutbar { position:sticky; top:0; z-index:10; background:#0f172a; color:#fff; border-radius:10px; padding:.55rem 1rem; display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; font-size:.85rem; }
+#cutbar .pg { flex:1; min-width:120px; height:8px; background:#334155; border-radius:4px; overflow:hidden; }
+#cutbar .pg i { display:block; height:100%; background:#4ade80; width:0; }
+#cutbar button { font:inherit; font-size:.75rem; background:transparent; color:#cbd5e1; border:1px solid #475569; border-radius:6px; padding:.2rem .6rem; cursor:pointer; }
+</style>
+</head>
+
+<body>
+<div class="page">
+<div id="cutbar"><b>切り出し済み <span id="cutn">0</span> / <span id="cutt">0</span>枚</b><div class="pg"><i id="cutpg"></i></div><span id="cutst" style="font-size:.75rem;color:#cbd5e1">読み込み中…</span><button type="button" id="cutreset">全部もどす</button></div>
+<div>
+  <h1>レンジブロック 部品と組み立て図</h1>
+  <p class="meta">2026-10-29 ／ Blenderモデル（10-29：レンジ横の側板D-3を追加・奥の引き出し2つをやめて空ける・背板と棚板を1枚に）から拾った寸法。12mm合板、新しい板3枚（手持ちの余りは使わない）。部品番号は D-1 から。 ／ <a href="hiace_custom.html">相談記録</a> ／ <a href="hiace_cut_sink_fridge.html">シンク・冷蔵庫 カット案</a> ／ <a href="hiace_cut_swivel_t4.html">スイベル・テーブル4 カット案</a></p>
+</div>
+<p class="cap" style="margin-top:-1rem">板取り図の部品か、部品表の行をタップすると「済」になる（もう一度タップで戻る）。記録は共有されるので、ほかのスマホ・PCで開いても同じ「済」が出る（15秒ごとに更新）。</p>
+
+<div class="card" id="summary"><h2>まとめ</h2>
+  <ul>
+    <li>場所：助手席の後ろ。前後1950〜2474（524）、通路側から壁まで奥行695、高さ629（天板の上）</li>
+    <li>上段：電子レンジ（Panasonic NE-UBS10D、494×435×370）を棚板D-5の上、車両前方の側板D-3に寄せて置く。扉は通路側</li>
+    <li>下段：通路側へ引き出す引き出し1つ（箱 472×460×高さ約203、滑り板で床を滑る）。レンジの重さは支え板D-8・D-9・D-10と間仕切りD-7で受ける</li>
+    <li>奥（壁側）の上下2つの空間は<b>空けておく</b>（車両前方＝スライドドア側から使う。入口は奥行165）</li>
+    <li>合板は <b>910×1820×12mm を3枚</b>（15枚取る、店で切る回数 26回）。角材20×20は1820を3本</li>
+    <li>板の小口にはビスを打たない。角は角材20×20か小型L字金具、重なる板は面どうしでビス</li>
+  </ul>
+  <div class="note"><b>確認してほしいこと</b><br>① <b>レンジの上の排気</b>：天板はレンジの上面に接する（すき間16）。10-09の記録に「メーカー指定の上方80mm」とあり未解決。天板は穴なしの長方形で切るので、使う前に取扱説明書で上・横のすき間を確認し、必要なら天板に排気の穴を家で開ける。横（D-3側）もすき間0<br>② D-3はブロックの外側に付くので、ブロックの前端は2474（車両前方へ12出る）。前は床の上に物はない<br>③ 引き出しは通路側へ530まで当たらない。箱の奥行は460なので、全部出ると抜けて落ちる。止めが要るなら言ってください<br>④ D-4・D-11は、店で残り幅502を500に切る（端の2mmは落ちる）</div>
+</div>
+
+<div class="card" id="figs"><h2>組み立て図（部品番号）</h2>
+<div class="fig"><svg style="max-width:595px" viewBox="0 0 595 514" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="① 通路側から見た図">
+<text x="297" y="18" font-size="13" font-weight="700" text-anchor="middle" fill="#0f172a">① 通路側から見た図</text>
+<text x="297" y="34" font-size="10" text-anchor="middle" fill="#64748b">左がリアドア側、右が車両前方（スライドドア側）</text>
+<rect x="127.4" y="81.4" width="310.0" height="382.5" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-4</title></rect>
+<rect x="127.4" y="328.2" width="12.4" height="135.8" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_下_背板</title></rect>
+<rect x="139.8" y="328.2" width="297.6" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_横_棚下_背板</title></rect>
+<rect x="127.4" y="81.4" width="12.4" height="239.3" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_上_背板</title></rect>
+<rect x="139.8" y="81.4" width="297.6" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_横_天板下_背板</title></rect>
+<rect x="127.4" y="328.2" width="12.4" height="135.8" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_下_仕切り</title></rect>
+<rect x="139.8" y="328.2" width="297.6" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_横_棚下_仕切り</title></rect>
+<rect x="127.4" y="81.4" width="12.4" height="239.3" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_上_仕切り</title></rect>
+<rect x="139.8" y="81.4" width="297.6" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_横_天板下_仕切り</title></rect>
+<rect x="425.0" y="340.6" width="12.4" height="123.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_下_前角</title></rect>
+<rect x="425.0" y="93.8" width="12.4" height="226.9" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_上_前角</title></rect>
+<rect x="127.4" y="81.4" width="310.0" height="239.3" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-6</title></rect>
+<rect x="127.4" y="328.2" width="310.0" height="135.8" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-7</title></rect>
+<rect x="134.9" y="328.2" width="295.1" height="135.8" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-10</title></rect>
+<rect x="143.6" y="336.4" width="277.8" height="118.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-15</title></rect>
+<rect x="143.6" y="336.4" width="12.4" height="118.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Drawer_下手前_補強_後L</title></rect>
+<rect x="408.9" y="336.4" width="12.4" height="118.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Drawer_下手前_補強_後R</title></rect>
+<rect x="139.5" y="462.3" width="15.5" height="1.2" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板1</title></rect>
+<rect x="139.5" y="463.5" width="15.5" height="0.1" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板1_テープ</title></rect>
+<rect x="282.8" y="462.3" width="15.5" height="1.2" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板3</title></rect>
+<rect x="282.8" y="463.5" width="15.5" height="0.1" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板3_テープ</title></rect>
+<rect x="409.9" y="462.3" width="15.5" height="1.2" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板5</title></rect>
+<rect x="409.9" y="463.5" width="15.5" height="0.1" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板5_テープ</title></rect>
+<rect x="127.4" y="81.4" width="0.9" height="9.3" fill="#94a3b8" fill-opacity="0.92" stroke="#334155" stroke-width=".9"><title>Storage_L金具_天板_後1_縦</title></rect>
+<rect x="127.4" y="81.4" width="9.3" height="0.9" fill="#94a3b8" fill-opacity="0.92" stroke="#334155" stroke-width=".9"><title>Storage_L金具_天板_後1_横</title></rect>
+<rect x="436.5" y="81.4" width="0.9" height="9.3" fill="#94a3b8" fill-opacity="0.92" stroke="#334155" stroke-width=".9"><title>Storage_L金具_天板_前1_縦</title></rect>
+<rect x="428.1" y="81.4" width="9.3" height="0.9" fill="#94a3b8" fill-opacity="0.92" stroke="#334155" stroke-width=".9"><title>Storage_L金具_天板_前1_横</title></rect>
+<rect x="127.4" y="81.4" width="0.9" height="9.3" fill="#94a3b8" fill-opacity="0.92" stroke="#334155" stroke-width=".9"><title>Storage_L金具_天板_後0_縦</title></rect>
+<rect x="127.4" y="81.4" width="9.3" height="0.9" fill="#94a3b8" fill-opacity="0.92" stroke="#334155" stroke-width=".9"><title>Storage_L金具_天板_後0_横</title></rect>
+<rect x="436.5" y="81.4" width="0.9" height="9.3" fill="#94a3b8" fill-opacity="0.92" stroke="#334155" stroke-width=".9"><title>Storage_L金具_天板_前0_縦</title></rect>
+<rect x="428.1" y="81.4" width="9.3" height="0.9" fill="#94a3b8" fill-opacity="0.92" stroke="#334155" stroke-width=".9"><title>Storage_L金具_天板_前0_横</title></rect>
+<rect x="131.2" y="91.4" width="306.3" height="229.4" fill="#1e293b" fill-opacity="0.55" stroke="#0f172a" stroke-width=".9"><title>Range_NE-UBS10D</title></rect>
+<rect x="139.5" y="462.3" width="15.5" height="1.2" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板0</title></rect>
+<rect x="139.5" y="463.5" width="15.5" height="0.1" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板0_テープ</title></rect>
+<rect x="282.8" y="462.3" width="15.5" height="1.2" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板2</title></rect>
+<rect x="282.8" y="463.5" width="15.5" height="0.1" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板2_テープ</title></rect>
+<rect x="409.9" y="462.3" width="15.5" height="1.2" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板4</title></rect>
+<rect x="409.9" y="463.5" width="15.5" height="0.1" fill="#a7f3d0" fill-opacity="0.92" stroke="#047857" stroke-width=".9"><title>Drawer_下手前_滑り板4_テープ</title></rect>
+<rect x="127.4" y="328.2" width="7.4" height="135.8" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-9</title></rect>
+<rect x="430.0" y="328.2" width="7.4" height="135.8" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-8</title></rect>
+<rect x="136.1" y="454.9" width="292.6" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-12</title></rect>
+<rect x="136.1" y="336.4" width="7.4" height="118.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-13</title></rect>
+<rect x="421.3" y="336.4" width="7.4" height="118.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-14</title></rect>
+<rect x="143.6" y="336.4" width="12.4" height="118.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Drawer_下手前_補強_前L</title></rect>
+<rect x="408.9" y="336.4" width="12.4" height="118.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Drawer_下手前_補強_前R</title></rect>
+<rect x="156.0" y="116.2" width="256.7" height="12.4" fill="#1e293b" fill-opacity="0.55" stroke="#0f172a" stroke-width=".9"><title>Range_NE-UBS10D_Handle</title></rect>
+<rect x="120.0" y="74.0" width="317.4" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-1</title></rect>
+<rect x="120.0" y="81.4" width="7.4" height="382.5" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-2</title></rect>
+<rect x="127.4" y="320.8" width="310.0" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-5</title></rect>
+<rect x="127.4" y="329.0" width="310.0" height="133.3" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-11</title></rect>
+<rect x="437.4" y="74.0" width="7.4" height="390.0" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-3</title></rect>
+<rect x="265.4" y="70.2" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="278.7" y="81.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-1</text>
+<rect x="110.4" y="205.2" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="123.7" y="216.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-2</text>
+<rect x="427.9" y="201.5" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="441.2" y="212.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-3</text>
+<rect x="119.1" y="317.0" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="132.4" y="328.0" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-5</text>
+<rect x="261.8" y="198.6" width="45.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="284.3" y="209.6" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">レンジ</text>
+<rect x="266.0" y="388.2" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="282.4" y="399.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-11</text>
+<text x="282" y="500" font-size="11" text-anchor="middle" fill="#334155">床</text>
+<text x="86" y="273" font-size="11" text-anchor="end" fill="#334155">リアドア側</text>
+<text x="479" y="273" font-size="11" fill="#334155">車両前方</text>
+</svg></div>
+<div class="fig"><svg style="max-width:701px" viewBox="0 0 701 514" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="② 横から見た断面（真ん中で切って、車両前方から見た図）">
+<text x="350" y="18" font-size="13" font-weight="700" text-anchor="middle" fill="#0f172a">② 横から見た断面（真ん中で切って、車両前方から見た図）</text>
+<text x="350" y="34" font-size="10" text-anchor="middle" fill="#64748b">左が通路側、右が壁側。奥の空間（右の上下2つ）は空ける。四角の黄色は奥へ通る角材の切り口</text>
+<rect x="151.6" y="91.4" width="269.7" height="229.4" fill="#1e293b" fill-opacity="0.55" stroke="#0f172a" stroke-width=".9"><title>Range_NE-UBS10D</title></rect>
+<rect x="120.0" y="116.2" width="31.6" height="12.4" fill="#1e293b" fill-opacity="0.55" stroke="#0f172a" stroke-width=".9"><title>Range_NE-UBS10D_Handle</title></rect>
+<rect x="120.0" y="74.0" width="430.9" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-1</title></rect>
+<rect x="543.5" y="81.4" width="7.4" height="382.5" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-4</title></rect>
+<rect x="120.0" y="320.8" width="423.5" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-5</title></rect>
+<rect x="421.3" y="81.4" width="7.4" height="239.3" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-6</title></rect>
+<rect x="421.3" y="328.2" width="7.4" height="135.8" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-7</title></rect>
+<rect x="120.0" y="329.0" width="7.4" height="133.3" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-11</title></rect>
+<rect x="413.9" y="328.2" width="7.4" height="135.8" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-10</title></rect>
+<rect x="127.4" y="454.9" width="285.2" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-12</title></rect>
+<rect x="405.2" y="336.4" width="7.4" height="118.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-15</title></rect>
+<rect x="428.8" y="328.2" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_横_棚下_仕切り</title></rect>
+<rect x="531.1" y="328.2" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_横_棚下_背板</title></rect>
+<rect x="428.8" y="81.4" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_横_天板下_仕切り</title></rect>
+<rect x="531.1" y="81.4" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_横_天板下_背板</title></rect>
+<rect x="202.1" y="70.2" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="215.4" y="81.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-1</text>
+<rect x="198.4" y="331.0" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="211.7" y="342.0" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-5</text>
+<rect x="411.7" y="153.6" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="425.0" y="164.6" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-6</text>
+<rect x="425.7" y="328.6" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="439.0" y="339.6" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-7</text>
+<rect x="547.9" y="185.2" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="561.2" y="196.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-4</text>
+<rect x="387.2" y="358.6" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="403.6" y="369.6" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-10</text>
+<rect x="107.3" y="348.2" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="123.7" y="359.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-11</text>
+<rect x="253.6" y="465.1" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="270.0" y="476.1" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-12</text>
+<rect x="376.5" y="418.2" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="392.9" y="429.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-15</text>
+<rect x="264.0" y="198.6" width="45.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="286.5" y="209.6" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">レンジ</text>
+<rect x="418.0" y="106.1" width="34.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="435.0" y="117.1" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">角材</text>
+<rect x="520.3" y="302.9" width="34.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="537.3" y="313.9" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">角材</text>
+<text x="335" y="500" font-size="11" text-anchor="middle" fill="#334155">床</text>
+<text x="86" y="273" font-size="11" text-anchor="end" fill="#334155">通路側</text>
+<text x="585" y="273" font-size="11" fill="#334155">壁側</text>
+</svg></div>
+<div class="fig"><svg style="max-width:595px" viewBox="0 0 595 555" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="③ 上から見た断面（床から100の高さ）">
+<text x="297" y="18" font-size="13" font-weight="700" text-anchor="middle" fill="#0f172a">③ 上から見た断面（床から100の高さ）</text>
+<text x="297" y="34" font-size="10" text-anchor="middle" fill="#64748b">上が通路側、下が壁側。左がリアドア側</text>
+<rect x="120.0" y="74.0" width="7.4" height="430.9" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-2</title></rect>
+<rect x="127.4" y="497.5" width="310.0" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-4</title></rect>
+<rect x="127.4" y="375.3" width="310.0" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-7</title></rect>
+<rect x="127.4" y="74.0" width="310.0" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-11</title></rect>
+<rect x="127.4" y="81.4" width="7.4" height="293.9" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-9</title></rect>
+<rect x="430.0" y="81.4" width="7.4" height="293.9" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-8</title></rect>
+<rect x="134.9" y="367.9" width="295.1" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-10</title></rect>
+<rect x="437.4" y="74.0" width="7.4" height="321.2" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-3</title></rect>
+<rect x="136.1" y="81.4" width="7.4" height="285.2" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-13</title></rect>
+<rect x="421.3" y="81.4" width="7.4" height="285.2" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-14</title></rect>
+<rect x="143.6" y="359.2" width="277.8" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-15</title></rect>
+<rect x="143.6" y="81.4" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Drawer_下手前_補強_前L</title></rect>
+<rect x="408.9" y="81.4" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Drawer_下手前_補強_前R</title></rect>
+<rect x="143.6" y="346.8" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Drawer_下手前_補強_後L</title></rect>
+<rect x="408.9" y="346.8" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Drawer_下手前_補強_後R</title></rect>
+<rect x="127.4" y="382.8" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_下_仕切り</title></rect>
+<rect x="127.4" y="485.1" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_下_背板</title></rect>
+<rect x="425.0" y="382.8" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_下_前角</title></rect>
+<rect x="110.4" y="241.9" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="123.7" y="252.9" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-2</text>
+<rect x="427.9" y="187.1" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="441.2" y="198.1" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-3</text>
+<rect x="269.1" y="493.7" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="282.4" y="504.7" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-4</text>
+<rect x="209.1" y="371.5" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="222.4" y="382.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-7</text>
+<rect x="400.4" y="280.9" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="413.7" y="291.9" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-8</text>
+<rect x="137.9" y="280.9" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="151.2" y="291.9" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-9</text>
+<rect x="326.0" y="348.1" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="342.4" y="359.1" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-10</text>
+<rect x="266.0" y="54.2" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="282.4" y="65.2" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-11</text>
+<rect x="149.4" y="216.5" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="165.8" y="227.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-13</text>
+<rect x="382.6" y="216.5" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="399.0" y="227.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-14</text>
+<rect x="266.0" y="339.4" width="32.8" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="282.4" y="350.4" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-15</text>
+<rect x="146.6" y="403.5" width="34.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="163.6" y="414.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">角材</text>
+<rect x="384.2" y="403.5" width="34.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="401.2" y="414.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">角材</text>
+<text x="282" y="541" font-size="11" text-anchor="middle" fill="#334155">壁側</text>
+<text x="86" y="293" font-size="11" text-anchor="end" fill="#334155">リアドア側</text>
+<text x="479" y="293" font-size="11" fill="#334155">車両前方</text>
+<text x="282" y="52" font-size="11" text-anchor="middle" fill="#334155">通路側</text>
+</svg></div>
+<div class="fig"><svg style="max-width:595px" viewBox="0 0 595 555" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="④ 上から見た断面（床から400の高さ）">
+<text x="297" y="18" font-size="13" font-weight="700" text-anchor="middle" fill="#0f172a">④ 上から見た断面（床から400の高さ）</text>
+<text x="297" y="34" font-size="10" text-anchor="middle" fill="#64748b">レンジの右横（車両前方）がD-3。奥の空間の3つの角に縦の角材</text>
+<rect x="131.2" y="105.6" width="306.3" height="269.7" fill="#1e293b" fill-opacity="0.55" stroke="#0f172a" stroke-width=".9"><title>Range_NE-UBS10D</title></rect>
+<rect x="120.0" y="74.0" width="7.4" height="430.9" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-2</title></rect>
+<rect x="127.4" y="497.5" width="310.0" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-4</title></rect>
+<rect x="127.4" y="375.3" width="310.0" height="7.4" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-6</title></rect>
+<rect x="437.4" y="74.0" width="7.4" height="321.2" fill="#e2e8f0" fill-opacity="0.92" stroke="#475569" stroke-width=".9"><title>D-3</title></rect>
+<rect x="127.4" y="382.8" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_上_仕切り</title></rect>
+<rect x="127.4" y="485.1" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_上_背板</title></rect>
+<rect x="425.0" y="382.8" width="12.4" height="12.4" fill="#fde68a" fill-opacity="0.92" stroke="#92400e" stroke-width=".9"><title>Storage_補強_縦_上_前角</title></rect>
+<rect x="110.4" y="241.9" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="123.7" y="252.9" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-2</text>
+<rect x="427.9" y="187.1" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="441.2" y="198.1" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-3</text>
+<rect x="269.1" y="493.7" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="282.4" y="504.7" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-4</text>
+<rect x="209.1" y="371.5" width="26.6" height="15" rx="7.5" fill="#fff" stroke="#0f172a" stroke-width="1.2"/>
+<text x="222.4" y="382.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">D-6</text>
+<rect x="261.8" y="233.0" width="45.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="284.3" y="244.0" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">レンジ</text>
+<rect x="146.6" y="403.5" width="34.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="163.6" y="414.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">角材</text>
+<rect x="384.2" y="403.5" width="34.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="401.2" y="414.5" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">角材</text>
+<rect x="146.6" y="463.8" width="34.0" height="15" rx="7.5" fill="#fef3c7" stroke="#0f172a" stroke-width="1.2"/>
+<text x="163.6" y="474.8" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a">角材</text>
+<text x="282" y="541" font-size="11" text-anchor="middle" fill="#334155">壁側</text>
+<text x="86" y="293" font-size="11" text-anchor="end" fill="#334155">リアドア側</text>
+<text x="479" y="293" font-size="11" fill="#334155">車両前方</text>
+<text x="282" y="52" font-size="11" text-anchor="middle" fill="#334155">通路側</text>
+</svg></div>
+  <div class="legend"><span><i style="background:#e2e8f0"></i>12mm合板</span><span><i style="background:#fde68a"></i>角材20×20</span><span><i style="background:#1e293b"></i>電子レンジ</span></div>
+</div>
+
+<div class="card" id="parts"><h2>12mm合板の部品（15枚）</h2><div class="tw"><table><tr><th>No</th><th>部品</th><th>寸法（mm、取り付けたときの向き）</th><th>板</th><th>取り付け</th><th>Blender</th></tr>
+<tr><td class="num"><b>D-1</b></td><td>天板</td><td class="num">前後 512<br>× 奥行 695</td><td class="num">合板1</td><td>側板D-2・背板D-4・間仕切りD-6の上に載せる。奥の空間で天板下の横の角材2本に下からビス。レンジ側は小型L字金具4個（D-2側2・D-3側2、レンジの上の16のすき間に入る）</td><td class="bl">Storage_Top</td></tr>
+<tr><td class="num"><b>D-2</b></td><td>側板（リアドア側）</td><td class="num">奥行 695<br>× 高さ 617</td><td class="num">合板1</td><td>床に立てる。内側に支え板D-9を面で重ねる。奥の空間の縦の角材4本で背板・間仕切りと留める</td><td class="bl">Storage_SideRear</td></tr>
+<tr><td class="num"><b>D-3</b></td><td>側板（レンジの横・車両前方）</td><td class="num">奥行 518<br>× 高さ 629</td><td class="num">合板2</td><td><b>ブロックの外側</b>（レンジが前端まであるため）。下半分は支え板D-8に面で重ねる。奥の端の20は奥の空間の前の角の縦の角材2本（間仕切りD-6・D-7と面で留まる）に、上は小型L字金具2個で天板と。床から天板の上（629）まで</td><td class="bl">Storage_SideFront_レンジ</td></tr>
+<tr><td class="num"><b>D-4</b></td><td>背板（壁側）</td><td class="num">前後 500<br>× 高さ 617</td><td class="num">合板1</td><td>奥の空間の縦の角材2本（D-2と）、棚下・天板下の横の角材に留める。前の端（車両前方）は開いたまま</td><td class="bl">Storage_Back</td></tr>
+<tr><td class="num"><b>D-5</b></td><td>棚板（レンジを載せる）</td><td class="num">前後 500<br>× 奥行 683</td><td class="num">合板2</td><td>支え板3枚と間仕切りD-7の上に載せ、奥の空間の棚下の横の角材2本に下からビス。床から219〜231</td><td class="bl">Storage_RangeShelf</td></tr>
+<tr><td class="num"><b>D-6</b></td><td>間仕切り 上（レンジの後ろ）</td><td class="num">前後 500<br>× 高さ 386</td><td class="num">合板1</td><td>棚板の上に立てる。奥の面で縦の角材2本（D-2側・D-3側）と天板下の横の角材に</td><td class="bl">Storage_Partition_上</td></tr>
+<tr><td class="num"><b>D-7</b></td><td>間仕切り 下</td><td class="num">前後 500<br>× 高さ 219</td><td class="num">合板3</td><td>床に立てる。手前の面に支え板D-10を重ねる。奥の面で縦の角材2本と棚下の横の角材に</td><td class="bl">Storage_Partition_下</td></tr>
+<tr><td class="num"><b>D-8</b></td><td>支え板（車両前方）</td><td class="num">奥行 474<br>× 高さ 219</td><td class="num">合板3</td><td>D-3の内側に面で重ねてビス（2枚で24なのでビスは20前後）。引き出しの箱とは2あく</td><td class="bl">Storage_RangeSupport_前</td></tr>
+<tr><td class="num"><b>D-9</b></td><td>支え板（リアドア側）</td><td class="num">奥行 474<br>× 高さ 219</td><td class="num">合板3</td><td>D-2の内側に面で重ねてビス（同上）</td><td class="bl">Storage_RangeSupport_後</td></tr>
+<tr><td class="num"><b>D-10</b></td><td>支え板（奥）</td><td class="num">前後 476<br>× 高さ 219</td><td class="num">合板3</td><td>間仕切りD-7の手前の面に重ねてビス（左右12ずつ内側、D-8・D-9の間）</td><td class="bl">Storage_RangeSupport_奥</td></tr>
+<tr><td class="num"><b>D-11</b></td><td>引き出し 前板</td><td class="num">前後 500<br>× 高さ 215</td><td class="num">合板1</td><td>箱の前の角の角材2本にボンド＋ビス。床から約3〜218。左右の支え板の小口を覆う</td><td class="bl">Drawer_下手前_前板</td></tr>
+<tr><td class="num"><b>D-12</b></td><td>引き出し 底板</td><td class="num">前後 472<br>× 奥行 460</td><td class="num">合板2</td><td>下に滑り板6個（左・中・右 × 前・奥）</td><td class="bl">Drawer_下手前_底板</td></tr>
+<tr><td class="num"><b>D-13</b></td><td>引き出し 側板（リアドア側）</td><td class="num">奥行 460<br>× 高さ 191</td><td class="num">合板3</td><td>底板の上に立てる。前の端は前板の裏に突き付け、角の角材で留める</td><td class="bl">Drawer_下手前_側板L</td></tr>
+<tr><td class="num"><b>D-14</b></td><td>引き出し 側板（車両前方）</td><td class="num">奥行 460<br>× 高さ 191</td><td class="num">合板3</td><td>同上（D-13と対）</td><td class="bl">Drawer_下手前_側板R</td></tr>
+<tr><td class="num"><b>D-15</b></td><td>引き出し 後ろの板</td><td class="num">前後 448<br>× 高さ 191</td><td class="num">合板3</td><td>底板の上、側板2枚の間。角の角材で留める。支え板D-10とは2あく</td><td class="bl">Drawer_下手前_箱後</td></tr>
+</table></div></div>
+
+<div class="card" id="cut"><h2>板取り（910×1820、12mm合板 3枚）</h2>
+<p class="cap">青い線：部品の上と右の辺、数字はその辺の長さ。赤い点線：切る線（番号の順）。のこ刃の幅3で計算。</p>
+<div class="sheetpage">
+<h3>合板1（910×1820） — D-1・D-6・D-2・D-4・D-11 — 使う割合 約84%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 430.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="合板1（910×1820）">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
+<rect x="0.0" y="0.0" width="305.5" height="225.1" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="152.7" y="116.5" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-1</text>
+<path d="M1.3,1.3 H304.2 V223.8" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="152.7" y="130.5" font-size="9" text-anchor="middle" fill="#334155">天板</text>
+<text x="152.7" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">695</text>
+<text x="301.5" y="116.5" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">512</text>
+<rect x="0.0" y="226.4" width="219.8" height="169.7" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="109.9" y="315.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-6</text>
+<path d="M1.3,227.7 H218.5 V394.7" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="109.9" y="329.2" font-size="9" text-anchor="middle" fill="#334155">間仕切り 上</text>
+<text x="109.9" y="241.4" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">500</text>
+<text x="215.8" y="315.2" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">386</text>
+<rect x="306.8" y="0.0" width="271.2" height="305.5" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="442.4" y="156.7" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-2</text>
+<path d="M308.1,1.3 H576.7 V304.2" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="442.4" y="170.7" font-size="9" text-anchor="middle" fill="#334155">側板（リアドア側）</text>
+<text x="442.4" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">617</text>
+<text x="574.0" y="156.7" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">695</text>
+<rect x="579.3" y="0.0" width="219.8" height="271.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="689.2" y="139.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-4</text>
+<path d="M580.6,1.3 H797.8 V269.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="689.2" y="153.6" font-size="9" text-anchor="middle" fill="#334155">背板</text>
+<text x="689.2" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">500</text>
+<text x="795.1" y="139.6" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">617</text>
+<rect x="579.3" y="272.5" width="219.8" height="94.5" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="689.2" y="323.8" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-11</text>
+<path d="M580.6,273.8 H797.8 V365.7" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="689.2" y="337.8" font-size="9" text-anchor="middle" fill="#334155">引き出し 前板</text>
+<text x="689.2" y="287.5" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">500</text>
+<text x="795.1" y="323.8" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">215</text>
+<line x1="306.2" y1="0.0" x2="306.2" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="0.0" y1="225.7" x2="305.5" y2="225.7" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="220.4" y1="226.4" x2="220.4" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="0.0" y1="396.7" x2="219.8" y2="396.7" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="578.7" y1="0.0" x2="578.7" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="306.8" y1="306.2" x2="578.0" y2="306.2" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="579.3" y1="271.9" x2="800.0" y2="271.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="799.8" y1="0.0" x2="799.8" y2="271.2" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="579.3" y1="367.7" x2="800.0" y2="367.7" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="799.8" y1="272.5" x2="799.8" y2="367.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="306.2" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="306.2" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">1</text>
+<circle cx="293.5" cy="225.7" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="293.5" y="229.3" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">2</text>
+<circle cx="220.4" cy="238.4" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="220.4" y="242.0" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">3</text>
+<circle cx="207.8" cy="396.7" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="207.8" y="400.3" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">4</text>
+<circle cx="578.7" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="578.7" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">5</text>
+<circle cx="566.0" cy="306.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="566.0" y="309.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">6</text>
+<circle cx="788.0" cy="271.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="788.0" y="275.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">7</text>
+<circle cx="799.8" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="799.8" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">8</text>
+<circle cx="788.0" cy="367.7" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="788.0" y="371.3" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">9</text>
+<circle cx="799.8" cy="284.5" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="799.8" y="288.1" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">10</text>
+<text x="263.3" y="317.2" font-size="12" text-anchor="middle" fill="#64748b">余り 192×395</text>
+<text x="442.4" y="357.4" font-size="12" text-anchor="middle" fill="#64748b">余り 617×212</text>
+<text x="400" y="420" font-size="11" text-anchor="middle" fill="#64748b">1820</text>
+</svg></div>
+<p class="shop"><b>店で切る：10回</b>（赤い点線、番号の順に。どれも端から端までの直線）<br>① 大判を、左端から695で切る<br>② 695×910の板を、上端から512で切る → <b>D-1</b>（512×695）<br>③ 695×395の板を、左端から500で切る<br>④ 500×395の板を、上端から386で切る → <b>D-6</b>（500×386）<br>⑤ 1122×910の板を、左端から617で切る<br>⑥ 617×910の板を、上端から695で切る → <b>D-2</b>（695×617）<br>⑦ 502×910の板を、上端から617で切る<br>⑧ 502×617の板を、左端から500で切る → <b>D-4</b>（500×617）（端の数mmは切り落とし）<br>⑨ 502×290の板を、上端から215で切る<br>⑩ 502×215の板を、左端から500で切る → <b>D-11</b>（500×215）（端の数mmは切り落とし）</p>
+<p class="cap">余り：192×395、617×212、500×6、502×72</p></div>
+<div class="sheetpage">
+<h3>合板2（910×1820） — D-5・D-3・D-12 — 使う割合 約53%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 430.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="合板2（910×1820）">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
+<rect x="0.0" y="0.0" width="300.2" height="219.8" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="150.1" y="113.9" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-5</text>
+<path d="M1.3,1.3 H298.9 V218.5" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="150.1" y="127.9" font-size="9" text-anchor="middle" fill="#334155">棚板</text>
+<text x="150.1" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">683</text>
+<text x="296.2" y="113.9" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">500</text>
+<rect x="301.5" y="0.0" width="276.5" height="227.7" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="439.8" y="117.8" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-3</text>
+<path d="M302.8,1.3 H576.7 V226.4" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="439.8" y="131.8" font-size="9" text-anchor="middle" fill="#334155">側板（レンジの横）</text>
+<text x="439.8" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">629</text>
+<text x="574.0" y="117.8" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">518</text>
+<rect x="579.3" y="0.0" width="207.5" height="202.2" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="683.1" y="105.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-12</text>
+<path d="M580.6,1.3 H785.5 V200.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="683.1" y="119.1" font-size="9" text-anchor="middle" fill="#334155">引き出し 底板</text>
+<text x="683.1" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">472</text>
+<text x="782.8" y="105.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">460</text>
+<line x1="300.9" y1="0.0" x2="300.9" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="0.0" y1="220.4" x2="300.2" y2="220.4" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="578.7" y1="0.0" x2="578.7" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="301.5" y1="228.4" x2="578.0" y2="228.4" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="579.3" y1="202.9" x2="800.0" y2="202.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="787.5" y1="0.0" x2="787.5" y2="202.2" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="300.9" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="300.9" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">1</text>
+<circle cx="288.2" cy="220.4" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="288.2" y="224.0" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">2</text>
+<circle cx="578.7" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="578.7" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">3</text>
+<circle cx="566.0" cy="228.4" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="566.0" y="232.0" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">4</text>
+<circle cx="788.0" cy="202.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="788.0" y="206.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">5</text>
+<circle cx="787.5" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="787.5" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">6</text>
+<text x="150.1" y="314.5" font-size="12" text-anchor="middle" fill="#64748b">余り 683×407</text>
+<text x="439.8" y="318.5" font-size="12" text-anchor="middle" fill="#64748b">余り 629×389</text>
+<text x="689.7" y="305.8" font-size="12" text-anchor="middle" fill="#64748b">余り 502×447</text>
+<text x="400" y="420" font-size="11" text-anchor="middle" fill="#64748b">1820</text>
+</svg></div>
+<p class="shop"><b>店で切る：6回</b>（赤い点線、番号の順に。どれも端から端までの直線）<br>① 大判を、左端から683で切る<br>② 683×910の板を、上端から500で切る → <b>D-5</b>（500×683）<br>③ 1134×910の板を、左端から629で切る<br>④ 629×910の板を、上端から518で切る → <b>D-3</b>（518×629）<br>⑤ 502×910の板を、上端から460で切る<br>⑥ 502×460の板を、左端から472で切る → <b>D-12</b>（472×460）</p>
+<p class="cap">余り：683×407、629×389、502×447、27×460</p></div>
+<div class="sheetpage">
+<h3>合板3（910×1820） — D-7・D-8・D-9・D-10・D-13・D-14・D-15 — 使う割合 約41%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 430.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="合板3（910×1820）">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
+<rect x="0.0" y="0.0" width="219.8" height="96.3" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="109.9" y="52.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-7</text>
+<path d="M1.3,1.3 H218.5 V95.0" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="109.9" y="66.1" font-size="9" text-anchor="middle" fill="#334155">間仕切り 下</text>
+<text x="109.9" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">500</text>
+<text x="215.8" y="52.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">219</text>
+<rect x="221.1" y="0.0" width="208.4" height="96.3" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="325.3" y="52.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-8</text>
+<path d="M222.4,1.3 H428.2 V95.0" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="325.3" y="66.1" font-size="9" text-anchor="middle" fill="#334155">支え板（車両前方）</text>
+<text x="325.3" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">474</text>
+<text x="425.5" y="52.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">219</text>
+<rect x="430.8" y="0.0" width="208.4" height="96.3" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="534.9" y="52.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-9</text>
+<path d="M432.1,1.3 H637.8 V95.0" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="534.9" y="66.1" font-size="9" text-anchor="middle" fill="#334155">支え板（リアドア側）</text>
+<text x="534.9" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">474</text>
+<text x="635.1" y="52.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">219</text>
+<rect x="0.0" y="97.6" width="209.2" height="96.3" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="104.6" y="149.7" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-10</text>
+<path d="M1.3,98.9 H207.9 V192.5" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="104.6" y="163.7" font-size="9" text-anchor="middle" fill="#334155">支え板（奥）</text>
+<text x="104.6" y="112.6" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">476</text>
+<text x="205.2" y="149.7" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">219</text>
+<rect x="0.0" y="195.2" width="202.2" height="84.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="101.1" y="241.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-13</text>
+<path d="M1.3,196.5 H200.9 V277.8" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="101.1" y="255.1" font-size="9" text-anchor="middle" fill="#334155">引き出し 側板</text>
+<text x="101.1" y="210.2" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">460</text>
+<text x="198.2" y="241.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">191</text>
+<rect x="203.5" y="195.2" width="202.2" height="84.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="304.6" y="241.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-14</text>
+<path d="M204.8,196.5 H404.4 V277.8" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="304.6" y="255.1" font-size="9" text-anchor="middle" fill="#334155">引き出し 側板</text>
+<text x="304.6" y="210.2" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">460</text>
+<text x="401.7" y="241.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">191</text>
+<rect x="407.0" y="195.2" width="196.9" height="84.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="505.5" y="241.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">D-15</text>
+<path d="M408.3,196.5 H602.7 V277.8" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="505.5" y="255.1" font-size="9" text-anchor="middle" fill="#334155">引き出し 後ろの板</text>
+<text x="505.5" y="210.2" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">448</text>
+<text x="600.0" y="241.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">191</text>
+<line x1="0.0" y1="96.9" x2="800.0" y2="96.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="220.4" y1="0.0" x2="220.4" y2="96.3" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="430.1" y1="0.0" x2="430.1" y2="96.3" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="639.8" y1="0.0" x2="639.8" y2="96.3" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="0.0" y1="194.5" x2="800.0" y2="194.5" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="209.9" y1="97.6" x2="209.9" y2="193.8" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="0.0" y1="279.8" x2="800.0" y2="279.8" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="202.9" y1="195.2" x2="202.9" y2="279.1" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="406.4" y1="195.2" x2="406.4" y2="279.1" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<line x1="604.6" y1="195.2" x2="604.6" y2="279.1" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="788.0" cy="96.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="788.0" y="100.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">1</text>
+<circle cx="220.4" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="220.4" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">2</text>
+<circle cx="430.1" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="430.1" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">3</text>
+<circle cx="639.8" cy="12.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="639.8" y="15.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">4</text>
+<circle cx="788.0" cy="194.5" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="788.0" y="198.1" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">5</text>
+<circle cx="209.9" cy="109.6" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="209.9" y="113.2" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">6</text>
+<circle cx="788.0" cy="279.8" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="788.0" y="283.4" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">7</text>
+<circle cx="202.9" cy="207.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="202.9" y="210.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">8</text>
+<circle cx="406.4" cy="207.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="406.4" y="210.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">9</text>
+<circle cx="604.6" cy="207.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="604.6" y="210.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">10</text>
+<text x="720.2" y="52.1" font-size="12" text-anchor="middle" fill="#64748b">余り 363×219</text>
+<text x="505.3" y="149.7" font-size="12" text-anchor="middle" fill="#64748b">余り 1341×219</text>
+<text x="702.6" y="241.1" font-size="12" text-anchor="middle" fill="#64748b">余り 443×191</text>
+<text x="400.0" y="344.2" font-size="12" text-anchor="middle" fill="#64748b">余り 1820×272</text>
+<text x="400" y="420" font-size="11" text-anchor="middle" fill="#64748b">1820</text>
+</svg></div>
+<p class="shop"><b>店で切る：10回</b>（赤い点線、番号の順に。どれも端から端までの直線）<br>① 大判を、上端から219で切る<br>② 1820×219の板を、左端から500で切る → <b>D-7</b>（500×219）<br>③ 1317×219の板を、左端から474で切る → <b>D-8</b>（474×219）<br>④ 840×219の板を、左端から474で切る → <b>D-9</b>（474×219）<br>⑤ 1820×688の板を、上端から219で切る<br>⑥ 1820×219の板を、左端から476で切る → <b>D-10</b>（476×219）<br>⑦ 1820×466の板を、上端から191で切る<br>⑧ 1820×191の板を、左端から460で切る → <b>D-13</b>（460×191）<br>⑨ 1357×191の板を、左端から460で切る → <b>D-14</b>（460×191）<br>⑩ 894×191の板を、左端から448で切る → <b>D-15</b>（448×191）</p>
+<p class="cap">余り：363×219、1341×219、443×191、1820×272</p></div>
+</div>
+
+<div class="card" id="steps"><h2>組み立ての順番</h2>
+  <ol style="padding-left:1.3rem;display:flex;flex-direction:column;gap:.3rem">
+    <li>面で重ねる3組を先に作る：D-2の内側にD-9、D-3の内側にD-8（どちらも床・通路側の端をそろえて、通路側から12奥＝引き出しの前板の厚み分）、D-7の手前の面にD-10（左右12ずつ内側）。ボンド＋ビス（長さ20前後、内側から）</li>
+    <li>下段：D-2・D-7・D-4を立て、奥の空間の縦の角材（下）でD-2とD-7、D-2とD-4を留める。D-3（＋D-8）を前の角の縦の角材（下）でD-7と留める</li>
+    <li>棚下の横の角材2本を、D-7の奥の面とD-4の内側の面（上端を床から219）に付け、D-5を載せて角材の下からビス</li>
+    <li>上段：D-6を棚板の上に立て、縦の角材（上）でD-2・D-3と留める。D-4とD-2も縦の角材（上）で</li>
+    <li>天板下の横の角材2本をD-6の奥の面とD-4の内側（上端617）に付け、D-1を載せて下からビス。レンジ側は小型L字金具4個（D-2の内側に2・D-3の内側に2、天板の下）</li>
+    <li>引き出し：D-12の上にD-13・D-14・D-15を立て、角の角材4本で留める。前の角材にD-11をボンド＋ビス。底に滑り板6個</li>
+    <li>電子レンジを通路側から入れ、D-3に寄せる</li>
+  </ol>
+</div>
+
+<div class="card" id="other"><h2>合板以外の材料・金物</h2><div class="tw"><table><tr><th>材料</th><th>用途</th><th>数</th><th>長さ（mm）</th><th>取り付け</th><th>Blender</th></tr>
+<tr><td>角材 20×20</td><td>奥の空間の縦の角（下段）</td><td class="num">3</td><td class="num">219・219・199</td><td>D-2とD-7、D-2とD-4、D-3とD-7（前の角、上に棚下の角材が来るので199）</td><td class="bl">Storage_補強_縦_下_*</td></tr>
+<tr><td>角材 20×20</td><td>奥の空間の縦の角（上段）</td><td class="num">3</td><td class="num">386・386・366</td><td>D-2とD-6、D-2とD-4、D-3とD-6（前の角は366）</td><td class="bl">Storage_補強_縦_上_*</td></tr>
+<tr><td>角材 20×20</td><td>棚板の下（奥の空間）</td><td class="num">2</td><td class="num">480</td><td>D-7の奥の面・D-4の内側、上端219。棚板D-5を下からビス</td><td class="bl">Storage_補強_横_棚下_*</td></tr>
+<tr><td>角材 20×20</td><td>天板の下（奥の空間）</td><td class="num">2</td><td class="num">480</td><td>D-6の奥の面・D-4の内側、上端617。天板D-1を下からビス</td><td class="bl">Storage_補強_横_天板下_*</td></tr>
+<tr><td>角材 20×20</td><td>引き出しの箱の角</td><td class="num">4</td><td class="num">191</td><td>箱の内側の縦の4つの角</td><td class="bl">Drawer_下手前_補強_*</td></tr>
+<tr><td>（角材の切り方）</td><td>1820を3本</td><td class="num">—</td><td class="num">—</td><td>① 480＋480＋480＋366 ② 480＋386＋386＋219＋219 ③ 199＋191×4（のこ刃3込み）</td><td class="bl"></td></tr>
+<tr><td>小型L字金具 15×15（薄いもの）</td><td>天板と側板（レンジの上）</td><td class="num">4</td><td class="num">—</td><td>D-2の内側に2・D-3の内側に2（通路側から約85・385）。レンジの上の16のすき間に入る大きさ。レンジと側板D-2の間は6</td><td class="bl">Storage_L金具_天板_*</td></tr>
+<tr><td>滑り板 25×50×厚さ2（3Dプリント PETG/ASA）＋PTFEテープ 幅25</td><td>引き出しの底</td><td class="num">6</td><td class="num">テープ 50ずつ</td><td>底板D-12の下。左・中・右 × 前・奥</td><td class="bl">Drawer_下手前_滑り板*</td></tr>
+<tr><td>ビス φ3.5×28</td><td>角材から板へ</td><td class="num">—</td><td class="num">—</td><td>角材の側から。下穴</td><td class="bl"></td></tr>
+<tr><td>ビス 長さ20前後</td><td>面で重ねる板（D-2＋D-9、D-3＋D-8、D-7＋D-10）</td><td class="num">—</td><td class="num">—</td><td>2枚で24なので28は突き抜ける</td><td class="bl"></td></tr>
+</table></div></div>
+
+</div>
+<script>
+(function(){
+  // 済マークは GAS(hiace-cut-status-gas)に置いて端末間で共有する。localStorage は表示用の控えと未送信分だけ
+  var API='https://script.google.com/macros/s/AKfycbwD6OzlDa8wIczUQ7KReiRj-jK4sgh1mtiupI1evdIcfhG2GuGDsWoSMK6SGq2-SgG3/exec';
+  var PAGE='range', KEY='hiace_cut_range_done', PEND='hiace_cut_range_pending', MERGED='hiace_cut_range_merged';
+  // 部品番号 D-1 は共有先(GAS)では D1 として保存する（GASの番号の形が英字＋数字のため）
+  function pidOf(s){ var m=/^D-(\d+)$/.exec(String(s).trim().split(/\s+/)[0]); return m?'D'+m[1]:null; }
+  function load(k,d){ try{ return JSON.parse(localStorage.getItem(k)||'null')||d; }catch(e){ return d; } }
+  function store(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  var done=load(KEY,{}), pend=load(PEND,{}), busy=false;
+  var ns='http://www.w3.org/2000/svg', ids={};
+  document.querySelectorAll('.fig svg').forEach(function(svg){
+    var kids=[].slice.call(svg.children);
+    kids.forEach(function(r,i){
+      if((r.tagName!=='rect'&&r.tagName!=='path')||r.getAttribute('stroke-width')!=='.8') return;
+      var t=kids[i+1]; if(!t||t.tagName!=='text') return;
+      var pid=pidOf(t.textContent); if(!pid) return; r.setAttribute('data-pid',pid); ids[pid]=1;
+      var m=document.createElementNS(ns,'text');
+      var bx=r.tagName==='rect'?{x:+r.getAttribute('x'),y:+r.getAttribute('y'),width:+r.getAttribute('width')}:r.getBBox();
+      m.setAttribute('x',(r.getAttribute('data-markx')?+r.getAttribute('data-markx'):bx.x+bx.width)-4);
+      m.setAttribute('y',bx.y+13); m.setAttribute('text-anchor','end'); m.setAttribute('font-size','11');
+      m.setAttribute('class','dn'); m.setAttribute('data-mark',pid); m.textContent='済 ✓'; svg.appendChild(m);
+    });
+  });
+  document.querySelectorAll('tr').forEach(function(tr){
+    var b=tr.querySelector('td.num b'); var p=b&&pidOf(b.textContent); if(p) tr.setAttribute('data-pid',p);
+  });
+  function status(t){ document.getElementById('cutst').textContent=t; }
+  function render(){
+    var view={}; Object.keys(done).forEach(function(k){ view[k]=1; });
+    Object.keys(pend).forEach(function(k){ if(pend[k]) view[k]=1; else delete view[k]; });
+    document.querySelectorAll('[data-pid]').forEach(function(el){ el.classList.toggle('done',!!view[el.getAttribute('data-pid')]); });
+    document.querySelectorAll('[data-mark]').forEach(function(el){ el.style.display=view[el.getAttribute('data-mark')]?'':'none'; });
+    var all=Object.keys(ids), n=all.filter(function(k){return view[k];}).length;
+    document.getElementById('cutn').textContent=n; document.getElementById('cutt').textContent=all.length;
+    document.getElementById('cutpg').style.width=(all.length?n/all.length*100:0)+'%';
+    return view;
+  }
+  function call(q){
+    return fetch(API+'?k='+PAGE+(q?'&'+q:''),{cache:'no-store'}).then(function(r){ return r.json(); }).then(function(j){
+      if(!j||!j.done) throw new Error(j&&j.error||'bad'); return j.done;
+    });
+  }
+  function sync(){
+    if(busy) return; busy=true;
+    var chain=Promise.resolve(), first=null;
+    if(!load(MERGED,false)){  // この端末で初めて共有版を開いたとき、端末に残っていた済を足し合わせる
+      var mine=Object.keys(done).filter(function(k){ return ids[k]; });
+      chain=chain.then(function(){ return mine.length?call('op=merge&ids='+mine.join(',')):null; }).then(function(){ store(MERGED,true); });
+    }
+    Object.keys(pend).forEach(function(p){
+      var v=pend[p];
+      chain=chain.then(function(){ return call('op=set&p='+p+'&v='+(v?1:0)); }).then(function(){ if(pend[p]===v){ delete pend[p]; store(PEND,pend); } });
+    });
+    chain.then(function(){ return call(''); }).then(function(d){
+      done=d; store(KEY,done); render();
+      var n=Object.keys(pend).length; status(n?'未送信 '+n+'件':'共有中 ✓');
+    }).catch(function(){
+      var n=Object.keys(pend).length; status('通信できません'+(n?'（未送信 '+n+'件）':''));
+    }).then(function(){ busy=false; });
+  }
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('[data-pid]'); if(!el) return;
+    var pid=el.getAttribute('data-pid'); if(!ids[pid]) return;
+    var view=render(); pend[pid]=view[pid]?0:1; store(PEND,pend); render(); status('保存中…'); sync();
+  });
+  document.getElementById('cutreset').addEventListener('click',function(){
+    if(!confirm('済マークを全部もどしますか？（ほかの端末からも消えます）')) return;
+    status('保存中…'); pend={}; store(PEND,pend);
+    call('op=reset').then(function(d){ done=d; store(KEY,done); render(); status('共有中 ✓'); }).catch(function(){ status('通信できません'); });
+  });
+  render(); status('読み込み中…'); sync();
+  setInterval(function(){ if(!document.hidden) sync(); },15000);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) sync(); });
+})();
+</script>
+</body>
+</html>
