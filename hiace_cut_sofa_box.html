@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ソファ下の収納箱 カット案</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%23b45309%22/%3E%3Crect x=%226%22 y=%228%22 width=%2220%22 height=%2216%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%222%22/%3E%3Cpath d=%22M16 8v16M6 16h10%22 stroke=%22%23fff%22 stroke-width=%222%22/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#f8fafc; --card:#fff; --line:#e2e8f0; --tx:#0f172a; --sub:#334155; --mut:#64748b; --th:#f1f5f9; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans JP',sans-serif; background:var(--bg); color:var(--tx); padding:2rem 1rem; font-size:14px; line-height:1.7; }
+.page { max-width:860px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; }
+h1 { font-size:1.5rem; font-weight:900; }
+h2 { font-size:1rem; font-weight:900; margin-bottom:.75rem; padding-bottom:.4rem; border-bottom:2px solid var(--line); }
+h3 { font-size:.9rem; font-weight:900; margin:1.1rem 0 .4rem; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1.25rem 1.5rem; }
+.meta { font-size:.8rem; color:var(--mut); margin-top:.3rem; }
+a { color:#2563eb; }
+ul { padding-left:1.2rem; display:flex; flex-direction:column; gap:.25rem; }
+.tw { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:.85rem; }
+th { background:var(--th); font-weight:700; padding:.5rem .75rem; text-align:left; white-space:nowrap; }
+td { padding:.45rem .75rem; border-top:1px solid var(--line); vertical-align:top; color:var(--sub); }
+td.bl { font-size:.72rem; color:var(--mut); }
+.num { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.note { background:#fff7ed; border-left:3px solid #f97316; padding:.6rem .9rem; border-radius:4px; font-size:.82rem; color:#7c2d12; margin-top:.75rem; }
+.note-blue { background:#eff6ff; border-left-color:#3b82f6; color:#1e3a8a; }
+.fig { margin-top:.4rem; }
+.fig svg { width:100%; height:auto; display:block; }
+p.shop { font-size:.8rem; color:#991b1b; margin-top:.3rem; }
+.cap { font-size:.75rem; color:var(--mut); margin-top:.3rem; }
+.legend { display:flex; flex-wrap:wrap; gap:.4rem 1rem; font-size:.75rem; color:#475569; margin-top:.4rem; }
+.legend i { display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-2px; margin-right:.3rem; border:1px solid #94a3b8; }
+@media (max-width:600px) { body { padding:1rem; } .card { padding:1rem; } }
+.asm { position:relative; margin-top:.4rem; }
+.asm img { width:100%; height:auto; display:block; }
+.lb { position:absolute; transform:translate(-50%,-50%); font-size:.72rem; font-weight:900; line-height:1; padding:.22rem .38rem; border-radius:999px; background:#fff; border:1.5px solid #475569; color:#0f172a; white-space:nowrap; box-shadow:0 1px 2px rgba(0,0,0,.25); }
+.lb.a { border-color:#b45309; background:#fef3c7; }
+.lb.hw { border-color:#334155; background:#e2e8f0; font-weight:700; }
+@media (max-width:600px) { .lb { font-size:.6rem; padding:.15rem .28rem; } }
+.fig svg rect[data-pid], .asm .lb, tr[data-pid] { cursor:pointer; }
+.fig svg rect.done, .fig svg path.done { fill:#bbf7d0 !important; stroke:#15803d !important; }
+.fig svg text.dn { fill:#15803d; font-weight:900; pointer-events:none; }
+.fig svg text { pointer-events:none; }
+.asm .lb.done { background:#bbf7d0 !important; border-color:#15803d !important; color:#14532d; }
+tr.done td { background:#f0fdf4; color:#15803d; }
+tr.done td b::after { content:" 済"; color:#15803d; }
+#cutbar { position:sticky; top:0; z-index:10; background:#0f172a; color:#fff; border-radius:10px; padding:.55rem 1rem; display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; font-size:.85rem; }
+#cutbar .pg { flex:1; min-width:120px; height:8px; background:#334155; border-radius:4px; overflow:hidden; }
+#cutbar .pg i { display:block; height:100%; background:#4ade80; width:0; }
+#cutbar button { font:inherit; font-size:.75rem; background:transparent; color:#cbd5e1; border:1px solid #475569; border-radius:6px; padding:.2rem .6rem; cursor:pointer; }
+</style>
+</head>
+
+<body>
+<div class="page">
+<div id="cutbar"><b>切り出し済み <span id="cutn">0</span> / <span id="cutt">0</span>枚</b><div class="pg"><i id="cutpg"></i></div><span id="cutst" style="font-size:.75rem;color:#cbd5e1">読み込み中…</span><button type="button" id="cutreset">全部もどす</button></div>
+<div>
+  <h1>ソファ下の収納箱 カット案</h1>
+  <p class="meta">2026-11-03 ／ Blenderモデル（SofaBed_収納箱_1〜3、11-03に板ごとの部品へ分けた）から拾った寸法。12mm合板、新しい板2枚。部品番号は E-1 から。 ／ <a href="hiace_custom.html">相談記録</a> ／ <a href="hiace_cut_range.html">レンジブロック カット案</a> ／ <a href="hiace_cut_sink_fridge.html">シンク・冷蔵庫 カット案</a></p>
+</div>
+<p class="cap" style="margin-top:-1rem">板取り図の部品か、部品表の行をタップすると「済」になる（もう一度タップで戻る）。記録は共有されるので、ほかのスマホ・PCで開いても同じ「済」が出る（15秒ごとに更新）。</p>
+
+<div class="card" id="summary"><h2>まとめ</h2>
+  <ul>
+    <li>ソファベッド1・2・3の下に、床を滑らせて通路へ引き出す箱を1つずつ。シンク下段の引き出し（C-5）と同じ組み方：<b>前板・底板・側板2枚・奥板</b>＋内側の角に<b>20×20の角材</b></li>
+    <li>外寸（前後×奥行）：箱1 645×653（ソファベッド1、車両前方側）／箱2 704×485（ソファベッド2、奥はタイヤハウス）／箱3 505×695（ソファベッド3、リアドア側）。高さは前板が床から3〜197、側板の上端が190</li>
+    <li><b>奥板は高さ50</b>で、奥の上は開けておく（11-03）</li>
+    <li>合板は <b>910×1820×12mm を2枚</b>（15枚、余り材は使わない）。<b>全部お店で切る：20回</b>。合板Bに463×1820の余り</li>
+  </ul>
+  <div class="note"><b>切る前に確認してほしいこと</b><br>
+  ① <b>箱3とSUPバッグ</b>：相談記録では、ソファベッド3の下はL字の張り出しを付けたときに<b>SUPバッグ（920×420×220）をしまう場所</b>になっている。箱3を置くとバッグは入らない。箱3を作るならSUPバッグの置き場所を別に決める<br>
+  ② <b>箱3とソファ時の前板</b>：ソファ時だけ付ける前板（SB3_BoxFront、Y165〜183）が、箱3の前板と同じ場所にある。箱3の前板がその代わりになるので、SB3_BoxFrontは作らない前提にした<br>
+  ③ <b>箱3の奥の角</b>：リアドア側の壁はカーブしている（X0〜125、張り出し量は未測定）。箱3の奥（モデルでは壁から5）の、リアドア側の角が当たらないか、<b>E-12・E-13・E-15を切る前に実測</b>。当たるなら箱3の奥行を詰める<br>
+  ④ <b>取っ手</b>：前板の上は背骨まで2しかなく、上から指を掛けられない。前板に穴（指を掛ける丸穴か長穴）を開けるか、つまみを付けるかは未定。穴なら切った後に家で開けられる</div>
+  <p class="cap">点検の結果（Blenderのモデル）：周りの見えている部品とのめり込みなし。どの板も2か所以上で留まる（前板＝前の角材2本、側板＝底板＋角材2本、奥板＝底板＋後ろの角材2本）。辺だけで接する角なし。</p>
+</div>
+
+<div class="card" id="figs"><h2>図</h2>
+<div class="fig"><svg style="max-width:820px" viewBox="0 0 820 380.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="① 上から見た図（床から40の高さで切った図）">
+<text x="410.0" y="18" font-size="13" font-weight="700" text-anchor="middle" fill="#0f172a">① 上から見た図（床から40の高さで切った図）</text>
+<text x="410.0" y="34" font-size="10" text-anchor="middle" fill="#64748b">左がリアドア側、右が車両前方。黄色は角の角材20×20、薄い灰色は周りの固定の板</text>
+<text x="410.0" y="62.0" font-size="11" text-anchor="middle" fill="#64748b">通路側</text>
+<rect x="526.0" y="70.0" width="4.8" height="280.0" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".9"><title>SofaBed_Box_Side1</title></rect>
+<rect x="795.2" y="70.0" width="4.8" height="264.0" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".9"><title>SofaBed_Box_Side2</title></rect>
+<rect x="233.2" y="70.0" width="4.8" height="280.0" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".9"><title>SB3_Divider</title></rect>
+<rect x="20.0" y="70.0" width="4.8" height="280.0" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".9"><title>SB3_RearDoor</title></rect>
+<rect x="238.0" y="264.0" width="288.0" height="86.0" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".9"><title>WheelHouse_L</title></rect>
+<rect x="534.0" y="70.0" width="258.0" height="4.8" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_1_前板 (E-1)</title></rect>
+<rect x="534.0" y="74.8" width="4.8" height="256.4" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_1_側板L (E-3)</title></rect>
+<rect x="787.2" y="74.8" width="4.8" height="256.4" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_1_側板R (E-4)</title></rect>
+<rect x="538.8" y="326.4" width="248.4" height="4.8" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_1_箱後 (E-5)</title></rect>
+<rect x="538.8" y="74.8" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_1_補強_前L</title></rect>
+<rect x="779.2" y="74.8" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_1_補強_前R</title></rect>
+<rect x="538.8" y="318.4" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_1_補強_後L</title></rect>
+<rect x="779.2" y="318.4" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_1_補強_後R</title></rect>
+<rect x="241.2" y="70.0" width="281.6" height="4.8" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_2_前板 (E-6)</title></rect>
+<rect x="241.2" y="74.8" width="4.8" height="189.2" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_2_側板L (E-8)</title></rect>
+<rect x="518.0" y="74.8" width="4.8" height="189.2" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_2_側板R (E-9)</title></rect>
+<rect x="246.0" y="259.2" width="272.0" height="4.8" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_2_箱後 (E-10)</title></rect>
+<rect x="246.0" y="74.8" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_2_補強_前L</title></rect>
+<rect x="510.0" y="74.8" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_2_補強_前R</title></rect>
+<rect x="246.0" y="251.2" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_2_補強_後L</title></rect>
+<rect x="510.0" y="251.2" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_2_補強_後R</title></rect>
+<rect x="28.0" y="70.0" width="202.0" height="4.8" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_3_前板 (E-11)</title></rect>
+<rect x="28.0" y="74.8" width="4.8" height="273.2" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_3_側板L (E-13)</title></rect>
+<rect x="225.2" y="74.8" width="4.8" height="273.2" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_3_側板R (E-14)</title></rect>
+<rect x="32.8" y="343.2" width="192.4" height="4.8" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_3_箱後 (E-15)</title></rect>
+<rect x="32.8" y="74.8" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_3_補強_前L</title></rect>
+<rect x="217.2" y="74.8" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_3_補強_前R</title></rect>
+<rect x="32.8" y="335.2" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_3_補強_後L</title></rect>
+<rect x="217.2" y="335.2" width="8.0" height="8.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>SofaBed_収納箱_3_補強_後R</title></rect>
+<text x="382.0" y="306.8" font-size="11" text-anchor="middle" fill="#64748b">タイヤハウス</text>
+<text x="663.0" y="76.4" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-1</text>
+<text x="663.0" y="197.0" font-size="13" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">箱1</text>
+<text x="663.0" y="332.8" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-5</text>
+<text x="536.4" y="225.0" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-3</text>
+<text x="789.6" y="225.0" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-4</text>
+<text x="663.0" y="213.0" font-size="11" text-anchor="middle" fill="#334155">外寸 645×653</text>
+<text x="382.0" y="76.4" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-6</text>
+<text x="382.0" y="163.4" font-size="13" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">箱2</text>
+<text x="382.0" y="265.6" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-10</text>
+<text x="243.6" y="191.4" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-8</text>
+<text x="520.4" y="191.4" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-9</text>
+<text x="382.0" y="179.4" font-size="11" text-anchor="middle" fill="#334155">外寸 704×485</text>
+<text x="129.0" y="76.4" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-11</text>
+<text x="129.0" y="205.4" font-size="13" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">箱3</text>
+<text x="129.0" y="349.6" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-15</text>
+<text x="30.4" y="233.4" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-13</text>
+<text x="227.6" y="233.4" font-size="9" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-14</text>
+<text x="129.0" y="221.4" font-size="11" text-anchor="middle" fill="#334155">外寸 505×695</text>
+<text x="410.0" y="366.0" font-size="11" text-anchor="middle" fill="#64748b">壁側（スライドドアの反対側）</text>
+</svg></div>
+<div class="fig"><svg style="max-width:960px" viewBox="0 0 960 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="② 横から見た断面（箱1の真ん中で切った図）">
+<text x="480.0" y="18" font-size="13" font-weight="700" text-anchor="middle" fill="#0f172a">② 横から見た断面（箱1の真ん中で切った図）</text>
+<text x="480.0" y="34" font-size="10" text-anchor="middle" fill="#64748b">左が通路側、右が壁側。前板の上は背骨まで2あく。灰色の小さな板が滑り板（厚さ2＋PTFEテープ）</text>
+<rect x="97.0" y="100.3" width="641.0" height="175.0" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="5 3"/>
+<rect x="706.0" y="225.3" width="20.0" height="50.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>補強_後R</title></rect>
+<rect x="97.0" y="100.3" width="20.0" height="175.0" fill="#fde68a" stroke="#92400e" stroke-width=".9"><title>補強_前R</title></rect>
+<rect x="110.0" y="287.3" width="50.0" height="2.0" fill="#cbd5e1" stroke="#64748b" stroke-width=".9"><title>SofaBed_収納箱_1_滑り板2</title></rect>
+<rect x="663.0" y="287.3" width="50.0" height="2.0" fill="#cbd5e1" stroke="#64748b" stroke-width=".9"><title>SofaBed_収納箱_1_滑り板3</title></rect>
+<rect x="85.0" y="93.3" width="12.0" height="194.0" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_1_前板 (E-1)</title></rect>
+<rect x="97.0" y="275.3" width="641.0" height="12.0" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_1_底板 (E-2)</title></rect>
+<rect x="726.0" y="225.3" width="12.0" height="50.0" fill="#e2e8f0" stroke="#475569" stroke-width=".9"><title>SofaBed_収納箱_1_箱後 (E-5)</title></rect>
+<rect x="85.0" y="75.0" width="40.0" height="16.0" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".9"><title>Comb1_引出し背骨</title></rect>
+<rect x="450.0" y="75.0" width="120.0" height="16.0" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".9"><title>Comb_1x4_中</title></rect>
+<rect x="85.0" y="59.0" width="653.0" height="16.0" fill="#f1f5f9" stroke="#94a3b8" stroke-width=".9"><title>Comb1_引出しすのこ</title></rect>
+<line x1="40.0" y1="289.5" x2="790.0" y2="289.5" stroke="#64748b"/>
+<text x="91.0" y="190.0" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-1</text>
+<text x="420.0" y="285.3" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-2（底板）</text>
+<text x="732.0" y="254.0" font-size="10" font-weight="900" text-anchor="middle" fill="#0f172a" stroke="#fff" stroke-width="2.5" paint-order="stroke">E-5</text>
+<text x="420.0" y="180.0" font-size="11" text-anchor="middle" fill="#64748b">奥に見える側板 E-4（高さ175）</text>
+<text x="320.0" y="81.0" font-size="11" text-anchor="middle" fill="#64748b">すのこを受ける材（下面199）</text>
+<text x="105.0" y="65.0" font-size="11" text-anchor="middle" fill="#64748b">背骨</text>
+<text x="116.0" y="130.0" font-size="10" text-anchor="start" fill="#92400e">角材175</text>
+<text x="703.0" y="210.0" font-size="10" text-anchor="middle" fill="#92400e">角材50</text>
+<line x1="80.0" y1="287.3" x2="80.0" y2="93.3" stroke="#2563eb" stroke-width="1.4"/><text x="76.0" y="194.3" font-size="11" font-weight="900" text-anchor="end" fill="#2563eb">194</text>
+<line x1="765.0" y1="275.3" x2="765.0" y2="225.3" stroke="#2563eb" stroke-width="1.4"/><text x="761.0" y="254.3" font-size="11" font-weight="900" text-anchor="end" fill="#2563eb"></text>
+<text x="770.0" y="254.0" font-size="11" text-anchor="start" fill="#2563eb">50</text>
+<text x="775.0" y="100.0" font-size="10" text-anchor="start" fill="#334155">上端 床から190</text>
+<text x="38.0" y="93.0" font-size="10" text-anchor="end" fill="#334155">197</text>
+<text x="38.0" y="291.0" font-size="10" text-anchor="end" fill="#334155">床から3</text>
+<text x="785.0" y="286.0" font-size="11" text-anchor="end" fill="#64748b">床</text>
+</svg></div>
+<div class="legend"><span><i style="background:#e2e8f0"></i>12mm合板（箱）</span><span><i style="background:#fde68a"></i>角材20×20</span><span><i style="background:#cbd5e1"></i>滑り板</span><span><i style="background:#f1f5f9"></i>周りの固定の板（切らない）</span></div>
+</div>
+
+<div class="card" id="parts"><h2>12mm合板の部品（15枚、全部新しい板から）</h2><div class="tw"><table><tr><th>No</th><th>箱</th><th>部品</th><th>寸法（mm、取り付けたときの向き）</th><th>板</th><th>取り付け</th><th>Blender</th></tr>
+<tr><td class="num"><b>E-1</b></td><td class="num">箱1</td><td>前板</td><td class="num">前後 645<br>× 高さ 194</td><td class="num">合板B</td><td>箱の前面。底板の前の小口と側板の前の端を覆う。裏の角材2本（175）にボンド＋ビス。床から3〜197。取っ手は未定</td><td class="bl">SofaBed_収納箱_1_前板 (E-1)</td></tr>
+<tr><td class="num"><b>E-2</b></td><td class="num">箱1</td><td>底板</td><td class="num">前後 645<br>× 奥行 641</td><td class="num">合板A</td><td>前板の裏から奥まで、箱の全幅。上に側板2枚・奥板・角材4本が載る。下に滑り板6個</td><td class="bl">SofaBed_収納箱_1_底板 (E-2)</td></tr>
+<tr><td class="num"><b>E-3</b></td><td class="num">箱1</td><td>側板（リアドア側）</td><td class="num">奥行 641<br>× 高さ 175</td><td class="num">合板A</td><td>底板の上に立てる。前は前板の裏に突き付け、角材2本（前175・後ろ50）にボンド＋ビス</td><td class="bl">SofaBed_収納箱_1_側板L (E-3)</td></tr>
+<tr><td class="num"><b>E-4</b></td><td class="num">箱1</td><td>側板（車両前方側）</td><td class="num">奥行 641<br>× 高さ 175</td><td class="num">合板B</td><td>同上（リアドア側の側板と対）</td><td class="bl">SofaBed_収納箱_1_側板R (E-4)</td></tr>
+<tr><td class="num"><b>E-5</b></td><td class="num">箱1</td><td>奥板</td><td class="num">前後 621<br>× 高さ 50</td><td class="num">合板B</td><td><b>高さ50</b>（奥は全部はふさがない）。側板2枚の間、底板の上。後ろの角材2本（50）にボンド＋ビス</td><td class="bl">SofaBed_収納箱_1_箱後 (E-5)</td></tr>
+<tr><td class="num"><b>E-6</b></td><td class="num">箱2</td><td>前板</td><td class="num">前後 704<br>× 高さ 194</td><td class="num">合板B</td><td>箱の前面。底板の前の小口と側板の前の端を覆う。裏の角材2本（175）にボンド＋ビス。床から3〜197。取っ手は未定</td><td class="bl">SofaBed_収納箱_2_前板 (E-6)</td></tr>
+<tr><td class="num"><b>E-7</b></td><td class="num">箱2</td><td>底板</td><td class="num">前後 704<br>× 奥行 473</td><td class="num">合板A</td><td>前板の裏から奥まで、箱の全幅。上に側板2枚・奥板・角材4本が載る。下に滑り板6個</td><td class="bl">SofaBed_収納箱_2_底板 (E-7)</td></tr>
+<tr><td class="num"><b>E-8</b></td><td class="num">箱2</td><td>側板（リアドア側）</td><td class="num">奥行 473<br>× 高さ 175</td><td class="num">合板A</td><td>底板の上に立てる。前は前板の裏に突き付け、角材2本（前175・後ろ50）にボンド＋ビス</td><td class="bl">SofaBed_収納箱_2_側板L (E-8)</td></tr>
+<tr><td class="num"><b>E-9</b></td><td class="num">箱2</td><td>側板（車両前方側）</td><td class="num">奥行 473<br>× 高さ 175</td><td class="num">合板B</td><td>同上（リアドア側の側板と対）</td><td class="bl">SofaBed_収納箱_2_側板R (E-9)</td></tr>
+<tr><td class="num"><b>E-10</b></td><td class="num">箱2</td><td>奥板</td><td class="num">前後 680<br>× 高さ 50</td><td class="num">合板B</td><td><b>高さ50</b>（奥は全部はふさがない）。側板2枚の間、底板の上。後ろの角材2本（50）にボンド＋ビス</td><td class="bl">SofaBed_収納箱_2_箱後 (E-10)</td></tr>
+<tr><td class="num"><b>E-11</b></td><td class="num">箱3</td><td>前板</td><td class="num">前後 505<br>× 高さ 194</td><td class="num">合板B</td><td>箱の前面。底板の前の小口と側板の前の端を覆う。裏の角材2本（175）にボンド＋ビス。床から3〜197。取っ手は未定</td><td class="bl">SofaBed_収納箱_3_前板 (E-11)</td></tr>
+<tr><td class="num"><b>E-12</b></td><td class="num">箱3</td><td>底板</td><td class="num">前後 505<br>× 奥行 683</td><td class="num">合板A</td><td>前板の裏から奥まで、箱の全幅。上に側板2枚・奥板・角材4本が載る。下に滑り板6個</td><td class="bl">SofaBed_収納箱_3_底板 (E-12)</td></tr>
+<tr><td class="num"><b>E-13</b></td><td class="num">箱3</td><td>側板（リアドア側）</td><td class="num">奥行 683<br>× 高さ 175</td><td class="num">合板A</td><td>底板の上に立てる。前は前板の裏に突き付け、角材2本（前175・後ろ50）にボンド＋ビス</td><td class="bl">SofaBed_収納箱_3_側板L (E-13)</td></tr>
+<tr><td class="num"><b>E-14</b></td><td class="num">箱3</td><td>側板（車両前方側）</td><td class="num">奥行 683<br>× 高さ 175</td><td class="num">合板A</td><td>同上（リアドア側の側板と対）</td><td class="bl">SofaBed_収納箱_3_側板R (E-14)</td></tr>
+<tr><td class="num"><b>E-15</b></td><td class="num">箱3</td><td>奥板</td><td class="num">前後 481<br>× 高さ 50</td><td class="num">合板B</td><td><b>高さ50</b>（奥は全部はふさがない）。側板2枚の間、底板の上。後ろの角材2本（50）にボンド＋ビス</td><td class="bl">SofaBed_収納箱_3_箱後 (E-15)</td></tr>
+</table></div><p class="cap">前後＝車の前後方向（箱の幅）、奥行＝通路から壁への方向。側板の「リアドア側」は箱の左右のうちリアドアに近い方。</p></div>
+
+<div class="card" id="cut"><h2>板取り（910×1820、12mm合板 2枚）</h2>
+<p class="cap">余り材は使わない。全部お店で切る（合わせて20回）。青い線：部品の上と右の辺、数字はその辺の長さ。赤い点線：切る線（番号の順）。のこ刃の幅3で計算。</p>
+<h3>合板A（910×1820） — E-12・E-13・E-14・E-2・E-3・E-7・E-8 — 使う割合 約92%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 420.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="合板A（910×1820）">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
+<rect x="0.0" y="0.0" width="300.2" height="222.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="150.1" y="111.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-12</text>
+<path d="M1.3,1.3 H298.9 V220.7" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="150.1" y="126.0" font-size="9" text-anchor="middle" fill="#334155">箱3 底板</text>
+<text x="150.1" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">683</text>
+<text x="295.2" y="115.0" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">505</text>
+<rect x="0.0" y="223.3" width="300.2" height="76.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="150.1" y="261.8" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-13</text>
+<path d="M1.3,224.6 H298.9 V298.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="150.1" y="276.8" font-size="9" text-anchor="middle" fill="#334155">箱3 側板</text>
+<text x="150.1" y="238.3" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">683</text>
+<text x="295.2" y="265.8" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">175</text>
+<rect x="0.0" y="301.5" width="300.2" height="76.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="150.1" y="340.0" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-14</text>
+<path d="M1.3,302.8 H298.9 V377.2" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="150.1" y="355.0" font-size="9" text-anchor="middle" fill="#334155">箱3 側板</text>
+<text x="150.1" y="316.5" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">683</text>
+<text x="295.2" y="344.0" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">175</text>
+<rect x="301.5" y="0.0" width="281.8" height="283.5" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="442.4" y="141.8" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-2</text>
+<path d="M302.8,1.3 H582.0 V282.2" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="442.4" y="156.8" font-size="9" text-anchor="middle" fill="#334155">箱1 底板</text>
+<text x="442.4" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">641</text>
+<text x="578.3" y="145.8" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">645</text>
+<rect x="301.5" y="284.8" width="281.8" height="76.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="442.4" y="323.3" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-3</text>
+<path d="M302.8,286.1 H582.0 V360.5" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="442.4" y="338.3" font-size="9" text-anchor="middle" fill="#334155">箱1 側板</text>
+<text x="442.4" y="299.8" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">641</text>
+<text x="578.3" y="327.3" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">175</text>
+<rect x="584.6" y="0.0" width="207.9" height="309.5" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="688.6" y="154.7" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-7</text>
+<path d="M585.9,1.3 H791.2 V308.2" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="688.6" y="169.7" font-size="9" text-anchor="middle" fill="#334155">箱2 底板</text>
+<text x="688.6" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">473</text>
+<text x="787.5" y="158.7" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">704</text>
+<rect x="584.6" y="310.8" width="207.9" height="76.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="688.6" y="349.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-8</text>
+<path d="M585.9,312.1 H791.2 V386.4" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="688.6" y="364.2" font-size="9" text-anchor="middle" fill="#334155">箱2 側板</text>
+<text x="688.6" y="325.8" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">473</text>
+<text x="787.5" y="353.2" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">175</text>
+<line x1="300.9" y1="0.0" x2="300.9" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="300.9" cy="389.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="300.9" y="392.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">1</text>
+<line x1="584.0" y1="0.0" x2="584.0" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="584.0" cy="389.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="584.0" y="392.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">2</text>
+<line x1="793.2" y1="0.0" x2="793.2" y2="400.0" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="793.2" cy="389.0" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="793.2" y="392.6" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">3</text>
+<line x1="0.0" y1="222.6" x2="300.2" y2="222.6" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="286.2" cy="222.6" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="286.2" y="226.2" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">4</text>
+<line x1="301.5" y1="284.2" x2="583.3" y2="284.2" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="569.3" cy="284.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="569.3" y="287.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">5</text>
+<line x1="584.6" y1="310.1" x2="792.5" y2="310.1" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="778.5" cy="310.1" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="778.5" y="313.7" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">6</text>
+<line x1="0.0" y1="300.9" x2="300.2" y2="300.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="286.2" cy="300.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="286.2" y="304.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">7</text>
+<line x1="301.5" y1="362.4" x2="583.3" y2="362.4" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="569.3" cy="362.4" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="569.3" y="366.0" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">7</text>
+<line x1="584.6" y1="388.4" x2="792.5" y2="388.4" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="778.5" cy="388.4" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="778.5" y="392.0" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">7</text>
+<line x1="0.0" y1="379.1" x2="300.2" y2="379.1" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="286.2" cy="379.1" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="286.2" y="382.7" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">8</text>
+<text x="400" y="414" font-size="11" text-anchor="middle" fill="#64748b">1820</text>
+</svg></div>
+<p class="shop"><b>店で切る：8回</b>（赤い点線、番号の順に。どれも、その時の板の端から端までの直線）<br>① 大判を、左端から683で切る<br>② 右の1134×910の板を、①の切り口から641で切る<br>③ 右の490×910の板を、②の切り口から473で切る（右の14は捨て）<br>④ 左の683×910の板を、上端から505で切る → <b>E-12</b>（505×683）<br>⑤ 真ん中の641×910の板を、上端から645で切る → <b>E-2</b>（645×641）<br>⑥ 右の473×910の板を、上端から704で切る → <b>E-7</b>（704×473）<br>⑦ ④⑤⑥で下に残った3枚（683×402・641×262・473×203）を<b>重ねて</b>、上端から175で切る → <b>E-13</b>（683×175）・<b>E-3</b>（641×175）・<b>E-8</b>（473×175）<br>⑧ ⑦で残った683×224の板を、上端から175で切る → <b>E-14</b>（683×175）</p>
+<p class="cap">余り（幅50以上）：641×84</p>
+<h3>合板B（910×1820） — E-6・E-1・E-11・E-4・E-9・E-5・E-10・E-15 — 使う割合 約39%</h3><div class="fig"><svg style="max-width:804px" viewBox="-2 -2 804.0 420.0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="合板B（910×1820）">
+<rect x="0" y="0" width="800.0" height="400.0" fill="#f8fafc" stroke="#64748b"/>
+<rect x="0.0" y="0.0" width="309.5" height="85.3" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="154.7" y="42.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-6</text>
+<path d="M1.3,1.3 H308.2 V84.0" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="154.7" y="57.6" font-size="9" text-anchor="middle" fill="#334155">箱2 前板</text>
+<text x="154.7" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">704</text>
+<text x="304.5" y="46.6" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">194</text>
+<rect x="310.8" y="0.0" width="283.5" height="85.3" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="452.5" y="42.6" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-1</text>
+<path d="M312.1,1.3 H593.0 V84.0" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="452.5" y="57.6" font-size="9" text-anchor="middle" fill="#334155">箱1 前板</text>
+<text x="452.5" y="15.0" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">645</text>
+<text x="589.3" y="46.6" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">194</text>
+<rect x="0.0" y="86.6" width="222.0" height="85.3" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="111.0" y="129.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-11</text>
+<path d="M1.3,87.9 H220.7 V170.6" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="111.0" y="144.2" font-size="9" text-anchor="middle" fill="#334155">箱3 前板</text>
+<text x="111.0" y="101.6" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">505</text>
+<text x="217.0" y="133.2" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">194</text>
+<rect x="223.3" y="86.6" width="281.8" height="76.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="364.2" y="125.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-4</text>
+<path d="M224.6,87.9 H503.8 V162.2" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="364.2" y="140.1" font-size="9" text-anchor="middle" fill="#334155">箱1 側板</text>
+<text x="364.2" y="101.6" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">641</text>
+<text x="500.1" y="129.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">175</text>
+<rect x="506.4" y="86.6" width="207.9" height="76.9" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="610.3" y="125.1" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-9</text>
+<path d="M507.7,87.9 H713.0 V162.2" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<text x="610.3" y="140.1" font-size="9" text-anchor="middle" fill="#334155">箱2 側板</text>
+<text x="610.3" y="101.6" font-size="12" font-weight="900" text-anchor="middle" fill="#2563eb">473</text>
+<text x="709.3" y="129.1" font-size="12" font-weight="900" text-anchor="end" fill="#2563eb">175</text>
+<rect x="0.0" y="173.2" width="273.0" height="22.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="136.5" y="188.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-5　<tspan fill="#2563eb" font-weight="900">621×50</tspan></text>
+<path d="M1.3,174.5 H271.7 V193.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<rect x="274.3" y="173.2" width="298.9" height="22.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="423.7" y="188.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-10　<tspan fill="#2563eb" font-weight="900">680×50</tspan></text>
+<path d="M275.6,174.5 H571.9 V193.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<rect x="574.5" y="173.2" width="211.4" height="22.0" fill="#e2e8f0" stroke="#475569" stroke-width=".8"/>
+<text x="680.2" y="188.2" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">E-15　<tspan fill="#2563eb" font-weight="900">481×50</tspan></text>
+<path d="M575.8,174.5 H784.6 V193.9" fill="none" stroke="#2563eb" stroke-width="2.6" pointer-events="none"/>
+<line x1="0.0" y1="85.9" x2="800.0" y2="85.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="786.0" cy="85.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="786.0" y="89.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">1</text>
+<line x1="0.0" y1="172.5" x2="800.0" y2="172.5" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="786.0" cy="172.5" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="786.0" y="176.1" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">2</text>
+<line x1="0.0" y1="195.8" x2="800.0" y2="195.8" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="786.0" cy="195.8" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="786.0" y="199.4" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">3</text>
+<line x1="310.1" y1="0.0" x2="310.1" y2="85.3" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="310.1" cy="74.3" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="310.1" y="77.9" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">4</text>
+<line x1="594.9" y1="0.0" x2="594.9" y2="85.3" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="594.9" cy="74.3" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="594.9" y="77.9" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">5</text>
+<line x1="222.6" y1="86.6" x2="222.6" y2="171.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="222.6" cy="160.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="222.6" y="164.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">6</text>
+<line x1="505.7" y1="86.6" x2="505.7" y2="171.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="505.7" cy="160.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="505.7" y="164.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">7</text>
+<line x1="714.9" y1="86.6" x2="714.9" y2="171.9" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="714.9" cy="160.9" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="714.9" y="164.5" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">8</text>
+<line x1="223.3" y1="164.2" x2="505.1" y2="164.2" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="491.1" cy="164.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="491.1" y="167.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">9</text>
+<line x1="506.4" y1="164.2" x2="714.3" y2="164.2" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="700.3" cy="164.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="700.3" y="167.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">9</text>
+<line x1="273.6" y1="173.2" x2="273.6" y2="195.2" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="273.6" cy="206.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="273.6" y="209.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">10</text>
+<line x1="573.8" y1="173.2" x2="573.8" y2="195.2" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="573.8" cy="206.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="573.8" y="209.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">11</text>
+<line x1="786.6" y1="173.2" x2="786.6" y2="195.2" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="7 4"/>
+<circle cx="786.6" cy="206.2" r="8" fill="#fff" stroke="#dc2626" stroke-width="1.6"/><text x="786.6" y="209.8" font-size="10" font-weight="900" text-anchor="middle" fill="#dc2626">12</text>
+<text x="400" y="302.2" font-size="13" text-anchor="middle" fill="#64748b">余り 463×1820</text>
+<text x="400" y="414" font-size="11" text-anchor="middle" fill="#64748b">1820</text>
+</svg></div>
+<p class="shop"><b>店で切る：12回</b>（赤い点線、番号の順に。どれも、その時の板の端から端までの直線）<br>① 大判を、上端から194で長手方向に切る<br>② 残りの716×1820を、上端から194で切る<br>③ 残りの519×1820を、上端から50で切る。下の463×1820は<b>余り</b><br>④ 1本目の帯（194×1820）を、左端から704で切る → <b>E-6</b>（704×194）<br>⑤ 帯の残りを、④の切り口から645で切る → <b>E-1</b>（645×194）。右の465×194は余り<br>⑥ 2本目の帯（194×1820）を、左端から505で切る → <b>E-11</b>（505×194）<br>⑦ 帯の残りを、⑥の切り口から641で切る<br>⑧ 帯の残りを、⑦の切り口から473で切る。右の192×194は余り<br>⑨ ⑦と⑧で切った2枚（641×194・473×194）を<b>重ねて</b>、上端から175で切る → <b>E-4</b>（641×175）・<b>E-9</b>（473×175）<br>⑩ 3本目の帯（50×1820）を、左端から621で切る → <b>E-5</b>（621×50）<br>⑪ 帯の残りを、⑩の切り口から680で切る → <b>E-10</b>（680×50）<br>⑫ 帯の残りを、⑪の切り口から481で切る → <b>E-15</b>（481×50）。右の29は捨て</p>
+<p class="cap">余り（幅50以上）：1820×463、465×194、192×194</p>
+<div class="note note-blue">合板Bの③で切る<b>幅50の帯</b>は、お店のパネルソーで切れる一番細い幅を先に聞いておく。切れないと言われたら、③を飛ばして2本目の帯の下（519×1820）を持ち帰り、奥板3枚（50幅）は家で切る。</div></div>
+
+<div class="card" id="prep"><h2>組み立ての準備と順番</h2>
+  <h3>① 届いた板の確認</h3>
+  <ul><li>15枚そろっているか、部品表の寸法で測る。側板（175）と前板（194）は高さが違うので取り違えない</li><li>きれいな面を外側（前板は通路側）に。鉛筆で部品番号と「前」「床側」を書く</li></ul>
+  <h3>② 角材を切る（家で）</h3>
+  <ul><li>20×20の角材を<b>長さ175を6本</b>（前の角）、<b>長さ50を6本</b>（後ろの角）。1820の1本から取れる（合計1383）</li></ul>
+  <h3>③ 印と位置</h3>
+  <div class="tw"><table><tr><th>板</th><th>面</th><th>付ける物</th><th>数</th><th>位置（mm）</th></tr>
+<tr><td class="num"><b>E-3・E-4</b><br>（箱1）</td><td class="num">側板の内側</td><td>角材 20×20</td><td class="num">4</td><td class="num">前の端にそろえて長さ175を1本／奥の端から12あけて長さ50を1本（下の端にそろえる）</td></tr>
+<tr><td class="num"><b>E-8・E-9</b><br>（箱2）</td><td class="num">側板の内側</td><td>角材 20×20</td><td class="num">4</td><td class="num">前の端にそろえて長さ175を1本／奥の端から12あけて長さ50を1本（下の端にそろえる）</td></tr>
+<tr><td class="num"><b>E-13・E-14</b><br>（箱3）</td><td class="num">側板の内側</td><td>角材 20×20</td><td class="num">4</td><td class="num">前の端にそろえて長さ175を1本／奥の端から12あけて長さ50を1本（下の端にそろえる）</td></tr>
+<tr><td class="num"><b>E-2</b><br>（箱1）</td><td class="num">底板の下</td><td>滑り板 25×50</td><td class="num">6</td><td class="num">リアドア側の端から 18〜42・310〜335・602〜628<br>前の端から 13〜63・566〜616</td></tr>
+<tr><td class="num"><b>E-7</b><br>（箱2）</td><td class="num">底板の下</td><td>滑り板 25×50</td><td class="num">6</td><td class="num">リアドア側の端から 18〜42・340〜365・662〜686<br>前の端から 13〜63・398〜448</td></tr>
+<tr><td class="num"><b>E-12</b><br>（箱3）</td><td class="num">底板の下</td><td>滑り板 25×50</td><td class="num">6</td><td class="num">リアドア側の端から 18〜42・240〜265・462〜488<br>前の端から 13〜63・608〜658</td></tr>
+</table></div>
+  <h3>④ 組む順番（3つとも同じ）</h3>
+  <ol style="padding-left:1.3rem;display:flex;flex-direction:column;gap:.3rem">
+    <li>側板2枚の内側に角材を付ける（前175・後ろ50）。ボンド＋側板の外からビス</li>
+    <li>底板の上に側板2枚を立て、間に奥板を入れて後ろの角材に留める。底板とはボンド、底板の下から角材へビス</li>
+    <li>前板を、底板の前の小口と側板の前の端を覆うように当て、下の端を底板の下の面にそろえる。前の角材2本へボンド＋前板の裏側からビス（表にビスの頭を出さない）</li>
+    <li>底板の下に滑り板6個（PTFEテープを床側に貼ったもの）を付ける</li>
+    <li>ソファベッドの下へ入れ、奥まで押して出し入れを確認する</li>
+  </ol>
+  <p class="cap">ビスは12mm合板を突き抜けない長さ（角材へ打つ物は φ3.5×28、合板どうしは使わない）。下穴φ2〜2.5。</p>
+</div>
+
+<div class="card" id="other"><h2>合板以外の材料</h2><div class="tw"><table><tr><th>材料</th><th>用途</th><th>数</th><th>長さ（mm）</th><th>取り付け</th><th>Blender</th></tr>
+<tr><td>角材 20×20</td><td>箱の内側の縦の角</td><td class="num"><b>12本</b>（1820を1本）</td><td class="num">175×6・50×6</td><td>板の小口にビスを打たず、ここへボンド＋ビス</td><td class="bl">SofaBed_収納箱_*_補強_*</td></tr>
+<tr><td>滑り板 25×50×厚さ2（3Dプリント PETG/ASA）</td><td>箱の底</td><td class="num">18（6×3箱）</td><td class="num">—</td><td>夏の車内の熱で変形しないようPETGかASA。付け方は未定（両面テープか皿ビス）</td><td class="bl">SofaBed_収納箱_*_滑り板*</td></tr>
+<tr><td>PTFEテープ 幅25・厚さ0.18（Amazon B09LTN7QJL）</td><td>滑り板の床側</td><td class="num">18枚</td><td class="num">50ずつ（計0.9m）</td><td>相談記録で決定済みの物</td><td class="bl">SofaBed_収納箱_*_滑り板*_テープ</td></tr>
+<tr><td>木ねじ φ3.5×28 皿頭＋木工用ボンド</td><td>角材と板</td><td class="num">約70</td><td class="num">28</td><td>下穴φ2〜2.5</td><td class="bl"></td></tr>
+</table></div></div>
+</div>
+<script>
+(function(){
+  // 済マークは GAS(hiace-cut-status-gas)に置いて端末間で共有する。localStorage は表示用の控えと未送信分だけ
+  var API='https://script.google.com/macros/s/AKfycbwD6OzlDa8wIczUQ7KReiRj-jK4sgh1mtiupI1evdIcfhG2GuGDsWoSMK6SGq2-SgG3/exec';
+  var PAGE='sofa_box', KEY='hiace_cut_sofa_box_done', PEND='hiace_cut_sofa_box_pending', MERGED='hiace_cut_sofa_box_merged';
+  // 部品番号 E-1 は共有先(GAS)では E1 として保存する（GASの番号の形が英字＋数字のため）
+  function pidOf(s){ var m=/^E-(\d+)$/.exec(String(s).trim().split(/\s+/)[0]); return m?'E'+m[1]:null; }
+  function load(k,d){ try{ return JSON.parse(localStorage.getItem(k)||'null')||d; }catch(e){ return d; } }
+  function store(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  var done=load(KEY,{}), pend=load(PEND,{}), busy=false;
+  var ns='http://www.w3.org/2000/svg', ids={};
+  document.querySelectorAll('.fig svg').forEach(function(svg){
+    var kids=[].slice.call(svg.children);
+    kids.forEach(function(r,i){
+      if((r.tagName!=='rect'&&r.tagName!=='path')||r.getAttribute('stroke-width')!=='.8') return;
+      var t=kids[i+1]; if(!t||t.tagName!=='text') return;
+      var pid=pidOf(t.textContent); if(!pid) return; r.setAttribute('data-pid',pid); ids[pid]=1;
+      var m=document.createElementNS(ns,'text');
+      var bx=r.tagName==='rect'?{x:+r.getAttribute('x'),y:+r.getAttribute('y'),width:+r.getAttribute('width')}:r.getBBox();
+      m.setAttribute('x',(r.getAttribute('data-markx')?+r.getAttribute('data-markx'):bx.x+bx.width)-4);
+      m.setAttribute('y',bx.y+13); m.setAttribute('text-anchor','end'); m.setAttribute('font-size','11');
+      m.setAttribute('class','dn'); m.setAttribute('data-mark',pid); m.textContent='済 ✓'; svg.appendChild(m);
+    });
+  });
+  document.querySelectorAll('tr').forEach(function(tr){
+    var b=tr.querySelector('td.num b'); var p=b&&pidOf(b.textContent); if(p) tr.setAttribute('data-pid',p);
+  });
+  function status(t){ document.getElementById('cutst').textContent=t; }
+  function render(){
+    var view={}; Object.keys(done).forEach(function(k){ view[k]=1; });
+    Object.keys(pend).forEach(function(k){ if(pend[k]) view[k]=1; else delete view[k]; });
+    document.querySelectorAll('[data-pid]').forEach(function(el){ el.classList.toggle('done',!!view[el.getAttribute('data-pid')]); });
+    document.querySelectorAll('[data-mark]').forEach(function(el){ el.style.display=view[el.getAttribute('data-mark')]?'':'none'; });
+    var all=Object.keys(ids), n=all.filter(function(k){return view[k];}).length;
+    document.getElementById('cutn').textContent=n; document.getElementById('cutt').textContent=all.length;
+    document.getElementById('cutpg').style.width=(all.length?n/all.length*100:0)+'%';
+    return view;
+  }
+  function call(q){
+    return fetch(API+'?k='+PAGE+(q?'&'+q:''),{cache:'no-store'}).then(function(r){ return r.json(); }).then(function(j){
+      if(!j||!j.done) throw new Error(j&&j.error||'bad'); return j.done;
+    });
+  }
+  function sync(){
+    if(busy) return; busy=true;
+    var chain=Promise.resolve(), first=null;
+    if(!load(MERGED,false)){  // この端末で初めて共有版を開いたとき、端末に残っていた済を足し合わせる
+      var mine=Object.keys(done).filter(function(k){ return ids[k]; });
+      chain=chain.then(function(){ return mine.length?call('op=merge&ids='+mine.join(',')):null; }).then(function(){ store(MERGED,true); });
+    }
+    Object.keys(pend).forEach(function(p){
+      var v=pend[p];
+      chain=chain.then(function(){ return call('op=set&p='+p+'&v='+(v?1:0)); }).then(function(){ if(pend[p]===v){ delete pend[p]; store(PEND,pend); } });
+    });
+    chain.then(function(){ return call(''); }).then(function(d){
+      done=d; store(KEY,done); render();
+      var n=Object.keys(pend).length; status(n?'未送信 '+n+'件':'共有中 ✓');
+    }).catch(function(){
+      var n=Object.keys(pend).length; status('通信できません'+(n?'（未送信 '+n+'件）':''));
+    }).then(function(){ busy=false; });
+  }
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('[data-pid]'); if(!el) return;
+    var pid=el.getAttribute('data-pid'); if(!ids[pid]) return;
+    var view=render(); pend[pid]=view[pid]?0:1; store(PEND,pend); render(); status('保存中…'); sync();
+  });
+  document.getElementById('cutreset').addEventListener('click',function(){
+    if(!confirm('済マークを全部もどしますか？（ほかの端末からも消えます）')) return;
+    status('保存中…'); pend={}; store(PEND,pend);
+    call('op=reset').then(function(d){ done=d; store(KEY,done); render(); status('共有中 ✓'); }).catch(function(){ status('通信できません'); });
+  });
+  render(); status('読み込み中…'); sync();
+  setInterval(function(){ if(!document.hidden) sync(); },15000);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) sync(); });
+})();
+</script>
+</body>
+</html>
