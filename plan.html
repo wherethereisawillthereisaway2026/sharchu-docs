@@ -188,6 +188,9 @@
 <div><span class="k">室内換気扇（天井、Walfront DC24V 4pinPWMブロワー、1台）</span></div>
 <div>  <span class="c">└→</span> <span class="v">RPi GPIO13 直結（GPIO PWM出力）</span> <span class="w">← 物理スイッチなし。Pico不使用。「切」もPWM=0%依存</span></div>
 <div></div>
+<div><span class="k">窓ファン（24V 80mm 2線ファン×2個、3Dプリントの換気枠）</span></div>
+<div>  <span class="c">└→</span> <span class="v">RPi GPIO19(Pin35) → MOSトリガースイッチ基板（B0C2H7X13F）→ ファン2個並列</span> <span class="w">← 画面から手動操作。タッチセンサーなし。CO2連動は後から（2026-11-27）</span></div>
+<div></div>
 <div><span class="k">ネットワーク</span></div>
 <div>  <span class="c">→</span> <span class="v">古いスマホ + 楽天SIM（USB テザリング → RPi）</span> <span class="w">← 安価。バッテリー常時充電問題に注意</span></div>
 <div></div>
@@ -228,6 +231,8 @@
         <tr><td>GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">未記載</td><td>RPi GNDとの接続は新基板で要確認</td></tr>
         <tr class="g"><td class="b" rowspan="1">Walfront DC24V ブロワー</td><td rowspan="1">室内換気扇（天井）<br>赤・黒は24V本線、ラズパイ非接続</td><td>PWM（青）</td><td class="p">GPIO13</td><td class="b" style="white-space:nowrap">33</td><td>PWM信号（風量。「切」もPWM=0%）</td></tr>
         <tr class="g"><td class="b" rowspan="1">Walfront DC24V ブロワー</td><td rowspan="1">バッテリ庫ファン<br>赤・黒は24V本線、ラズパイ非接続</td><td>PWM（青）</td><td class="p">GPIO18</td><td class="b" style="white-space:nowrap">12</td><td>PWM信号（バッテリ温度で制御）</td></tr>
+        <tr class="g"><td class="b" rowspan="2">MOSトリガースイッチ基板（Amazon B0C2H7X13F）</td><td rowspan="2">窓ファン（24V 80mm 2線ファン×2個を並列、0.25A×2）<br>ソフト導入済み・配線待ち（2026-11-27）。DC+/−は24V（ヒューズ1A）、OUT+/−へファン</td><td>PWM+</td><td class="p">GPIO19</td><td class="b" style="white-space:nowrap">35</td><td>PWM信号（1kHz、切/15/30/100%。15%で回るかは未確認）</td></tr>
+        <tr><td>PWM GND</td><td class="p">GND</td><td class="b" style="white-space:nowrap">34</td><td>信号のGND</td></tr>
         <tr class="g"><td class="b" rowspan="3">Sensirion SCD40</td><td rowspan="3">CO₂・温湿度センサー（I2C）<br>配線済み・稼働中（2026-09-25）</td><td>SDA</td><td class="p">GPIO2</td><td class="b" style="white-space:nowrap">3</td><td>I2Cデータ</td></tr>
         <tr><td>SCL</td><td class="p">GPIO3</td><td class="b" style="white-space:nowrap">5</td><td>I2Cクロック</td></tr>
         <tr><td>VCC / GND</td><td class="p">3.3V / GND</td><td class="b" style="white-space:nowrap">17 / 20</td><td>電源（配線済み）。<b>3.3V専用</b>: 基板にレギュレーターがなく、5Vを入れるとI2C線にも5Vがかかりピンを壊す。ピーク電流が大きく電圧の揺れに弱いため、他の機器と分けて専用の3.3Vピン(17番)から給電</td></tr>
